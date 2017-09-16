@@ -1,7 +1,7 @@
 https://github.com/meijmproject/meijm.git
 
-Microsoft Windows [°æ±¾ 6.1.7601]
-°æÈ¨ËùÓĞ (c) 2009 Microsoft Corporation¡£±£ÁôËùÓĞÈ¨Àû¡£
+Microsoft Windows [ï¿½æ±¾ 6.1.7601]
+ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½ (c) 2009 Microsoft Corporationï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½
 
 C:\Users\Administrator>cd f:
 F:\
@@ -9,8 +9,8 @@ F:\
 C:\Users\Administrator>cd F:\myproject\mysql-5.5.41-winx64\bin
 
 C:\Users\Administrator>f"
-'f"' ²»ÊÇÄÚ²¿»òÍâ²¿ÃüÁî£¬Ò²²»ÊÇ¿ÉÔËĞĞµÄ³ÌĞò
-»òÅú´¦ÀíÎÄ¼ş¡£
+'f"' ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½â²¿ï¿½ï¿½ï¿½î£¬Ò²ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ĞµÄ³ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 
 C:\Users\Administrator>f:
 
@@ -18,8 +18,8 @@ F:\myproject\mysql-5.5.41-winx64\bin>mysqld  install
 Service successfully installed.
 
 F:\myproject\mysql-5.5.41-winx64\bin>net start mysql
-MySQL ·şÎñÕıÔÚÆô¶¯ .
-MySQL ·şÎñÒÑ¾­Æô¶¯³É¹¦¡£
+MySQL ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ .
+MySQL ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½
 
 
 F:\myproject\mysql-5.5.41-winx64\bin>mysql -u root -p
@@ -36,4 +36,4 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-mysql>
+mysql>sss
