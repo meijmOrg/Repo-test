@@ -31,7 +31,7 @@ public class ImCheckPersonInfoQueryHelper {
 	 * @throws ServiceException
 	 */
 	public static ImCheckPersonInfoDTO findImCheckPersonInfoDTOByBatchOidAndNameAndBirthday(Long importBatchOid, String name, String birthday) throws ServiceException {
-		String hql = "from ImCheckPersonInfo cpi where cpi.importBatchOid=? and cpi.name=? and date_format(cpi.birthday,'%Y-%m-%d')=?";
+		String hql = "from ImCheckPersonInfo cpi where cpi.importBatchOid=? and cpi.name=? and CONVERT(varchar(100), cpi.birthday, 23)=?";
 		return BeanHelper.copyProperties(DaoUtil.uniqueResult(hql, importBatchOid, name, birthday), ImCheckPersonInfoDTO.class);
 	}
 	

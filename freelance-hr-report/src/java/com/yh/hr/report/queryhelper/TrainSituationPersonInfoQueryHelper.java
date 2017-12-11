@@ -31,7 +31,7 @@ public class TrainSituationPersonInfoQueryHelper {
 		hql.append(" and ptqi.prof_Tech_Level like :profTechLevel) p");
 		hql.append(" left join yhc_Pb_Education_Training_Info peti");
 		hql.append(" on p.person_Oid = peti.person_Oid");
-		hql.append(" where peti.education_training_kink_code='2' and date_format(peti.training_Begin_Date, '%Y') =:trainingBeginDate ");
+		hql.append(" where peti.education_training_kink_code='2' and LEFT(CONVERT(varchar(100), peti.training_Begin_Date, 112),4) =:trainingBeginDate ");
 		
 		List<List<PbPersonInfoDTO>> rowList = new ArrayList<List<PbPersonInfoDTO>>();  //包含所有委培人员信息的list
 		List<List<Object[]>> list = new ArrayList<List<Object[]>>();  //sql查询结果list
@@ -77,7 +77,7 @@ public class TrainSituationPersonInfoQueryHelper {
 		hql.append(" from yhc_Pb_Prof_Tech_Qualif_Info tqi");
 		hql.append(" left join yhc_pb_education_training_info eti");
 		hql.append(" on tqi.person_oid = eti.person_oid");
-		hql.append(" where eti.education_training_kink_code='1' and date_format(eti.training_Begin_Date, '%Y') = :trainingBeginDate");
+		hql.append(" where eti.education_training_kink_code='1' and LEFT(CONVERT(varchar(100), eti.training_Begin_Date, 112),4) = :trainingBeginDate");
 		hql.append(" and tqi.prof_Tech_Level like :profTechLevel");
 		List<List<Long>> list = new ArrayList<List<Long>>();  //sql查询结果list
 		//循环，从2013--2017年

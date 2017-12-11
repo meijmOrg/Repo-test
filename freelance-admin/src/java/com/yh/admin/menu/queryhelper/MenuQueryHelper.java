@@ -121,8 +121,8 @@ public class MenuQueryHelper {
 					+ " and sp.function_role_id = rl.role_id " 
 					+ " and sp.system_position_oid = usp.system_position_oid " 
 					+ " and usp.user_id = '"+ userId+ "'" 
-					+ " and (usp.effective_date is null or usp.effective_date <= now()) " 
-					+ " and (usp.expired_date is null or usp.expired_date >= now()) )"
+					+ " and (usp.effective_date is null or usp.effective_date <= getdate()) " 
+					+ " and (usp.expired_date is null or usp.expired_date >= getdate()) )"
 					+ ")";
 
 		}
@@ -172,8 +172,8 @@ public class MenuQueryHelper {
 					+ " and sp.function_role_id = rl.role_id "
 					+ " and sp.system_position_oid = usp.system_position_oid " 
 					+ " and usp.user_id = '"+ userId+ "'" 
-					+ " and (usp.effective_date is null or usp.effective_date <= now()) " 
-					+ " and (usp.expired_date is null or usp.expired_date >= now()) ))";
+					+ " and (usp.effective_date is null or usp.effective_date <= getdate()) " 
+					+ " and (usp.expired_date is null or usp.expired_date >= getdate()) ))";
 
 		}
 		hql += " and m.system_code = '" + systemId + "' order by m.order_seq";

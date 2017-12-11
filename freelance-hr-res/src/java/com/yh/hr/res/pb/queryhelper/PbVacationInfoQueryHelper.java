@@ -81,8 +81,8 @@ public class PbVacationInfoQueryHelper {
 		lsql.append(" (select uo.org_name from yhc_ut_org uo where uo.org_oid = jpp.hire_dept_oid) as hire_dept_name ,");
 		lsql.append("       jpvi.VACATION_Oid," );
 		lsql.append("       jpvi.VACATION_TYPE," );
-		lsql.append("       date_format(jpvi.START_DATE,'%Y-%m-%d')," );
-		lsql.append("       date_format(jpvi.END_DATE,'%Y-%m-%d'),");
+		lsql.append("       CONVERT(varchar(100), jpvi.START_DATE, 23)," );
+		lsql.append("       CONVERT(varchar(100), jpvi.END_DATE, 23),");
 		lsql.append("       jpvi.VACATION_DAYS," );
 		lsql.append("       jpvi.REASON," );
 		lsql.append("       jpvi.CREATE_DATE" );

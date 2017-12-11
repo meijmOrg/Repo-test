@@ -292,8 +292,8 @@ public class RoleDataAuthQueryHelper {
 		
 		sql.append("   and jrda.role_id = jsp.data_role_id ");
 		sql.append("   and usp.system_position_oid = jsp.system_position_oid ");
-		sql.append("   and (usp.effective_date is null or usp.effective_date <= now()) ");
-		sql.append("   and (usp.expired_date is null or usp.expired_date >= now())" );
+		sql.append("   and (usp.effective_date is null or usp.effective_date <= getdate()) ");
+		sql.append("   and (usp.expired_date is null or usp.expired_date >= getdate())" );
 		
 		return DataConverUtils.toLong(DaoUtil.uniqueResultWithSQL(sql.toString())) > 0;
 	}

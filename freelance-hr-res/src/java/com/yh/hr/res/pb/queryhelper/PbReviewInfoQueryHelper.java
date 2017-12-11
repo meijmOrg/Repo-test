@@ -67,7 +67,7 @@ public class PbReviewInfoQueryHelper{
     public static List<PbReviewInfoDTO> findReviewInfoByPersonOidAndReviewYear(Long personOid,Date date) throws ServiceException {
     	StringBuilder hql = new StringBuilder();
         HashMap<String, Object> hqlParams = new HashMap<String, Object>();
-    	hql.append("from PbReviewInfo r where personOid=:personOid and reviewTypeCode=:reviewTypeCode  and date_format(reviewYear,'%Y')=:reviewYear");
+    	hql.append("from PbReviewInfo r where personOid=:personOid and reviewTypeCode=:reviewTypeCode  and LEFT(CONVERT(varchar(100), reviewYear, 112),4)=:reviewYear");
     	hqlParams.put("personOid", personOid);
 		hqlParams.put("reviewTypeCode", DicConstants.YHRS0069_1);
 		hqlParams.put("reviewYear", DateUtil.format(date,"yyyy"));
@@ -93,7 +93,7 @@ public class PbReviewInfoQueryHelper{
      */
     public static List<PbReviewInfoDTO> findByReviewYear(TableTagBean ttb) throws DataAccessFailureException{
     	
-    	StringBuffer hql = new StringBuffer("from PbReviewInfo ri where ri.personOid = :personOid and date_format(ri.reviewYear,'%Y') = :reviewYearStr ");
+    	StringBuffer hql = new StringBuffer("from PbReviewInfo ri where ri.personOid = :personOid and LEFT(CONVERT(varchar(100), ri.reviewYear, 112),4) = :reviewYearStr ");
 		Map<String, Object> params = new HashMap<String, Object>();
 		if(null!=ttb.getCondition().get("reviewOid")){
 			hql.append(" and ri.reviewOid <> :reviewOid");

@@ -48,7 +48,7 @@ public class UploadFileDetailQueryHelper {
 		sql.append("       juf.ref_oid");
 		sql.append("       ,jufd.created_by_code");
 		sql.append("       ,jufd.created_by_name");
-		sql.append("       ,date_format(jufd.created_date,'%Y-%m-%d %H:%i:%s')");
+		sql.append("       ,CONVERT(varchar(100),jufd.created_date,20)");
 		
 		//wm_concat ：行变列，11g返回clob类型，数据库需WMSYS用户及相关函数（暂时找不到更简单的替代方案）
 		sql.append("       ,(select group_concat(cast(jura.authority as char)) from yha_upload_ref_auth jura where jura.ref_code = juf.ref_code and jura.ref_role_code = '").append(refRoleCode).append("')");

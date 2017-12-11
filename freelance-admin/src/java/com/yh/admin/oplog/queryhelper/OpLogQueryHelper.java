@@ -36,7 +36,7 @@ public class OpLogQueryHelper {
 		sql.append("       user_name,");
 		sql.append("       system_code,");
 		sql.append("       system_name,");
-		sql.append("       DATE_FORMAT(log_date,'%Y-%m-%d  %H:%i:%s'),");
+		sql.append("       CONVERT(varchar(100),log_date,20),");
 		sql.append("       ip_address,");
 		sql.append("       function_code,");
 		sql.append("       function_name");

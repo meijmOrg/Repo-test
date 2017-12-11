@@ -46,7 +46,7 @@ public class BizUploadPhotoQueryHelper {
 		sql.append("       jpp.photo_type,");
 		sql.append("       jpp.create_by");
 		sql.append("       ,jpp.create_name");
-		sql.append("       ,date_format(jpp.create_date,'%Y-%m-%d %H:%i:%s')");
+		sql.append("       ,CONVERT(varchar(100),jpp.created_date,20)");
 		
 		//wm_concat ：行变列，11g返回clob类型，数据库需WMSYS用户及相关函数（暂时找不到更简单的替代方案）
 //		sql.append("       ,(select to_char(wm_concat(jura.authority)) from yha_upload_ref_auth jura where jura.ref_code = juf.ref_code and jura.ref_role_code = '").append(bizPersonOid).append("')");

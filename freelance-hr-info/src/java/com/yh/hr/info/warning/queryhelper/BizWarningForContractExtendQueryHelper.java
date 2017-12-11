@@ -50,12 +50,12 @@ public class BizWarningForContractExtendQueryHelper
 	public static List<JSONObject> listBizWarningInfo(TableTagBean ttb) throws ServiceException
 	{
 		StringBuffer sql = new StringBuffer("select eci.person_oid,eci.contract_no,eci.contract_begin," +
-				" eci.contract_end,(eci.contract_end-60) as warning_date,datediff(eci.contract_end,str_to_date(date_format(now(),'%Y-%m-%d'),'%Y-%m-%d')) as differenceDays,ppi.name,ppi.id_code,ppi.id_no,ppi.sex_code,ppi.birthday,ppi.hire_dept_oid," +
+				" eci.contract_end,(eci.contract_end-60) as warning_date,datediff(eci.contract_end,CONVERT(DATETIME,CONVERT(varchar(100), GETDATE(), 23),20)) as differenceDays,ppi.name,ppi.id_code,ppi.id_no,ppi.sex_code,ppi.birthday,ppi.hire_dept_oid," +
 				" ppi.person_type,ppi.person_code,ppa.his_position_name,o.org_name");
 		sql.append(" from yhc_pb_engage_contract_info eci,yhc_pb_person_info ppi,yhc_pb_person_attach ppa,yhc_ut_org o " +
 				" where eci.person_oid = ppi.person_oid and ppi.person_oid = ppa.person_oid and ppi.hire_dept_oid = o.org_oid");
 		sql.append(" and eci.status='1' and eci.contract_type <> '2'");
-		sql.append(" and datediff(eci.contract_end,str_to_date(date_format(now(),'%Y-%m-%d'),'%Y-%m-%d'))<=(select wci.warning_days from jhi_war_config_info wci where wci.item_code='"+ BizWarningConstants.BIZ_WARNING_YJHTDQ+"') ");
+		sql.append(" and datediff(eci.contract_end,CONVERT(DATETIME,CONVERT(varchar(100), GETDATE(), 23),20))<=(select wci.warning_days from jhi_war_config_info wci where wci.item_code='"+ BizWarningConstants.BIZ_WARNING_YJHTDQ+"') ");
 		final HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 //		sql.append(" and bw.system_id =:systemId");
 //		sqlParams.put("systemId", UserContext.getSystemId());
@@ -66,7 +66,7 @@ public class BizWarningForContractExtendQueryHelper
 //		}
 		if(StringUtils.isNotEmpty(ttb.getCondition().get("warningDays")))
 		{
-			sql.append(" and (eci.contract_end-str_to_date(date_format(now(),'%Y-%m-%d'),'%Y-%m-%d')) <=:warningDays ");
+			sql.append(" and (eci.contract_end-CONVERT(DATETIME,CONVERT(varchar(100), GETDATE(), 23),20)) <=:warningDays ");
 			sqlParams.put("warningDays", ttb.getCondition().get("warningDays"));
 		}
 		if(StringUtils.isNotEmpty(ttb.getCondition().get("name")))
@@ -90,12 +90,12 @@ public class BizWarningForContractExtendQueryHelper
 	public static long[] countBizWarningInfo(TableTagBean ttb) throws ServiceException
 	{
 		StringBuffer sql = new StringBuffer("select eci.person_oid,eci.contract_no,eci.contract_begin," +
-				" eci.contract_end,(eci.contract_end-60) as warning_date,datediff(eci.contract_end,str_to_date(date_format(now(),'%Y-%m-%d'),'%Y-%m-%d')) as difference,ppi.name,ppi.id_code,ppi.id_no,ppi.sex_code,ppi.birthday,ppi.hire_dept_oid," +
+				" eci.contract_end,(eci.contract_end-60) as warning_date,datediff(eci.contract_end,CONVERT(DATETIME,CONVERT(varchar(100), GETDATE(), 23),20)) as difference,ppi.name,ppi.id_code,ppi.id_no,ppi.sex_code,ppi.birthday,ppi.hire_dept_oid," +
 				" ppi.person_type,ppi.person_code,ppa.his_position_name,o.org_name");
 		sql.append(" from yhc_pb_engage_contract_info eci,yhc_pb_person_info ppi,yhc_pb_person_attach ppa,yhc_ut_org o " +
 				" where eci.person_oid = ppi.person_oid and ppi.person_oid = ppa.person_oid and ppi.hire_dept_oid = o.org_oid");
 		sql.append(" and eci.status='1' and eci.contract_type <> '2'");
-		sql.append(" and datediff(eci.contract_end,str_to_date(date_format(now(),'%Y-%m-%d'),'%Y-%m-%d'))<=(select wci.warning_days from jhi_war_config_info wci where wci.item_code='"+ BizWarningConstants.BIZ_WARNING_YJHTDQ+"') ");
+		sql.append(" and datediff(eci.contract_end,CONVERT(DATETIME,CONVERT(varchar(100), GETDATE(), 23),20))<=(select wci.warning_days from jhi_war_config_info wci where wci.item_code='"+ BizWarningConstants.BIZ_WARNING_YJHTDQ+"') ");
 		sql.append(" and ppi.HIRE_DEPT_OID in (select oa.org_oid from yhb_user_org_auth oa where oa.user_id = '").append(UserContext.getLoginUserID()).append("') ");
 		final HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 //		sql.append(" and bw.system_id =:systemId");
@@ -103,9 +103,9 @@ public class BizWarningForContractExtendQueryHelper
 		List<Object[]> list = DaoUtil.listWithSQLByCondition(sql.toString(), sqlParams, ttb.getPage(), ttb.getPageSize());
 		long[] countList = new long[4];
 		countList[0]=DaoUtil.countWithSQLByCondition("select count(*) from(" + sql+") t", sqlParams);
-		countList[1]=DaoUtil.countWithSQLByCondition("select count(*) from(" + sql+" and datediff(eci.contract_end,str_to_date(date_format(now(),'%Y-%m-%d'),'%Y-%m-%d')) <=10 ) t", sqlParams);
-		countList[2]=DaoUtil.countWithSQLByCondition("select count(*) from(" + sql+" and datediff(eci.contract_end,str_to_date(date_format(now(),'%Y-%m-%d'),'%Y-%m-%d')) >10 and (eci.contract_end-str_to_date(date_format(now(),'%Y-%m-%d'),'%Y-%m-%d')) <=30 ) t", sqlParams);
-		countList[3]=DaoUtil.countWithSQLByCondition("select count(*) from(" + sql+" and datediff(eci.contract_end,str_to_date(date_format(now(),'%Y-%m-%d'),'%Y-%m-%d')) >30 ) t", sqlParams);
+		countList[1]=DaoUtil.countWithSQLByCondition("select count(*) from(" + sql+" and datediff(eci.contract_end,CONVERT(DATETIME,CONVERT(varchar(100), GETDATE(), 23),20)) <=10 ) t", sqlParams);
+		countList[2]=DaoUtil.countWithSQLByCondition("select count(*) from(" + sql+" and datediff(eci.contract_end,CONVERT(DATETIME,CONVERT(varchar(100), GETDATE(), 23),20)) >10 and (eci.contract_end-CONVERT(DATETIME,CONVERT(varchar(100), GETDATE(), 23),20)) <=30 ) t", sqlParams);
+		countList[3]=DaoUtil.countWithSQLByCondition("select count(*) from(" + sql+" and datediff(eci.contract_end,CONVERT(DATETIME,CONVERT(varchar(100), GETDATE(), 23),20)) >30 ) t", sqlParams);
 		if(CollectionUtils.isEmpty(list))return null;
 		return countList;
 	}

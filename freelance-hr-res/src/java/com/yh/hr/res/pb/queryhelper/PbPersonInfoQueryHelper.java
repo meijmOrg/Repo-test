@@ -386,7 +386,7 @@ public class PbPersonInfoQueryHelper {
 		{
 			throw new ServiceException(null,"缺少查询条件!");
 		}
-		String hql = "from PbPersonInfo pi where pi.name='"+name+"' and date_format(pi.birthday,'%Y-%m-%d')='"+DateUtil.format(birthday, DateUtil.DATE_PATTERN_DEFAULT)+"'";
+		String hql = "from PbPersonInfo pi where pi.name='"+name+"' and CONVERT(varchar(100), pi.birthday, 23)='"+DateUtil.format(birthday, DateUtil.DATE_PATTERN_DEFAULT)+"'";
 		List<PbPersonInfo> list = DaoUtil.find(hql);
 		if(CollectionUtils.isNotEmpty(list)) {
 			return BeanHelper.copyProperties(list.get(0), PbPersonInfoDTO.class);

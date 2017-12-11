@@ -119,7 +119,7 @@ public class TechnicalTitleAgeStatisticsQueryHelper {
 		return dto;
 	}
 	private static StringBuffer buildSql(StringBuffer sql,String hisPositionLevel,String flag){
-		sql.append(" (select FLOOR((now()-jppi.birthday)/365.25) as age,jppi.sex_code,jppi.person_oid from yhc_pb_person_info jppi,yhc_pb_person_attach jppa where ");
+		sql.append(" (select FLOOR((getdate()-jppi.birthday)/365.25) as age,jppi.sex_code,jppi.person_oid from yhc_pb_person_info jppi,yhc_pb_person_attach jppa where ");
 		sql.append(" jppi.person_oid = jppa.person_oid and jppi.birthday is not null and jppi.person_status in ('"+DicConstants.YHRS0009_110+"','"+DicConstants.YHRS0009_120+"','"+DicConstants.YHRS0009_130+"','"+DicConstants.YHRS0009_300+"') and jppi.person_type in ('"+DicConstants.YHRS0010_01+"','"+DicConstants.YHRS0010_02+"','"+DicConstants.YHRS0010_03+"','"+DicConstants.YHRS0010_04+"') and jppa.his_position_type in ('"+DicConstants.YHRS0113_1+"','"+DicConstants.YHRS0113_2+"','"+DicConstants.YHRS0113_3+"','"+DicConstants.YHRS0113_4+"','"+DicConstants.YHRS0113_7+"') ");
 		if(StringUtils.isNotEmpty(flag)&&flag.equals("true")){
 			sql.append(" and jppa.prof_tech_level is null");

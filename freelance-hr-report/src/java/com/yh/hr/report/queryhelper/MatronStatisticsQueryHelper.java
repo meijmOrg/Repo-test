@@ -110,7 +110,7 @@ public class MatronStatisticsQueryHelper {
 		buildSql(sql, DicConstants.YHRS0126_3+","+DicConstants.YHRS0126_4, dto);
 		sql.append(" where t.sex_code = '"+DicConstants.YHRS0001_2+"') as kzrSex2Count, ");
 		//科主任 平均年龄
-		sql.append(" (select ROUND(avg(FLOOR((now()-t.birthday)/365.25)),1) from ");
+		sql.append(" (select ROUND(avg(FLOOR((getdate()-t.birthday)/365.25)),1) from ");
 		buildSql(sql, DicConstants.YHRS0126_3+","+DicConstants.YHRS0126_4, dto);
 		sql.append(" where t.birthday is not null) as kzrnlCount, ");
 		//护士长 正
@@ -174,7 +174,7 @@ public class MatronStatisticsQueryHelper {
 		buildSql(sql, DicConstants.YHRS0126_5+","+DicConstants.YHRS0126_6, dto);
 		sql.append(" where t.sex_code = '"+DicConstants.YHRS0001_2+"') as hszSex2Count, ");
 		//护士长 平均年龄
-		sql.append(" (select ROUND(avg(FLOOR((now()-t.birthday)/365.25)),1) from ");
+		sql.append(" (select ROUND(avg(FLOOR((getdate()-t.birthday)/365.25)),1) from ");
 		buildSql(sql, DicConstants.YHRS0126_5+","+DicConstants.YHRS0126_6, dto);
 		sql.append(" where t.birthday is not null) as hsznlCount ");
 		sql.append(" from dual");

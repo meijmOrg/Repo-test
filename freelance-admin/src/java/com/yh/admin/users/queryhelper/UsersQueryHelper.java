@@ -110,10 +110,10 @@ public class UsersQueryHelper {
 				/* 登陆时用户不在于系统挂钩 + */
 				// + "  and rl.system_id = :systemId "
 				+ " and usp.user_id = ? "
-				+ " and (u.effective_dt is null or u.effective_dt <= now()) "
-				+ " and (u.expired_date is null or u.expired_date >= now()) "
-				+ " and (usp.effective_date is null or usp.effective_date <= now()) "
-				+ " and (usp.expired_date is null or usp.expired_date >= now()) "
+				+ " and (u.effective_dt is null or u.effective_dt <= getdate()) "
+				+ " and (u.expired_date is null or u.expired_date >= getdate()) "
+				+ " and (usp.effective_date is null or usp.effective_date <= getdate()) "
+				+ " and (usp.expired_date is null or usp.expired_date >= getdate()) "
 				+ ")";
 
 		List<Object[]> list = DaoUtil.findWithSQL(sql, userId);

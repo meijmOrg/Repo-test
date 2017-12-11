@@ -31,8 +31,8 @@ public class GoOutPersonSelectQueryHelper {
 		hql.append(" jppi.HIRE_DEPT_OID, ");
 		hql.append(" jpgoi.GO_OUT_ADDRESS,");
 		
-		hql.append(" date_format(jpgoi.START_DATE, '%Y-%m-%d ') START_DATE,");
-		hql.append(" date_format(jpgoi.END_DATE, '%Y-%m-%d ') END_DATE,");
+		hql.append(" CONVERT(varchar(100), jpgoi.START_DATE, 23) START_DATE,");
+		hql.append(" CONVERT(varchar(100), jpgoi.END_DATE, 23) END_DATE,");
 		hql.append(" jpgoi.DAY_COUNT,");
 		hql.append(" jpgoi.BUDGET_FROM, ");
 		hql.append(" jpgoi.go_out_oid ");
