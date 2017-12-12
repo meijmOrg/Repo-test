@@ -114,7 +114,7 @@ public class VerPbPersonWorkbenchQueryHelper {
 		//执业资格等级
 		lsql.append("		,pa.QUALIFICATIONS_LEVEL_CODE");
 		//年龄
-		lsql.append(", (year(GETDATE())-year(p.birthday)-1) + ( RIGHT(CONVERT(varchar(100), p.birthday, 12),4) <= RIGHT(CONVERT(varchar(100), GETDATE(), 12),4) ) as AGE");
+		lsql.append(", (year(GETDATE())-year(p.birthday)-1) + case when (RIGHT(CONVERT(varchar(100), p.birthday, 12),4)<=RIGHT(CONVERT(varchar(100), GETdATE(), 12),4)) then 1 else 0 end  as AGE");
 		if (ttb.getPageSize() != 0) {
 			ttb.setTotal(DaoUtil.countWithSQLByCondition(new StringBuilder().append("select count(*) ").append(lsql).append(sql).toString(), params));
 		}

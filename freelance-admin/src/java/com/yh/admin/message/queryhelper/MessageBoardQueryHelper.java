@@ -19,7 +19,8 @@ public class MessageBoardQueryHelper {
 		StringBuilder hql = new StringBuilder();
         HashMap<String, Object> hqlParams = new HashMap<String, Object>();
         buildHQL(ttb.getCondition(), hql, hqlParams);
-        hql.append(" order by effDate desc");
+        String orderBy = " order by effDate desc";
+        //hql.append(" order by effDate desc");
         /*String order = ttb.getOrderBy();
         if (order != null) {
             if (ttb.getAsc()) {
@@ -28,7 +29,7 @@ public class MessageBoardQueryHelper {
                 hql.append(" order by " + order + " desc");
             }
         }*/
-        List<MessageBoardDto> list = BeanHelper.copyProperties(DaoUtil.listByCondition("select mb "+hql.toString(), hqlParams, ttb.getPage(), ttb.getPageSize()),MessageBoardDto.class);
+        List<MessageBoardDto> list = BeanHelper.copyProperties(DaoUtil.listByCondition("select mb "+hql.toString()+orderBy, hqlParams, ttb.getPage(), ttb.getPageSize()),MessageBoardDto.class);
         ttb.setList(list);
         ttb.setTotal(DaoUtil.countByCondition("select count(*)"+hql+"", hqlParams));
         return list;

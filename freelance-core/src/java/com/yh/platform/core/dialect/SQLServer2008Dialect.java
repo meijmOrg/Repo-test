@@ -15,7 +15,6 @@ public class SQLServer2008Dialect extends SQLServerDialect {
 	public SQLServer2008Dialect() {
 		super();
 		//重新注册hibernate的映射类型
-		//decimal or numeric -> big_decimal
 		registerHibernateType(Types.NVARCHAR, Hibernate.STRING.getName());
 	}
 }
