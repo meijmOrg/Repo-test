@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="projectInitializeFacade" parent="txnProxyParent">
+    <property name="target">
+       <bean class="com.yh.hr.info.projectinitialize.facade.ProjectInitializeFacade">
+        <property name="projectInitializeService">
+          <ref bean="projectInitializeService" />
+        </property>   
+      </bean>
+    </property>
+  </bean>
+  <bean id="projectInitializeService" class="com.yh.hr.info.projectinitialize.service.impl.ProjectInitializeServiceImpl" />
+</beans>

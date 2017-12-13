@@ -332,4 +332,24 @@ public class UsersFacade {
 	public UserRelationDTO getUserRelationDTOByRefOidAndRefType(Long refOid,String refType) throws ServiceException {
 		return usersService.getUserRelationDTOByRefOidAndRefType(refOid, refType);
 	}
+	
+	/**
+	 * 获取单位名称
+	 * @param 
+	 * @return unitName
+	 * @throws ServiceException
+	 */
+	public String getUnitName()throws ServiceException{
+		return usersService.getUnitName();
+	}
+	
+	/**
+	 * 获取licenseCode
+	 * @param 
+	 * @return licenseCode
+	 * @throws ServiceException
+	 */
+	public List<String> getLicenseCode()throws ServiceException {
+		return usersService.getLicenseCode();
+	}
 }

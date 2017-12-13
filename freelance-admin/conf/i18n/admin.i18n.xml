@@ -29,6 +29,12 @@
 	<entry key="errors.license.invalid">
 		<zh_CN>license已到期，请联系管理员！</zh_CN>
 	</entry>
+	<entry key="errors.license.isnull">
+		<zh_CN>单位无本系统操作权限，请联系管理员！</zh_CN>
+	</entry>
+	<entry key="errors.license.mismatching">
+		<zh_CN>单位名称和license不匹配，请联系管理员！</zh_CN>
+	</entry>
 	<!--========= oracle error message =================-->
 	<entry key="error.dao.common">
 		<zh_CN>数据库读写失败</zh_CN>

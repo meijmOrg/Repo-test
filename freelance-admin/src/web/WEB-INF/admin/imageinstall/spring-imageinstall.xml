@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="imageInstallFacade" parent="txnProxyParent">
+    <property name="target">
+       <bean class="com.yh.admin.imageinstall.facade.impl.ImageInstallFacadeImpl">
+        <property name="imageInstallService">
+          <ref bean="imageInstallService" />
+        </property>   
+      </bean>
+    </property>
+  </bean>
+  <bean id="imageInstallService" class="com.yh.admin.imageinstall.service.impl.ImageInstallServiceImpl" />
+</beans>

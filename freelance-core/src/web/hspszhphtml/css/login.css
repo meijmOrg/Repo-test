@@ -22,7 +22,7 @@
     margin: 0 auto;
     height: inherit;
     position: relative;
-    background: url("../images/copyright/lg-bg-img.png") no-repeat;
+    /* background: url("../images/copyright/lg-bg-img.png") no-repeat; */
     position: relative;
 }
 .lg-form-cont{

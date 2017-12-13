@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+	<form-beans>
+    <form-bean name="projectInitializeForm" type="com.yh.hr.info.projectinitialize.web.form.ProjectInitializeForm" />
+  </form-beans>
+	<action-mappings>
+	    <action path="/goCustomerInfoList"
+	            scope="request"
+	            type="com.yh.hr.info.projectinitialize.web.action.ProjectInitializeAction"
+	            parameter="method">
+	    	<description>跳转到项目初始化工作台</description>
+	      <forward name="success" path="/hrinfo/projectinitialize/projectinitialize_worktop.jsp" />
+	    </action>
+	    <action path="/listCustomerInfo"
+            scope="request"
+            type="com.yh.hr.info.projectinitialize.web.action.ProjectInitializeAction"
+            parameter="method">
+	    	<description>列出客户信息</description>
+    	</action>
+    	<action path="/goCustomerCreate"
+	            scope="request"
+	            name="projectInitializeForm"
+	            type="com.yh.hr.info.projectinitialize.web.action.ProjectInitializeAction"
+	            parameter="method">
+	    	<description>跳转到客户新增页面（启动配置）</description>
+	      <forward name="success" path="/hrinfo/projectinitialize/customer_create.jsp" />
+	    </action>
+	    <action path="/createCustomerInfo"
+	            scope="request"
+	            name="projectInitializeForm"
+	            type="com.yh.hr.info.projectinitialize.web.action.ProjectInitializeAction"
+	            parameter="method">
+	    	<description>客户新增（启动配置）</description>
+	    </action>
+	    <action path="/goCustomerUpdate"
+	            scope="request"
+	            name="projectInitializeForm"
+	            type="com.yh.hr.info.projectinitialize.web.action.ProjectInitializeAction"
+	            parameter="method">
+	    	<description>跳转到客户修改页面（修改配置）</description>
+	      <forward name="success" path="/hrinfo/projectinitialize/customer_update.jsp" />
+	    </action>
+	    <action path="/updateCustomerInfo"
+	            scope="request"
+	            name="projectInitializeForm"
+	            type="com.yh.hr.info.projectinitialize.web.action.ProjectInitializeAction"
+	            parameter="method">
+	    	<description>客户修改（修改配置）</description>
+	    </action>
+	</action-mappings>
+</struts-config>

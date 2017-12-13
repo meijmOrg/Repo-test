@@ -214,4 +214,24 @@ public class UsersService {
 	public UserRelationDTO getUserRelationDTOByUserId(String userId) throws ServiceException {
 		return BeanHelper.copyProperties(UsersQueryHelper.getUserRelationByUserId(userId), UserRelationDTO.class);
 	}
+	
+	/**
+	 * 获取单位名称
+	 * @param 
+	 * @return unitName
+	 * @throws ServiceException
+	 */
+	public String getUnitName()throws ServiceException{
+		return UsersQueryHelper.getUnitName();
+	}
+	
+	/**
+	 * 获取licenseCode
+	 * @param 
+	 * @return licenseCode
+	 * @throws ServiceException
+	 */
+	public List<String> getLicenseCode()throws ServiceException {
+		return UsersQueryHelper.getLicenseCode();
+	}
 }

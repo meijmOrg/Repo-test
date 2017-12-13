@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+	<form-beans>
+    <form-bean name="imageInstallForm" type="com.yh.admin.imageinstall.web.form.ImageInstallForm" />
+  </form-beans>
+	<action-mappings>
+	    <action path="/goImageInstall"
+	            scope="request"
+	            name="imageInstallForm"
+	            type="com.yh.admin.imageinstall.web.action.ImageInstallAction"
+	            parameter="method">
+	    	<description>跳转到系统外观设置页面</description>
+	      <forward name="success" path="/admin/imageinstall/image_install_page.jsp" />
+	    </action>
+	    <action path="/updateImageInstall"
+            scope="request"
+            name="imageInstallForm"
+            type="com.yh.admin.imageinstall.web.action.ImageInstallAction"
+            parameter="method">
+	    	<description>更新系统LOGO和BANNER</description>
+    	</action>
+	</action-mappings>
+</struts-config>

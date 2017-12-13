@@ -521,4 +521,39 @@ public class UsersQueryHelper {
 		String hql = "from UserRelation ur where ur.userId=?";
 		return DaoUtil.uniqueResult(hql, userId);
 	}
+	
+	/**
+	 * 获取单位名称
+	 * @param 
+	 * @return unitName
+	 * @throws ServiceException
+	 */
+	public static String getUnitName()
+			throws ServiceException {
+		List<String> list = DaoUtil
+				.findWithSQL("select yuu.unit_name from yhe_ub_unit yuu where 1=1 and yuu.unit_status ='2' ");
+		if (CollectionUtils.isEmpty(list)) {
+			return null;
+		} else {
+			String bd = list.get(0);
+			return bd;
+		}
+	}
+	
+	/**
+	 * 获取licenseCode
+	 * @param 
+	 * @return licenseCode
+	 * @throws ServiceException
+	 */
+	public static List<String> getLicenseCode()
+			throws ServiceException {
+		List<String> list = DaoUtil
+				.findWithSQL("select yci.license_code from yhc_customer_info yci where 1=1 and yci.start_status ='1' ");
+		if (CollectionUtils.isEmpty(list)) {
+			return null;
+		} else {
+			return list;
+		}
+	}
 }

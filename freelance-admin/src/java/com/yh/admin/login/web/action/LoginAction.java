@@ -34,6 +34,7 @@ import com.yh.admin.users.facade.UsersFacade;
 import com.yh.admin.util.AdminConstants;
 import com.yh.admin.util.EncryptUtil;
 import com.yh.admin.util.SystemConstants;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionErrors;
@@ -54,6 +55,7 @@ import com.yh.platform.core.constant.Constant;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.ConfigUtil;
 import com.yh.platform.core.util.CryptoUtil;
+import com.yh.platform.core.util.DESUtils;
 import com.yh.platform.core.util.DateUtil;
 import com.yh.platform.core.util.SpringBeanUtil;
 import com.yh.platform.core.web.UserContext;
@@ -121,6 +123,46 @@ public class LoginAction extends BaseAction
 				{
 					log.info("login safe set cookie maxage 0 ：" + request.getCookies()[i].getName());
 					request.getCookies()[i].setMaxAge(0);//让cookie过期
+				}
+			}
+			
+			//验证系统license和单位名称是否匹配
+			//如果为Y，则需要验证license，否则不需要验证
+			if("Y".equals(ConfigUtil.getProperty("isLicenseTrue")))
+			{
+				boolean isTrue = false;
+				String dUnitName = "";
+				String unitName = usersFacade.getUnitName();
+				List<String> licenseCodes = usersFacade.getLicenseCode();
+				if(CollectionUtils.isEmpty(licenseCodes)){
+					ActionMessages errors = new ActionMessages();
+					errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("errors.license.isnull"));
+					if (!errors.isEmpty())
+					{
+						saveErrors(request, errors);
+					}
+					return mapping.getInputForward();
+				}else{
+					for(String licenseCode : licenseCodes){
+						//用默认的key解密
+						String licenseStr = DESUtils.decrypt(licenseCode);
+						if(StringUtils.isNotEmpty(licenseStr)&&licenseStr.length()>8){
+							dUnitName = licenseStr.substring(0, licenseStr.length()-8);
+						}
+						if(dUnitName.equals(unitName)){
+							isTrue = true;
+						}
+					}
+				}
+				if(!isTrue)
+				{
+					ActionMessages errors = new ActionMessages();
+					errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("errors.license.mismatching"));
+					if (!errors.isEmpty())
+					{
+						saveErrors(request, errors);
+					}
+					return mapping.getInputForward();
 				}
 			}
 			
