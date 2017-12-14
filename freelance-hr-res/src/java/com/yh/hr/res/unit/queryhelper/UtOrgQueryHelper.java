@@ -86,8 +86,8 @@ public class UtOrgQueryHelper {
 		}
 		StringBuilder lsql = new StringBuilder();
 		lsql.append("select u.org_oid,");
-		lsql.append("       trim(u.org_name) as un," );
-		lsql.append("       trim(t.org_name) as unp" );
+		lsql.append("       ltrim(rtrim(u.org_name)) as un," );
+		lsql.append("       ltrim(rtrim(t.org_name)) as unp" );
 		
 		List<Object[]> list = null;
 		if(StringUtils.isNotEmpty(ttb.getCondition().get("pageNo")) && StringUtils.isNotEmpty(ttb.getCondition().get("pageSize")))

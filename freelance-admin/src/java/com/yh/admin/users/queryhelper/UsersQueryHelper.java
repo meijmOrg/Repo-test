@@ -302,9 +302,9 @@ public class UsersQueryHelper {
 					.append("select sp.system_position_oid, ")
 					.append("sp.system_position_name , ")
 					.append("sp.system_position_desc, ")
-					.append(" trim(r.role_name) as functionName, ")
+					.append(" ltrim(rtrim(r.role_name)) as functionName, ")
 					// 数据角色
-					.append(" trim(rr.role_name) as dataName, ")
+					.append(" ltrim(rtrim(rr.role_name)) as dataName, ")
 					// 功能角色
 					.append("   us.effective_date, ")
 					.append("  us.expired_date, ")

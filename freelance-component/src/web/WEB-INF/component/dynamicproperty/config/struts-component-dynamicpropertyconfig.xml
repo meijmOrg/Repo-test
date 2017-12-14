@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<action-mappings>
+		<action path="/goDynamicPropertyConfigUpdate"
+				type="com.yh.component.dynamicproperty.web.action.DynamicPropertyConfigAction"
+				scope="request"
+				parameter="method">
+			<description>跳转到功能字段配置页面</description>
+			<forward name="success" path="/component/dynamicproperty/config/dynamicpropertyconfig_list.jsp" />
+		</action>
+		<action path="/doDynamicPropertyAvailable"
+				name="dynamicPropertyForm"
+				scope="request"
+				type="com.yh.component.dynamicproperty.web.action.DynamicPropertyConfigAction"
+				parameter="method">
+				<description>启用/停用</description>
+		</action>
+		<!--跳转到 修改字段含义页面-->
+        <action path="/goUpdateDpDescription"
+				name="dynamicPropertyForm"
+				scope="request"
+				type="com.yh.component.dynamicproperty.web.action.DynamicPropertyConfigAction"
+				parameter="method">
+				<description>跳转到修改字段含义页面</description>
+				<forward name="success" path="/component/dynamicproperty/config/dpdescription_update.jsp"/>
+		</action>
+		<action path="/updateDpDescription"
+				name="dynamicPropertyForm"
+				scope="request"
+				type="com.yh.component.dynamicproperty.web.action.DynamicPropertyConfigAction"
+				parameter="method">
+				<description>修改字段含义</description>
+		</action>
+	</action-mappings>
+</struts-config>

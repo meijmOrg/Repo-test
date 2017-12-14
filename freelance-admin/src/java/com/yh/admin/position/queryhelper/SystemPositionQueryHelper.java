@@ -49,8 +49,8 @@ public class SystemPositionQueryHelper {
 		StringBuilder lsql = new StringBuilder();
 		lsql.append("select sp.system_position_name,");
 		lsql.append(" sp.system_position_desc," );
-		lsql.append(" trim(rr.role_name) as rrn," );
-		lsql.append(" trim(r.role_name) as r, " );
+		lsql.append(" ltrim(rtrim(rr.role_name)) as rrn," );
+		lsql.append(" ltrim(rtrim(r.role_name)) as r, " );
 		lsql.append(" sp.system_position_oid " );
 
 
@@ -179,8 +179,8 @@ public class SystemPositionQueryHelper {
 
 	public static SystemPositionDTO goViewPoistionRole(Long systemPositionOid) throws ServiceException {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select jsp.system_position_oid,jsp.system_position_name,jsp.system_position_desc,trim(jr.role_name) as functionRoleName,");
-		sql.append(" trim(jrr.role_name) as dataRoleName from YHB_SYSTEM_POSITION jsp 	left join yhb_roles jr on jr.role_id = jsp.function_role_id ");
+		sql.append("select jsp.system_position_oid,jsp.system_position_name,jsp.system_position_desc,ltrim(rtrim(jr.role_name)) as functionRoleName,");
+		sql.append(" ltrim(rtrim(jrr.role_name)) as dataRoleName from YHB_SYSTEM_POSITION jsp 	left join yhb_roles jr on jr.role_id = jsp.function_role_id ");
 		sql.append(" left join yhb_roles jrr on jrr.role_id = jsp.data_role_id");
 		sql.append(" where jsp.system_position_oid = ?");
 		List<Object[]> list=DaoUtil.findWithSQL(sql.toString(), systemPositionOid);

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+    	<form-bean name="workflowConfigurationForm"	type="com.yh.component.workflow.web.form.WorkflowConfigurationForm" />
+    </form-beans>
+	<action-mappings>
+		<action path="/goWorkflowConfigurationUpdate"
+				type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+				scope="request"
+				parameter="method">
+			<description>跳转到模板管理页面</description>
+			<forward name="success" path="/component/workflow/configuration/workflowtemplet_list.jsp" />
+		</action>
+		<action path="/goViewWorkflowTemplet"
+				name="workflowConfigurationForm"
+				type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+				scope="request"
+				parameter="method">
+			<description>查看模板信息</description>
+			<forward name="success" path="/component/workflow/configuration/workflowtemplet_right.jsp" />
+		</action>
+		<action path="/listWorkflowTemplet"
+				type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+				scope="request"
+				parameter="method">
+			<description>获取模板列表</description>
+		</action>
+		<action path="/goInsertWorkflowTemplet"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request"
+			name="workflowConfigurationForm"
+			validate="false"
+			input="/component/workflow/configuration/workflowtemplet_list.jsp">
+			<description>跳转到模板信息新增页面</description>
+			<forward name="success" path="/component/workflow/configuration/workflowtemplet_create.jsp"/>
+		</action>
+		<action path="/insertWorkflowTemplet" 
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request"
+			name="workflowConfigurationForm"
+			validate="true">
+			<description>新增模板信息</description>
+		</action>
+		<action path="/goUpdateWorkflowTemplet"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request" 
+			name="workflowConfigurationForm"
+			input="/component/workflow/configuration/workflowtemplet_list.jsp"
+			validate="false">
+			<description>跳转到模板信息修改页面</description>
+			<forward name="success" path="/component/workflow/configuration/workflowtemplet_update.jsp"/>
+		</action>
+		<action path="/updateWorkflowTemplet"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method"
+			scope="request"
+			name="workflowConfigurationForm"
+			validate="true">
+			<description>修改模板信息</description>
+		</action>
+		<action path="/deleteWorkflowTemplet"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request" 
+			name="workflowConfigurationForm"
+			validate="false">
+			<description>删除模板记录</description>
+		</action>
+		<action path="/goSelectOrgForCreateFlow"
+				type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+				scope="request"
+				parameter="method">
+			<description>跳转到新建流程-选择部门</description>
+			<!--<forward name="success" path="/component/workflow/configuration/workflowactivity_selectorg.jsp" />-->
+		</action>
+		<action path="/goCreateWorkflowBaseInfo"
+				type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+				scope="request"
+				parameter="method">
+			<description>跳转到新建流程</description>
+			<forward name="success" path="/component/workflow/configuration/workflow_activity_rule_main.jsp" />
+		</action>
+		<action path="/goUpdateWorkflowBaseInfo"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request" 
+			name="workflowConfigurationForm"
+			input="/component/workflow/configuration/workflow_activity_rule_main.jsp"
+			validate="false">
+			<description>跳转到流程信息修改页面</description>
+			<forward name="success" path="/component/workflow/configuration/workflow_activity_rule_main.jsp"/>
+		</action>
+		<action path="/updateWorkflowBaseInfo"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method"
+			scope="request"
+			name="workflowConfigurationForm"
+			validate="true">
+			<description>修改流程信息</description>
+		</action>
+		<action path="/deleteWorkflowBaseInfo"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request" 
+			name="workflowConfigurationForm"
+			validate="false">
+			<description>删除流程记录</description>
+		</action>
+		<action path="/goInsertWorkflowActivity"
+				type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+				scope="request"
+				parameter="method">
+			<description>跳转到新建活动</description>
+			<forward name="success" path="/component/workflow/configuration/workflowactivity_create.jsp" />
+		</action>
+		<action path="/insertWorkflowActivity" 
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request"
+			name="workflowActivityForm"
+			validate="true">
+			<description>新增活动信息</description>
+		</action>
+		<action path="/goUpdateWorkflowActivity"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request" 
+			name="workflowActivityForm"
+			input="/component/workflow/configuration/workflowactivity_update.jsp"
+			validate="false">
+			<description>跳转到活动信息修改页面</description>
+			<forward name="success" path="/component/workflow/configuration/workflowactivity_update.jsp"/>
+		</action>
+		<action path="/updateWorkflowActivity"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method"
+			scope="request"
+			name="workflowActivityForm"
+			validate="true">
+			<description>修改活动信息</description>
+		</action>
+		<action path="/deleteWorkflowActivity"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request" 
+			name="workflowActivityForm"
+			validate="false">
+			<description>删除活动记录</description>
+		</action>
+		<action path="/goInsertWorkflowRule"
+				type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+				scope="request"
+				parameter="method">
+			<description>跳转到新建规则</description>
+			<forward name="success" path="/component/workflow/configuration/workflowrule_create.jsp" />
+		</action>
+		<action path="/insertWorkflowRule" 
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request"
+			name="workflowRuleForm"
+			validate="true">
+			<description>新增规则信息</description>
+		</action>
+		<action path="/goUpdateWorkflowRule"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request" 
+			name="workflowRuleForm"
+			input="/component/workflow/configuration/workflowrule_update.jsp"
+			validate="false">
+			<description>跳转到规则信息修改页面</description>
+			<forward name="success" path="/component/workflow/configuration/workflowrule_update.jsp"/>
+		</action>
+		<action path="/updateWorkflowRule"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method"
+			scope="request"
+			name="workflowRuleForm"
+			validate="true">
+			<description>修改规则信息</description>
+		</action>
+		<action path="/deleteWorkflowRule"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method" 
+			scope="request" 
+			name="workflowRuleForm"
+			validate="false">
+			<description>删除规则记录</description>
+		</action>
+	</action-mappings>
+</struts-config>

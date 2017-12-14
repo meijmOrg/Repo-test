@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+    	<form-bean name="dynamicPropertyForm"	type="com.yh.component.dynamicproperty.web.form.DynamicPropertyForm" />
+    </form-beans>
+	<action-mappings>
+		<action path="/goDynamicPropertyUpdate"
+				type="com.yh.component.dynamicproperty.web.action.DynamicPropertyAction"
+				scope="request"
+				parameter="method">
+			<description>跳转到动态字段控制页面</description>
+			<forward name="success" path="/component/dynamicproperty/dynamicproperty_list.jsp" />
+		</action>
+		<action path="/goToPropertyList" 
+                parameter="method" 
+                type="com.yh.component.dynamicproperty.web.action.DynamicPropertyAction"
+                validate="false">
+            <forward name="TABLE" path="/component/dynamicproperty/tableproperty_viewport.jsp" />
+            <forward name="DYNAMIC" path="/component/dynamicproperty/dynamicproperty_viewport.jsp" />
+        </action>			
+        <action path="/getPropertyList" 
+                parameter="method" 
+                type="com.yh.component.dynamicproperty.web.action.DynamicPropertyAction"
+                validate="false">
+        </action>	
+        <!--跳转到 添加到字段管理页面-->
+        <action path="/goCreateDynamicProperty"
+				name="dynamicPropertyForm"
+				scope="request"
+				type="com.yh.component.dynamicproperty.web.action.DynamicPropertyAction"
+				parameter="method">
+				<description>跳转到添加到字段管理页面</description>
+				<forward name="success" path="/component/dynamicproperty/dynamicproperty_create.jsp"/>
+		</action>
+		<action path="/createDynamicProperty"
+				name="dynamicPropertyForm"
+				scope="request"
+				type="com.yh.component.dynamicproperty.web.action.DynamicPropertyAction"
+				parameter="method">
+				<description>新增动态字段</description>
+		</action>
+		<action path="/deleteDynamicProperty"
+				name="dynamicPropertyForm"
+				scope="request"
+				type="com.yh.component.dynamicproperty.web.action.DynamicPropertyAction"
+				parameter="method">
+				<description>删除动态字段</description>
+		</action>
+	</action-mappings>
+</struts-config>

@@ -129,11 +129,11 @@ public class UtUnitQueryHelper {
 		}
 		StringBuilder lsql = new StringBuilder();
 		lsql.append("select u.unit_oid,");
-		lsql.append("       trim(u.unit_name) as un," );
+		lsql.append("       ltrim(rtrim(u.unit_name)) as un," );
 		lsql.append("       u.unit_kind," );
 		lsql.append("       u.unit_category_code," );
 		lsql.append("       u.unit_area_code," );
-		lsql.append("       trim(t.unit_name) as unp," );
+		lsql.append("       ltrim(rtrim(t.unit_name)) as unp," );
 		lsql.append("       u.unit_code" );
 		/*return BeanHelper.copyProperties(DaoUtil.listByCondition(
 				new StringBuilder().append(hql).append(" order by u.orderOfAll, u.unitOid").toString(), params, ttb.getPage(), ttb.getPageSize()), UtUnitDTO.class);*/
