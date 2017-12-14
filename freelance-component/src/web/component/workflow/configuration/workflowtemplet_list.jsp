@@ -69,24 +69,24 @@ $(document).ready(function() {
 			checkbox: true,
 			singleCheck: true,
 			columns: [
-				{header:'模板名称', field:'templetName', width:150,render:function(record, rowIndex, row){
+				{header:'模板名称', field:'templateName', width:150,render:function(record, rowIndex, row){
 					var records = worktop.grid.selectModel.getSelectRows();
 					if(records.length == 0 && rowIndex.index == 0){
 						var row = this.tbody.find('tr[rowIndex='+rowIndex.index+']');
 						row.addClass('selected').find('input.cbm').prop('checked',true);
-						$("#right_wfc").load('goViewWorkflowTemplet.do?method=goViewWorkflowTemplet',{"templetId":rowIndex.data.templetId});
+						$("#right_wfc").load('goViewWorkflowTemplet.do?method=goViewWorkflowTemplet',{"templetId":rowIndex.data.templateId});
 						}
 					return record;
 					}},
-				{header:'模板编码', field:'templetCode', width:150},
-				{header:'模板分类', field:'templetType', width:150}
+				{header:'模板编码', field:'templateCode', width:150},
+				{header:'模板分类', field:'templateType', width:150}
 			]
 		}
 	]);
 	$(worktop.grid.selectModel.selectRow).click(function(){
 		var records = worktop.grid.selectModel.getSelectRows();
 		if(records.length == 1){
-			$("#right_wfc").load('goViewWorkflowTemplet.do?method=goViewWorkflowTemplet',{"templetId":records[0].data.templetId});
+			$("#right_wfc").load('goViewWorkflowTemplet.do?method=goViewWorkflowTemplet',{"templetId":records[0].data.templateId});
 			}
 	});
 	$(window).resize(function(){
@@ -106,7 +106,7 @@ function goback(){
 function updateTemplet(){
 	var records = worktop.grid.selectModel.getSelectRows();
 	if(records.length == 1){
-		Widget.openContent("goUpdateWorkflowTemplet.do?method=goUpdateTemplet&templetId="+records[0].data.templetId,function(){
+		Widget.openContent("goUpdateWorkflowTemplet.do?method=goUpdateTemplet&templetId="+records[0].data.templateId,function(){
 			worktop.grid.store.load({
 				params: {start:0, limit: worktop.grid.page.limit}
 			});
@@ -116,7 +116,7 @@ function updateTemplet(){
 function deleteTemplet(){
 	var records = worktop.grid.selectModel.getSelectRows();
 	if(records.length == 1){
-		$.get("deleteWorkflowTemplet.do?method=deleteTemplet&templetId="+records[0].data.templetId,function(data){
+		$.get("deleteWorkflowTemplet.do?method=deleteTemplet&templetId="+records[0].data.templateId,function(data){
 			if (data.message) {
 				MessageBox.alert('提示', data.message, function(){
 					worktop.grid.store.load({

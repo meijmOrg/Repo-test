@@ -40,7 +40,7 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 	 * (non-Javadoc)
 	 * @see com.yh.component.workflow.service.WorkflowConfigurationService#get(java.lang.Long)
 	 */
-	public WorkflowConfigurationDTO getTempletInfo(Long templetId) throws ServiceException {
+	public WorkflowConfigurationDTO getTempletInfo(String templetId) throws ServiceException {
 		// TODO Auto-generated method stub
 		WorkflowConfigurationDTO dto = new WorkflowConfigurationDTO();
 		//获取模板信息
@@ -55,7 +55,7 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 	 * (non-Javadoc)
 	 * @see com.yh.component.workflow.service.WorkflowConfigurationService#getBaseFlowInfo(java.lang.Long)
 	 */
-	public WorkflowConfigurationDTO getBaseFlowInfo(Long baseInfoId) throws ServiceException {
+	public WorkflowConfigurationDTO getBaseFlowInfo(String baseInfoId) throws ServiceException {
 		// TODO Auto-generated method stub
 		WorkflowConfigurationDTO dto = new WorkflowConfigurationDTO();
 		//根据流程Id获取流程信息yhf_flow_base_info
@@ -103,7 +103,7 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 	 * (non-Javadoc)
 	 * @see com.yh.component.workflow.service.WorkflowConfigurationService#delete(java.lang.Long)
 	 */
-	public void deleteTemplet(Long templetId) throws ServiceException {
+	public void deleteTemplet(String templetId) throws ServiceException {
 		// TODO Auto-generated method stub
 		FileTemplate bo=DaoUtil.get(FileTemplate.class, templetId);
 		if(bo!=null){

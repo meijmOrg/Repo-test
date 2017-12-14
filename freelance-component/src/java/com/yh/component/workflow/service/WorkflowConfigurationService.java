@@ -30,14 +30,14 @@ public interface WorkflowConfigurationService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	WorkflowConfigurationDTO getTempletInfo(Long templetId) throws ServiceException;
+	WorkflowConfigurationDTO getTempletInfo(String templetId) throws ServiceException;
 	/**
 	 * 根据流程ID获取流程信息
 	 * @param baseInfoId
 	 * @return
 	 * @throws ServiceException
 	 */
-	WorkflowConfigurationDTO getBaseFlowInfo(Long baseInfoId) throws ServiceException;
+	WorkflowConfigurationDTO getBaseFlowInfo(String baseInfoId) throws ServiceException;
 	/**
 	 * 获取部门信息
 	 * @return
@@ -61,7 +61,7 @@ public interface WorkflowConfigurationService {
 	 * @param templetId
 	 * @throws ServiceException
 	 */
-	void deleteTemplet(Long templetId)throws ServiceException;
+	void deleteTemplet(String templetId)throws ServiceException;
 	/**
 	 * 修改流程信息
 	 * @param workflowConfigurationDto

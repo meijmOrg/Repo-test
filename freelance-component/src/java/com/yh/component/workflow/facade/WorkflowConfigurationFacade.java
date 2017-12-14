@@ -38,7 +38,7 @@ public class WorkflowConfigurationFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public WorkflowConfigurationDTO getTempletInfo(Long templetId) throws ServiceException{
+	public WorkflowConfigurationDTO getTempletInfo(String templetId) throws ServiceException{
 		// TODO Auto-generated method stub
 		return workflowConfigurationService.getTempletInfo(templetId);
 	}
@@ -48,7 +48,7 @@ public class WorkflowConfigurationFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public WorkflowConfigurationDTO getBaseFlowInfo(Long baseInfoId) throws ServiceException{
+	public WorkflowConfigurationDTO getBaseFlowInfo(String baseInfoId) throws ServiceException{
 		// TODO Auto-generated method stub
 		return workflowConfigurationService.getBaseFlowInfo(baseInfoId);
 	}
@@ -66,7 +66,7 @@ public class WorkflowConfigurationFacade {
 	 * @param templetId
 	 * @throws ServiceException
 	 */
-	public void deleteTemplet(Long templetId) throws ServiceException{
+	public void deleteTemplet(String templetId) throws ServiceException{
 		// TODO Auto-generated method stub
 		workflowConfigurationService.deleteTemplet(templetId);
 		

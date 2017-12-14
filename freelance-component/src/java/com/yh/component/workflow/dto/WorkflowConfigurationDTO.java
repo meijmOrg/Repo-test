@@ -37,6 +37,8 @@ public class WorkflowConfigurationDTO {
 	private java.lang.String    flowModifyUserName;// 流程最近修改人姓名
 	private java.lang.String    flowModifyUserID;// 流程最近修改人 ID
 	private java.util.Date    	flowModifyDate;// 流程最近修改时间
+	
+	private java.lang.Long 		tfForbidden;//停用Or启用，默认启用，用于后期扩展
 	private List<WorkflowBaseInfoDTO> baseInfoList = new ArrayList<WorkflowBaseInfoDTO>();
 	private List<WorkflowActivityDTO> activityList = new ArrayList<WorkflowActivityDTO>();
 	private List<WorkflowRuleDTO> ruleList = new ArrayList<WorkflowRuleDTO>();
@@ -213,6 +215,12 @@ public class WorkflowConfigurationDTO {
 	}
 	public void setRuleList(List<WorkflowRuleDTO> ruleList) {
 		this.ruleList = ruleList;
+	}
+	public java.lang.Long getTfForbidden() {
+		return tfForbidden;
+	}
+	public void setTfForbidden(java.lang.Long tfForbidden) {
+		this.tfForbidden = tfForbidden;
 	}
 
 }

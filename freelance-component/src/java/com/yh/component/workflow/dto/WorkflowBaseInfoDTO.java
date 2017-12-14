@@ -17,6 +17,9 @@ public class WorkflowBaseInfoDTO {
 	private java.lang.String    flowModifyUserName;// 流程最近修改人姓名
 	private java.lang.String    flowModifyUserID;// 流程最近修改人 ID
 	private java.util.Date    	flowModifyDate;// 流程最近修改时间
+	
+	private java.lang.String	templateId;	//模板ID	
+	private java.lang.Long 		tfForbidden;//停用Or启用，默认启用，用于后期扩展
 	public java.lang.String getFlowId() {
 		return flowId;
 	}
@@ -82,6 +85,18 @@ public class WorkflowBaseInfoDTO {
 	}
 	public void setFlowModifyDate(java.util.Date flowModifyDate) {
 		this.flowModifyDate = flowModifyDate;
+	}
+	public java.lang.String getTemplateId() {
+		return templateId;
+	}
+	public void setTemplateId(java.lang.String templateId) {
+		this.templateId = templateId;
+	}
+	public java.lang.Long getTfForbidden() {
+		return tfForbidden;
+	}
+	public void setTfForbidden(java.lang.Long tfForbidden) {
+		this.tfForbidden = tfForbidden;
 	}
 
 }

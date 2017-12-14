@@ -101,7 +101,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 			String templetId=request.getParameter("templetId");
 			if(StringUtils.isNotEmpty(templetId)){
 				//获取模板信息和流程信息
-				WorkflowConfigurationDTO workflowConfigurationDto=workflowConfigurationFacade.getTempletInfo(Long.valueOf(templetId));
+				WorkflowConfigurationDTO workflowConfigurationDto=workflowConfigurationFacade.getTempletInfo(templetId);
 				BeanHelper.copyProperties(workflowConfigurationDto, workflowConfigurationForm);
 				return mapping.findForward("success");
 			}else{
@@ -173,7 +173,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 			{
 				throw new ServiceException(null, "templetId is null");
 			}
-			WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getTempletInfo(NumberUtils.longValue(templetId));
+			WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getTempletInfo(templetId);
 			if(null != workflowConfigurationDto)
 			{
 				WorkflowConfigurationForm workflowConfigurationForm = BeanHelper.copyProperties(workflowConfigurationDto, WorkflowConfigurationForm.class);
@@ -212,7 +212,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 			{
 				throw new ServiceException(null, "templetId is null");
 			}
-			WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getTempletInfo(NumberUtils.longValue(templetId));
+			WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getTempletInfo(templetId);
 			if(null == workflowConfigurationDto)
 			{
 				throw new ServiceException(null, "查询不到相关信息");
@@ -248,7 +248,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 			{
 				throw new ServiceException(null, "templetId is null");
 			}
-			workflowConfigurationFacade.deleteTemplet(NumberUtils.longValue(templetId));
+			workflowConfigurationFacade.deleteTemplet(templetId);
 			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
 		}
 		catch(Exception se)
@@ -278,7 +278,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 		
 		if(StringUtils.isNotEmpty(baseInfoId)){
 			//修改
-			workflowConfigurationDto=workflowConfigurationFacade.getBaseFlowInfo(Long.valueOf(baseInfoId));
+			workflowConfigurationDto=workflowConfigurationFacade.getBaseFlowInfo(baseInfoId);
 		}else{
 			//新增
 			//获取默认的活动（启动，结束？）与规则
@@ -311,7 +311,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 			{
 				throw new ServiceException(null, "baseInfoId is null");
 			}
-			WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getBaseFlowInfo(NumberUtils.longValue(baseInfoId));
+			WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getBaseFlowInfo(baseInfoId);
 			if(null != workflowConfigurationDto)
 			{
 				//WorkflowConfigurationForm workflowConfigurationForm = BeanHelper.copyProperties(workflowConfigurationDto, WorkflowConfigurationForm.class);
@@ -350,7 +350,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 			{
 				throw new ServiceException(null, "baseInfoId is null");
 			}
-			WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getBaseFlowInfo(NumberUtils.longValue(baseInfoId));
+			WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getBaseFlowInfo(baseInfoId);
 			if(null == workflowConfigurationDto)
 			{
 				throw new ServiceException(null, "查询不到相关信息");

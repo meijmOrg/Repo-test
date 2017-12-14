@@ -34,13 +34,13 @@ public class WorkflowConfigurationQueryHelper {
 	 */
 	public static List<JSONObject> listWorkflowTemplet(TableTagBean ttb) throws ServiceException{
 		Map<String,Object> params = new HashMap<String,Object>();
-		String sql = "select yft.templet_id,yft.templet_name,yft.templet_code,yft.templet_Type,yft.flow_process_page,yft.synergy_process_page,yft.document_edit_page,yft.document_detail_page,yft.document_print_page from yhf_flow_templet yft";
+		String sql = "select yft.template_Id,yft.template_Name,yft.template_Code,yft.template_Is_Universal,yft.template_Type,yft.template_Create_Page,yft.template_Edit_Page,yft.template_Info_Page,yft.template_Flow_Page,yft.template_Report_Page,yft.template_Create_Date,yft.template_Create_User_Name,yft.template_Modify_Date,yft.template_Modify_User_Name,yft.template_Description from yhf_file_template yft";
 		if (ttb.getPageSize() != 0) {
 			ttb.setTotal(DaoUtil.countWithSQLByCondition((new StringBuilder().append("select count(*) from (").append(sql).append(") as total").toString()), params));
 		}
 		List<Object[]> list = DaoUtil.listWithSQLByCondition(sql, params, ttb.getPage(), ttb.getPageSize());
 		return buildJSON(list);
-	}
+	}  
 	/**
 	 * object to JSONObject
 	 * @param list
@@ -53,15 +53,21 @@ public class WorkflowConfigurationQueryHelper {
 		List<JSONObject> jsonList = new ArrayList<JSONObject>();
 		for(Object[] obj:list){
 			JSONObject json = new JSONObject();
-			json.put("templetId", obj[0]==null?"":obj[0].toString());
-			json.put("templetName", obj[1]==null?"":obj[1].toString());
-			json.put("templetCode", obj[2]==null?"":obj[2].toString());
-			json.put("templetType", obj[3]==null?"":obj[3].toString());
-			json.put("flowProcessPage", obj[4]==null?"":obj[4].toString());//流程处理页面
-			json.put("synergyProcessPage", obj[5]==null?"":obj[5].toString());//协同处理页面
-			json.put("documentEditPage", obj[6]==null?"":obj[6].toString());//文档编辑页面
-			json.put("documentDetailPage", obj[7]==null?"":obj[7].toString());//文档详细页面
-			json.put("documentPrintPage", obj[8]==null?"":obj[8].toString());//文档打印页面
+			json.put("templateId", obj[0]==null?"":obj[0].toString());
+			json.put("templateName", obj[1]==null?"":obj[1].toString());	//模板名称	
+			json.put("templateCode", obj[2]==null?"":obj[2].toString());//编码
+			json.put("templateIsUniversal", obj[3]==null?"":obj[3].toString());//是否通用模板
+			json.put("templateType", obj[4]==null?"":obj[4].toString());//模板类别
+			json.put("templateCreatePage", obj[5]==null?"":obj[5].toString());//创建页面
+			json.put("templateEditPage", obj[6]==null?"":obj[6].toString());//编辑页面
+			json.put("templateInfoPage", obj[7]==null?"":obj[7].toString());//详细页面
+			json.put("templateFlowPage", obj[8]==null?"":obj[8].toString());//流程页面
+			json.put("templateReportPage", obj[9]==null?"":obj[9].toString());//报表页面
+			json.put("templateCreateDate", obj[10]==null?"":obj[10].toString());//创建时间
+			json.put("templateCreateUserName", obj[11]==null?"":obj[11].toString());//创建人
+			json.put("templateModifyDate", obj[12]==null?"":obj[12].toString());//修改时间
+			json.put("templateModifyUserName", obj[13]==null?"":obj[13].toString());//修改人
+			json.put("templateDescription", obj[14]==null?"":obj[14].toString());//模板描述
 			jsonList.add(json);
 		}
 		
@@ -73,9 +79,9 @@ public class WorkflowConfigurationQueryHelper {
 	 * @return
 	 * @throws DataAccessFailureException
 	 */
-	public static List<WorkflowBaseInfoDTO> listFlowBaseInfo(Long templetId) throws DataAccessFailureException{
+	public static List<WorkflowBaseInfoDTO> listFlowBaseInfo(String templetId) throws DataAccessFailureException{
 		Map<String,Object> params = new HashMap<String,Object>();
-		StringBuffer hql = new StringBuffer("from WorkflowBaseInfo yfbi where yfbi.templetId = '"+templetId+"'");
+		StringBuffer hql = new StringBuffer("from com.yh.component.workflow.bo.Flow f,TemplateFlow tf where tf.flowId = f.flowId and tf.templateId = '"+templetId+"'");
 		//流程排序
 		//hql.append(" order by	");
 		List<WorkflowBaseInfoDTO> list = DaoUtil.listByCondition(hql.toString(), params, 0, 0);
@@ -87,9 +93,9 @@ public class WorkflowConfigurationQueryHelper {
 	 * @return
 	 * @throws DataAccessFailureException
 	 */
-	public static List<WorkflowActivityDTO> listFlowActivity(Long baseInfoId) throws DataAccessFailureException{
+	public static List<WorkflowActivityDTO> listFlowActivity(String baseInfoId) throws DataAccessFailureException{
 		Map<String,Object> params = new HashMap<String,Object>();
-		StringBuffer hql = new StringBuffer("from WorkflowActivity yfa where yfa.baseInfoId = '"+baseInfoId+"'");
+		StringBuffer hql = new StringBuffer("from FlowActivity fa where fa.flowId = '"+baseInfoId+"'");
 		//活动排序
 		//hql.append(" order by	");
 		List<WorkflowActivityDTO> list = DaoUtil.listByCondition(hql.toString(), params, 0, 0);
@@ -101,9 +107,9 @@ public class WorkflowConfigurationQueryHelper {
 	 * @return
 	 * @throws DataAccessFailureException
 	 */
-	public static List<WorkflowRuleDTO> listFlowRule(Long baseInfoId) throws DataAccessFailureException{
+	public static List<WorkflowRuleDTO> listFlowRule(String baseInfoId) throws DataAccessFailureException{
 		Map<String,Object> params = new HashMap<String,Object>();
-		StringBuffer hql =new StringBuffer("from WorkflowRule yfu where yfu.baseInfoId = '"+baseInfoId+"'");
+		StringBuffer hql =new StringBuffer("from FlowRule fu where fu.flowId = '"+baseInfoId+"'");
 		//规则排序
 		//hql.append(" order by	");
 		List<WorkflowRuleDTO> list = DaoUtil.listByCondition(hql.toString(), params, 0, 0);
