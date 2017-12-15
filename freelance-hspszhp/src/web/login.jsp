@@ -21,11 +21,13 @@
 </head>
 <body class="main-body">
     <div class="lg-title">
-        <img src="hspszhphtml/images/copyright/logo_login.png"/>
+        <!-- <img src="hspszhphtml/images/copyright/logo_login.png"/> -->
+        <img src="<%=request.getContextPath() %>/admin/imageinstall/image_view.jsp?systemCode=<%=com.yh.admin.imageinstall.queryhelper.ImageInstallQueryHelper.getSystemCode()%>&flag=logo&_<%=new java.util.Random().nextInt(1000) %>" alt="图片" width="100px;"/>&nbsp;
     </div>
 
     <div class="lg-banner">
         <div class="lg-container">
+        <img style="width:500px;" src="<%=request.getContextPath() %>/admin/imageinstall/image_view.jsp?systemCode=<%=com.yh.admin.imageinstall.queryhelper.ImageInstallQueryHelper.getSystemCode()%>&flag=banner&_<%=new java.util.Random().nextInt(1000) %>" alt="图片" width="100px;"/>&nbsp;
             <div class="lg-ad-img"></div>
             <div class="lg-form-cont">
               <h2 class="lg-form-title">中国领先的医疗行业人事管理软件服务供应商</h2>
