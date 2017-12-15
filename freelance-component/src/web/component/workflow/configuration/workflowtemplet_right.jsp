@@ -194,7 +194,7 @@
     border: 1px solid #edf4fd;
 }
 .supplier-info li.blue:after{
-    content: '鈭�;
+    content: '鈭�';
     float: right;
     position: absolute;
     right: 6px;
@@ -219,7 +219,7 @@
 <script type="text/javascript" src="component/workflow/configuration/js/selectOrgForCreateFlow.js"></script>
 <script type="text/javascript">
 function createActivitySelectOrg(){
-	var templetId = '${workflowConfigurationForm.templetId}';
+	var templetId = '${workflowConfigurationForm.templateId}';
 		  Widget.openContent("goCreateActivitySelectOrg.do?method=goCreateActivitySelectOrg&templetId="+templetId,
 				function(){
 			 		$("#right_wfc").load('goViewWorkflowConfiguration.do?method=goViewWorkflowConfiguration',{"templetId":templetId});
@@ -254,16 +254,16 @@ function deleteFlow(baseInfoId){
             		<dl>
             			<dt>模板名称</dt>
             			<dd>
-            				<label title="${workflowConfigurationForm.templetName }"> 
-            				${workflowConfigurationForm.templetName }
+            				<label title="${workflowConfigurationForm.templateName }"> 
+            				${workflowConfigurationForm.templateName }&nbsp;
 	                      	</label>
             			</dd>
             		</dl>
             		<dl>
             			<dt>模板编码</dt>
             			<dd>
-            				<label title="${workflowConfigurationForm.templetCode }"> 
-            				${workflowConfigurationForm.templetCode }
+            				<label title="${workflowConfigurationForm.templateCode }"> 
+            				${workflowConfigurationForm.templateCode }&nbsp;
 	                      	</label>
             			</dd>
             		</dl>
@@ -272,16 +272,16 @@ function deleteFlow(baseInfoId){
             		<dl>
             			<dt>模板分类</dt>
             			<dd>
-            				<label title="${workflowConfigurationForm.templetType }"> 
-            				${workflowConfigurationForm.templetType }
+            				<label title="${workflowConfigurationForm.templateType }"> 
+            				${workflowConfigurationForm.templateType }&nbsp;
 	                      	</label>
             			</dd>
             		</dl>
             		<dl>
             			<dt>新增页面</dt>
             			<dd>
-            				<label title="${workflowConfigurationForm.templetType }"> 
-            				${workflowConfigurationForm.templetType }
+            				<label title="${workflowConfigurationForm.templateCreatePage }"> 
+            				${workflowConfigurationForm.templateCreatePage }&nbsp;
 	                      	</label>
             			</dd>
             		</dl>
@@ -290,16 +290,16 @@ function deleteFlow(baseInfoId){
             		<dl>
             			<dt>编辑页面</dt>
             			<dd>
-            				<label title="${workflowConfigurationForm.templetType }"> 
-            				${workflowConfigurationForm.templetType }
+            				<label title="${workflowConfigurationForm.templateEditPage }"> 
+            				${workflowConfigurationForm.templateEditPage }&nbsp;
 	                      	</label>
             			</dd>
             		</dl>
             		<dl>
             			<dt>流程页面</dt>
             			<dd>
-            				<label title="${workflowConfigurationForm.templetType }"> 
-            				${workflowConfigurationForm.templetType }
+            				<label title="${workflowConfigurationForm.templateFlowPage }"> 
+            				${workflowConfigurationForm.templateFlowPage }&nbsp;
 	                      	</label>
             			</dd>
             		</dl>
@@ -308,16 +308,16 @@ function deleteFlow(baseInfoId){
             		<dl>
             			<dt>详细页面</dt>
             			<dd>
-            				<label title="${workflowConfigurationForm.templetType }"> 
-            				${workflowConfigurationForm.templetType }
+            				<label title="${workflowConfigurationForm.templateInfoPage }"> 
+            				${workflowConfigurationForm.templateInfoPage }&nbsp;
 	                      	</label>
             			</dd>
             		</dl>
             		<dl>
             			<dt>报表页面</dt>
             			<dd>
-            				<label title="${workflowConfigurationForm.templetType }"> 
-            				${workflowConfigurationForm.templetType }
+            				<label title="${workflowConfigurationForm.templateReportPage }"> 
+            				${workflowConfigurationForm.templateReportPage }&nbsp;
 	                      	</label>
             			</dd>
             		</dl>
@@ -331,16 +331,16 @@ function deleteFlow(baseInfoId){
 			<th><div align="center">流程名称</div></th>
 			<th><div align="center">所属部门</div></th>
 			<th><div align="center">流程类型</div></th>
-			<th colspan="2"><div align="center"><a href="#" onclick="selectOrgForCreateFlow(this,'Y','${workflowConfigurationForm.templetId}')" style="color:green">新建流程</a></div></th>
+			<th colspan="2"><div align="center"><a href="#" onclick="selectOrgForCreateFlow(this,'Y','${workflowConfigurationForm.templateId}')" style="color:green">新建流程</a></div></th>
 		</tr>
 		<c:forEach items="${workflowConfigurationForm.baseInfoList}" var="dto" varStatus="status">
 		    <tr style="heigth:10px">
 		     	<td align="center">${status.index+1 }</td>
-		        <td align="center">${dto.flowName }</td>
-		        <td align="center">${dto.orgName }</td>
-		        <td align="center">${dto.flowType }</td>
-		        <td align="center"><a href="#" onclick="updateFlow('${dto.baseInfoId}')" style="color:green">修改</a></td>
-		        <td align="center"><a href="#" onclick="deleteFlow('${dto.baseInfoId}')" style="color:green">删除</a></td>
+		        <td align="center">${dto[0].flowName }</td>
+		        <td align="center">${dto[0].flowOrgName }</td>
+		        <td align="center">${dto[0].flowType }</td>
+		        <td align="center"><a href="#" onclick="updateFlow('${dto[0].flowId}')" style="color:green">修改</a></td>
+		        <td align="center"><a href="#" onclick="deleteFlow('${dto[0].flowId}')" style="color:green">删除</a></td>
 		    </tr>
 		</c:forEach>
     </table>

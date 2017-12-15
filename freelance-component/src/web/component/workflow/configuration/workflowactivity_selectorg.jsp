@@ -38,7 +38,7 @@
 		<c:forEach items="${orgList}" var="dto" varStatus="status">
 		    <tr style="heigth:10px">
 		     	<td align="center">${status.index+1 }</td>
-		        <td align="center">${dto.orgName }</td>
+		        <td align="center">${dto.flowOrgName }</td>
 		        <td align="center"><a href="#" onclick="createFlow()" style="color:green">新建流程</a></td>
 		    </tr>
 		</c:forEach>

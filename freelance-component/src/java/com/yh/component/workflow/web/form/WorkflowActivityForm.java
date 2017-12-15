@@ -10,79 +10,83 @@ import org.apache.struts.action.ActionForm;
  */
 public class WorkflowActivityForm extends ActionForm{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private java.lang.Long  	activityId;	//主键
-	private java.lang.Long		baseInfoId;	//流程基本信息ID
-	private java.lang.String  	activityName;	//活动名称
-	private java.lang.String	activityIndex;	//活动序号
-	private java.lang.String	preRegulation;	//前置规则
-	private java.lang.String  	succeedRegulation;	//后置规则
-	private java.lang.String 	activityType;//活动类型
-	private java.lang.String    backMode;//退回方式
-	private java.lang.String	endMode;//结束方式
-	private java.lang.String    defaultAuditContent;//默认审核内容
-	public java.lang.Long getActivityId() {
-		return activityId;
+	private static final long serialVersionUID = -5823435384683091875L;
+	private java.lang.String  	actId;	//主键
+	private java.lang.String	flowId;	//流程基本信息ID
+	private java.lang.String  	actName;	//活动名称
+	private java.lang.Double	actOrder;	//活动序号
+	private java.lang.String	actResult;	// 活动结果
+	private java.lang.String	actBeginRuleId;	//前置规则
+	private java.lang.String  	actEndRuleId;	//后置规则
+	private java.lang.String 	actType;//活动单元类型-开始、结束、常规活动
+	private java.lang.String    actBackType;//退回方式
+	private java.lang.String	actFinishType;//结束方式
+	private java.lang.String    actAuditContent;//默认审核内容
+	public java.lang.String getActId() {
+		return actId;
 	}
-	public void setActivityId(java.lang.Long activityId) {
-		this.activityId = activityId;
+	public void setActId(java.lang.String actId) {
+		this.actId = actId;
 	}
-	public java.lang.Long getBaseInfoId() {
-		return baseInfoId;
+	public java.lang.String getFlowId() {
+		return flowId;
 	}
-	public void setBaseInfoId(java.lang.Long baseInfoId) {
-		this.baseInfoId = baseInfoId;
+	public void setFlowId(java.lang.String flowId) {
+		this.flowId = flowId;
 	}
-	public java.lang.String getActivityName() {
-		return activityName;
+	public java.lang.String getActName() {
+		return actName;
 	}
-	public void setActivityName(java.lang.String activityName) {
-		this.activityName = activityName;
+	public void setActName(java.lang.String actName) {
+		this.actName = actName;
 	}
-	public java.lang.String getActivityIndex() {
-		return activityIndex;
+	public java.lang.Double getActOrder() {
+		return actOrder;
 	}
-	public void setActivityIndex(java.lang.String activityIndex) {
-		this.activityIndex = activityIndex;
+	public void setActOrder(java.lang.Double actOrder) {
+		this.actOrder = actOrder;
 	}
-	public java.lang.String getPreRegulation() {
-		return preRegulation;
+	public java.lang.String getActResult() {
+		return actResult;
 	}
-	public void setPreRegulation(java.lang.String preRegulation) {
-		this.preRegulation = preRegulation;
+	public void setActResult(java.lang.String actResult) {
+		this.actResult = actResult;
 	}
-	public java.lang.String getSucceedRegulation() {
-		return succeedRegulation;
+	public java.lang.String getActBeginRuleId() {
+		return actBeginRuleId;
 	}
-	public void setSucceedRegulation(java.lang.String succeedRegulation) {
-		this.succeedRegulation = succeedRegulation;
+	public void setActBeginRuleId(java.lang.String actBeginRuleId) {
+		this.actBeginRuleId = actBeginRuleId;
 	}
-	public java.lang.String getActivityType() {
-		return activityType;
+	public java.lang.String getActEndRuleId() {
+		return actEndRuleId;
 	}
-	public void setActivityType(java.lang.String activityType) {
-		this.activityType = activityType;
+	public void setActEndRuleId(java.lang.String actEndRuleId) {
+		this.actEndRuleId = actEndRuleId;
 	}
-	public java.lang.String getBackMode() {
-		return backMode;
+	public java.lang.String getActType() {
+		return actType;
 	}
-	public void setBackMode(java.lang.String backMode) {
-		this.backMode = backMode;
+	public void setActType(java.lang.String actType) {
+		this.actType = actType;
 	}
-	public java.lang.String getEndMode() {
-		return endMode;
+	public java.lang.String getActBackType() {
+		return actBackType;
 	}
-	public void setEndMode(java.lang.String endMode) {
-		this.endMode = endMode;
+	public void setActBackType(java.lang.String actBackType) {
+		this.actBackType = actBackType;
 	}
-	public java.lang.String getDefaultAuditContent() {
-		return defaultAuditContent;
+	public java.lang.String getActFinishType() {
+		return actFinishType;
 	}
-	public void setDefaultAuditContent(java.lang.String defaultAuditContent) {
-		this.defaultAuditContent = defaultAuditContent;
+	public void setActFinishType(java.lang.String actFinishType) {
+		this.actFinishType = actFinishType;
+	}
+	public java.lang.String getActAuditContent() {
+		return actAuditContent;
+	}
+	public void setActAuditContent(java.lang.String actAuditContent) {
+		this.actAuditContent = actAuditContent;
 	}
 
 }

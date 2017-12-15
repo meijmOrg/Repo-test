@@ -9,8 +9,10 @@ public class WorkflowBaseInfoDTO {
 	private java.lang.String  	flowId;	//主键
 	private java.lang.String	flowName;	//流程名称	
 	private java.lang.String	flowType;	//流程类型：专属流程和通用流程
-	private java.lang.Long 		flowOrgOid;//流程所属部门，若是通用流程，则保存0，若是专属流程保存部门ID
-	private java.lang.String    flowOrgName;//所属部门名称
+	private java.lang.Long 		flowOrgOid=this.orgOid;//流程所属部门，若是通用流程，则保存0，若是专属流程保存部门ID
+	private java.lang.String    flowOrgName=this.orgName;//所属部门名称
+	private java.lang.Long 		orgOid;
+	private java.lang.String    orgName;
 	private java.lang.String    flowCreateUserName;// 流程创建人
 	private java.lang.String    flowCreateUserID;// 流程创建人ID
 	private java.util.Date    	flowCreateDate;//  流程创建时间
@@ -97,6 +99,20 @@ public class WorkflowBaseInfoDTO {
 	}
 	public void setTfForbidden(java.lang.Long tfForbidden) {
 		this.tfForbidden = tfForbidden;
+	}
+	public java.lang.Long getOrgOid() {
+		return orgOid;
+	}
+	public void setOrgOid(java.lang.Long orgOid) {
+		this.orgOid = orgOid;
+		this.setFlowOrgOid(orgOid);
+	}
+	public java.lang.String getOrgName() {
+		return orgName;
+	}
+	public void setOrgName(java.lang.String orgName) {
+		this.orgName = orgName;
+		this.setFlowOrgName(orgName);
 	}
 
 }

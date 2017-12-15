@@ -121,6 +121,7 @@ function goQuery1(pageNo,flag,queryOrgName)
 				//清空list内容
 				$("#set_next_city").empty("");
 				$.each(item,function(index,orgName){
+					debugger
 	   	 			var tbTr ="<li onclick=findOrg('"+orgName.orgName+"','"+orgName.orgOid+"') title='"+orgName.orgName+"'>"+orgName.orgName+"</li>";
 					$("#set_next_city").append(tbTr);
 				});

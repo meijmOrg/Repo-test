@@ -21,6 +21,7 @@ import com.yh.component.workflow.queryhelper.WorkflowConfigurationQueryHelper;
 import com.yh.component.workflow.service.WorkflowConfigurationService;
 import com.yh.platform.core.dao.DaoUtil;
 import com.yh.platform.core.exception.ServiceException;
+import com.yh.platform.core.util.StringUtil;
 /**
  * @desc 流程-模板管理ServiceImpl
  * @author liul
@@ -81,23 +82,26 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 	 * (non-Javadoc)
 	 * @see com.yh.component.workflow.service.WorkflowConfigurationService#insert(com.yh.component.workflow.dto.WorkflowConfigurationDTO)
 	 */
-	public void insertTemplet(WorkflowConfigurationDTO workflowConfigurationDto)
+	public String insertTemplet(WorkflowConfigurationDTO workflowConfigurationDto)
 			throws ServiceException {
 		// TODO Auto-generated method stub
 		FileTemplate bo=new FileTemplate();
 		BeanUtils.copyProperties(workflowConfigurationDto, bo);
+		bo.setTemplateId(StringUtil.getUUID());
 		bo.save();
+		return bo.getTemplateId();
 	}
 	/*
 	 * (non-Javadoc)
 	 * @see com.yh.component.workflow.service.WorkflowConfigurationService#update(com.yh.component.workflow.dto.WorkflowConfigurationDTO)
 	 */
-	public void updateTemplet(WorkflowConfigurationDTO workflowConfigurationDto)
+	public String updateTemplet(WorkflowConfigurationDTO workflowConfigurationDto)
 			throws ServiceException {
 		// TODO Auto-generated method stub
 		FileTemplate bo=new FileTemplate();
 		BeanUtils.copyProperties(workflowConfigurationDto, bo);
 		bo.update();
+		return bo.getTemplateId();
 	}
 	/*
 	 * (non-Javadoc)
@@ -141,6 +145,7 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 		// TODO Auto-generated method stub
 		FlowRule bo=new FlowRule();
 		BeanUtils.copyProperties(workflowRuleDto, bo);
+		bo.setRuleId(StringUtil.getUUID());
 		bo.save();
 	}
 	/*
@@ -190,6 +195,7 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 		// TODO Auto-generated method stub
 		FlowActivity bo=new FlowActivity();
 		BeanUtils.copyProperties(workflowActivityDto, bo);
+		bo.setActId(StringUtil.getUUID());
 		bo.save();
 	}
 	/*

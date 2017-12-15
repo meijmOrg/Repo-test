@@ -114,8 +114,8 @@ function goback(){
             		<dl>
             			<dt>所属部门</dt>
             			<dd>
-            				<label title="${workflowConfigurationDto.orgName}"> 
-            				${workflowConfigurationDto.orgName}
+            				<label title="${workflowConfigurationDto.flowOrgName}"> 
+            				${workflowConfigurationDto.flowOrgName}
 	                      	</label>
             			</dd>
             		</dl>
@@ -140,11 +140,11 @@ function goback(){
 				<c:forEach items="${workflowConfigurationDto.activityList}" var="dto" varStatus="status">
 				    <tr style="heigth:10px">
 				     	<td align="center">${status.index+1 }</td>
-				        <td align="center">${dto.activityName }</td>
-				        <td align="center">${dto.preRegulation }</td>
-				        <td align="center">${dto.succeedRegulation }</td>
-				        <td align="center"><a href="#" onclick="updateActivity('${dto.activityId}')" style="color:green">修改</a></td>
-		        		<td align="center"><a href="#" onclick="deleteActivity('${dto.activityId}')" style="color:green">删除</a></td>
+				        <td align="center">${dto.actName }</td>
+				        <td align="center">${dto.actBeginRuleId }</td>
+				        <td align="center">${dto.actEndRuleId }</td>
+				        <td align="center"><a href="#" onclick="updateActivity('${dto.actId}')" style="color:green">修改</a></td>
+		        		<td align="center"><a href="#" onclick="deleteActivity('${dto.actId}')" style="color:green">删除</a></td>
 				    </tr>
 				</c:forEach>
 	    	</table>
@@ -164,8 +164,8 @@ function goback(){
 				     	<td align="center">${status.index+1 }</td>
 				        <td align="center">${dto.ruleName }</td>
 				        <td align="center">${dto.ruleType }</td>
-				        <td align="center">${dto.preActivity }</td>
-				        <td align="center">${dto.succeedActivity }</td>
+				        <td align="center">${dto.ruleBeginActId }</td>
+				        <td align="center">${dto.ruleEndActId }</td>
 				        <td align="center"><a href="#" onclick="updateRule('${dto.ruleId}')" style="color:green">修改</a></td>
 		        		<td align="center"><a href="#" onclick="deleteRule('${dto.ruleId}')" style="color:green">删除</a></td>
 				    </tr>

@@ -70,12 +70,22 @@ $(document).ready(function() {
 			singleCheck: true,
 			columns: [
 				{header:'模板名称', field:'templateName', width:150,render:function(record, rowIndex, row){
+					var templateId = worktop.grid.store.params.templateId;
 					var records = worktop.grid.selectModel.getSelectRows();
-					if(records.length == 0 && rowIndex.index == 0){
-						var row = this.tbody.find('tr[rowIndex='+rowIndex.index+']');
-						row.addClass('selected').find('input.cbm').prop('checked',true);
-						$("#right_wfc").load('goViewWorkflowTemplet.do?method=goViewWorkflowTemplet',{"templetId":rowIndex.data.templateId});
-						}
+					if(templateId == null || templateId == ''){
+						if(records.length == 0 && rowIndex.index == 0){
+							var row = this.tbody.find('tr[rowIndex='+rowIndex.index+']');
+							row.addClass('selected').find('input.cbm').prop('checked',true);
+							$("#right_wfc").load('goViewWorkflowTemplet.do?method=goViewWorkflowTemplet',{"templetId":rowIndex.data.templateId});
+							}
+						}else{
+							if(records.length == 0 && rowIndex.data.templateId == templateId){
+								var row = this.tbody.find('tr[rowIndex='+rowIndex.index+']');
+								row.addClass('selected').find('input.cbm').prop('checked',true);
+								$("#right_wfc").load('goViewWorkflowTemplet.do?method=goViewWorkflowTemplet',{"templetId":rowIndex.data.templateId});
+								}
+							}
+					
 					return record;
 					}},
 				{header:'模板编码', field:'templateCode', width:150},
@@ -105,7 +115,9 @@ function goback(){
 }
 function updateTemplet(){
 	var records = worktop.grid.selectModel.getSelectRows();
-	if(records.length == 1){
+	if(records.length == 0){
+		MessageBox.alert('提示', '请选中一条记录');
+	}else if(records.length == 1){
 		Widget.openContent("goUpdateWorkflowTemplet.do?method=goUpdateTemplet&templetId="+records[0].data.templateId,function(){
 			worktop.grid.store.load({
 				params: {start:0, limit: worktop.grid.page.limit}
@@ -115,50 +127,25 @@ function updateTemplet(){
 }
 function deleteTemplet(){
 	var records = worktop.grid.selectModel.getSelectRows();
-	if(records.length == 1){
-		$.get("deleteWorkflowTemplet.do?method=deleteTemplet&templetId="+records[0].data.templateId,function(data){
-			if (data.message) {
-				MessageBox.alert('提示', data.message, function(){
-					worktop.grid.store.load({
-						params: {start:0, limit: worktop.grid.page.limit}
-					});
-				})
-			}
-		},'json')
+	if(records.length == 0){
+		MessageBox.alert('提示', '请选中一条记录');
+	}else if(records.length == 1){
+		MessageBox.yes('提示','请确认是否删除?', function(){
+			$.get("deleteWorkflowTemplet.do?method=deleteTemplet&templetId="+records[0].data.templateId,function(data){
+						worktop.grid.store.load({
+							params: {start:0, limit: worktop.grid.page.limit}
+						});
+			},'json')
+		})
 	}
-	
-}
-function deleteTemplet1() {
-	MessageBox.confirm('提示', '确认删除？', function(action) {
-		if (action == 'yes') {
-			$.ajax({
-				url : 'deletePbFamilyInfo.do?method=deleteTemplet',
-				data : {
-					familyOid : familyOid
-				},
-				dataType : 'json',
-				error : function(x, t) {
-					alert(t);
-					alert("error occured!!!");
-				},
-				async : false,
-				success : function(data) {
-					if (data.success) {
-						$('#${param.Id}').load(
-								$('#${param.Id}').attr('url'), {
-									personOid : '${param.personOid}',
-									Id : '${param.Id}'
-								});
-					} else {
-						alert(data.message);
-					}
-				}
-			});
-		}
-	});
 }
 function addTemplet(){
-	Widget.openContent("goInsertWorkflowTemplet.do?method=goInsertTemplet",function(){
+	var records = worktop.grid.selectModel.getSelectRows();
+	var templateId = '';
+	if(records.length != 0){
+		templateId = records[0].data.templateId;
+		}
+	Widget.openContent("goInsertWorkflowTemplet.do?method=goInsertTemplet&templateId="+templateId,function(){
 		worktop.grid.store.load({
 			params: {start:0, limit: worktop.grid.page.limit}
 		});

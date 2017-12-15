@@ -49,13 +49,13 @@ public interface WorkflowConfigurationService {
 	 * @param workflowConfigurationDto
 	 * @throws ServiceException
 	 */
-	void insertTemplet(WorkflowConfigurationDTO workflowConfigurationDto)throws ServiceException;
+	String insertTemplet(WorkflowConfigurationDTO workflowConfigurationDto)throws ServiceException;
 	/**
 	 * 修改模板信息
 	 * @param workflowConfigurationDto
 	 * @throws ServiceException
 	 */
-	void updateTemplet(WorkflowConfigurationDTO workflowConfigurationDto)throws ServiceException;
+	String updateTemplet(WorkflowConfigurationDTO workflowConfigurationDto)throws ServiceException;
 	/**
 	 * 删除模板记录
 	 * @param templetId

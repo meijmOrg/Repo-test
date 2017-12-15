@@ -133,7 +133,6 @@ public class WorkflowConfigurationQueryHelper {
 		if(ttb.getPageSize() != 0) {
 			ttb.setTotal(DaoUtil.countByCondition(new StringBuilder("select count(*) ").append(hql).toString(), params));
 		}
-		
 		return BeanHelper.copyProperties(DaoUtil.listByCondition(
 				new StringBuilder().append(hql).toString(), params, ttb.getPage(), ttb.getPageSize()), WorkflowBaseInfoDTO.class);
 	}  

@@ -72,11 +72,14 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 		   HttpServletResponse response) throws Exception
 		{
 			try{
+				String templateId = request.getParameter("templateId");
 				TableTagBean ttb = TableTagBean.getFromRequest(request);
 				List<JSONObject> list = workflowConfigurationFacade.listWorkflowTemplet(ttb);
 				JSONObject obj = new JSONObject();
 				obj.put("total", ttb.getTotal());
 				obj.put("rows", list);
+				obj.put("templateId", templateId);
+				request.setAttribute("templateId", templateId);
 				response.getWriter().print(obj.toString());
 				return null;
 			}catch(Exception e)
@@ -124,6 +127,8 @@ public class WorkflowConfigurationAction extends BaseAction {
 	public ActionForward goInsertTemplet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
+		String templateId = request.getParameter("templateId");
+		request.setAttribute("templateId", templateId);
 		return mapping.findForward(FORWARD_SUCCESS);
 	}
 	
@@ -204,22 +209,31 @@ public class WorkflowConfigurationAction extends BaseAction {
 	public ActionForward updateTemplet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
-		String templetId = request.getParameter("templetId");
+ 		String templetId = request.getParameter("templateId");
+ 		String flagStatus = request.getParameter("flagStatus");
+ 		String templateId = "";
 		WorkflowConfigurationForm workflowConfigurationForm = (WorkflowConfigurationForm) form;
 		try
 		{
-			if(StringUtils.isEmpty(templetId))
-			{
-				throw new ServiceException(null, "templetId is null");
+			if(StringUtils.isNotEmpty(flagStatus)&&flagStatus.equals("INSERT")){
+				WorkflowConfigurationDTO workflowConfigurationDto = BeanHelper.copyProperties(workflowConfigurationForm, WorkflowConfigurationDTO.class);
+				templateId = workflowConfigurationFacade.insertTemplet(workflowConfigurationDto);
+			}else if(StringUtils.isNotEmpty(flagStatus)&&flagStatus.equals("UPDATE")){
+				if(StringUtils.isEmpty(templetId))
+				{
+					throw new ServiceException(null, "templetId is null");
+				}
+				WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getTempletInfo(templetId);
+				if(null == workflowConfigurationDto)
+				{
+					throw new ServiceException(null, "查询不到相关信息");
+				}
+				BeanHelper.copyProperties(workflowConfigurationForm, workflowConfigurationDto);
+				templateId = workflowConfigurationFacade.updateTemplet(workflowConfigurationDto);
+			}else{
+				throw new ServiceException(null, "null");
 			}
-			WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getTempletInfo(templetId);
-			if(null == workflowConfigurationDto)
-			{
-				throw new ServiceException(null, "查询不到相关信息");
-			}
-			BeanHelper.copyProperties(workflowConfigurationForm, workflowConfigurationDto);
-			workflowConfigurationFacade.updateTemplet(workflowConfigurationDto);
-			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
+			response.getWriter().write(JSONHelper.fromObject(true, templateId).toString());
 		}
 		catch(Exception se)
 		{

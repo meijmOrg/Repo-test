@@ -17,6 +17,9 @@
     <title>模板管理修改页面</title>
     <script type="text/javascript" src="component/workflow/configuration/js/CheckWorkflowTemplet.js"></script>
 	<script type="text/javascript" src="js/comm/customJs.js"></script>
+	<script type="text/javascript">
+	var templateId = '${workflowConfigurationForm.templateId }';
+	</script>
 </head>
 
 <body>
@@ -41,6 +44,7 @@
                 	</ol>
             </div>
             <div class="md-main-content">
+            	<input type="hidden" name="flagStatus" value="UPDATE"/>
 	       		<jsp:include page="/component/workflow/configuration/workflowtemplet_body.jsp"></jsp:include>    	
         	</div>
         </div>

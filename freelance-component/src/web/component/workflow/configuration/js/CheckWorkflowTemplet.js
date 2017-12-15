@@ -5,17 +5,17 @@ $(function(){
 	debugger
     $("#workflowConfigurationForm").validate({
         rules:{
-        	templetName: {
+        	templateName: {
                 required: true
             },
-            templetCode:{
+            templateCode:{
                 required: true
             }
         },   
         messages: {
-        	templetName: {
+        	templateName: {
                 required: "请输入模板名称"
-            },templetCode: {
+            },templateCode: {
                 required: "请输入模板编码"
             }
         },
@@ -27,15 +27,20 @@ $(function(){
         wrapper: "li",
         submitHandler: function( form) {
         	//alert("数据提交！");
-        	debugger
                   var options = {
                       type : "POST" ,  
                       url:'updateWorkflowTemplet.do?method=updateTemplet',
                       success : function(data) {
                     	  data = $.parseJSON(data);
                           if (data.success) {
+                        	  if(templateId == null || templateId == ''){
+                        		  templateId = data.message;
+                        	  }
                         	  //刷新主页面
                         	  Widget.close();
+                        	  worktop.grid.store.load({
+          						params: {start:0, limit: worktop.grid.page.limit,templateId:templateId}
+          					});
                           }
                           else 
                           {

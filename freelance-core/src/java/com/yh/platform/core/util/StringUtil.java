@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -258,5 +259,13 @@ public class StringUtil {
 	public static String wrap(String str, String prefix, String suffix) {
 		return StringUtils.isEmpty(str) ? BLANK :new StringBuilder().append(prefix==null?BLANK:prefix).append(str).append(suffix==null?BLANK:suffix).toString();
 	}
-	
+	/**
+	 * 生成36位UUID码
+	 */
+	public static String getUUID(){ 
+		String uuid36 = UUID.randomUUID().toString(); 
+		String uuid32 = uuid36.replaceAll("-", ""); 
+		System.out.println("【uuid36】" + uuid36 + "\n【uuid32】" + uuid32 ); 
+		return uuid36;
+		}
 }

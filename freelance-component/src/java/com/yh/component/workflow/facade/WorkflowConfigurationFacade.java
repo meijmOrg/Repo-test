@@ -76,18 +76,18 @@ public class WorkflowConfigurationFacade {
 	 * @param workflowConfigurationDto
 	 * @throws ServiceException
 	 */
-	public void updateTemplet(WorkflowConfigurationDTO workflowConfigurationDto) throws ServiceException{
+	public String updateTemplet(WorkflowConfigurationDTO workflowConfigurationDto) throws ServiceException{
 		// TODO Auto-generated method stub
-		workflowConfigurationService.updateTemplet(workflowConfigurationDto);
+		return workflowConfigurationService.updateTemplet(workflowConfigurationDto);
 	}
 	/**
 	 * 新增模板信息
 	 * @param workflowConfigurationDto
 	 * @throws ServiceException
 	 */
-	public void insertTemplet(WorkflowConfigurationDTO workflowConfigurationDto) throws ServiceException{
+	public String insertTemplet(WorkflowConfigurationDTO workflowConfigurationDto) throws ServiceException{
 		// TODO Auto-generated method stub
-		workflowConfigurationService.insertTemplet(workflowConfigurationDto);
+		return workflowConfigurationService.insertTemplet(workflowConfigurationDto);
 		
 	}
 	/**
