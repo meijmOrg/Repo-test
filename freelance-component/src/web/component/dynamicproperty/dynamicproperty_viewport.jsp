@@ -9,22 +9,23 @@
 <%-- <%@ include file="/include/js_css_admin_include.jsp"%> --%>
 <script type="text/javascript">
 
-var worktop_dynamic = null;
+var worktop = null;
 $(document).ready(function(){
-	worktop_dynamic = new Worktop([
+	worktop = new Worktop([
 		{
 			xtype:'Xtable',
 			xname:'grid',
 			url: 'getPropertyList.do?method=getDynamicPropertyList&dpCode=${dpCode}',
 			rowNumber: true,
-			start : '1',
-			iPageLength:'30',
+			start : '${param.pageNo}'==''?1:'${param.pageNo}',
+			iPageLength: '${param.limit}'==''?30:'${param.limit}',
 			columns: [
 				{header:'操作', css:'operation', type: 'html', width:50, render: 
 					function(v,r){
 						var dpId=r.data.dpId;
 						var dpCode=r.data.dpCode;
-						return $.format('<a  onclick="deleteDp('+dpId+',"'+dpCode+'")"  style="color:green">删除</a>', r.data);
+						console.log($.format('<a  onclick=deleteDp('+dpId+',"'+dpCode+'")  style="color:green">删除</a>', r.data));
+						return $.format('<a  onclick=deleteDp('+dpId+',"'+dpCode+'")  style="color:green">删除</a>', r.data);
 					}
 				},
 				{header:'字段名称', field:'dpName', width:80},
@@ -32,7 +33,7 @@ $(document).ready(function(){
 				{header:'字段含义', field:'dpDescription', width:80},
 				{header:'字段类别', field:'dpCategory', width:80},
 				{header:'字段状态', field:'dpState', width:80},
-				{header:'字段编码', field:'dpCode', width:80}
+				{header:'字段编码', field:'dpCodeName', width:80}
 			]
 		},
 		{
@@ -43,13 +44,14 @@ $(document).ready(function(){
 	]);
 	
      $(window).resize(function(){
-		worktop_dynamic.grid.wrap.find('.ct').height(
-				$('#messageTabWarning').height()-$('.page_foot').height()-48
+		worktop.grid.wrap.find('.ct').height(
+				$('#messageTabWarning').height()-$('.page_foot').height()
 			);//48(分页48)
 	}).resize().unbind();
-     worktop_dynamic.dynamicForm.goQuery();
+     worktop.dynamicForm.goQuery();
 });
 function deleteDp(dpId,dpCode){
+	debugger
 	if(dpId){
 		MessageBox.yes('提示','请确认是否删除?', function(){
 			$.ajax({

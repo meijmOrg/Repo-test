@@ -85,7 +85,7 @@
       	  <div class="modal-footer">
                <input  type="submit" class="btn btn-primary" value="保　存">
                <button type="button" class="btn btn-default close-login" data-dismiss="modal" button-click="widget-close">
-               <a href="#" class="close-popdown">取　消</a></button>
+               <a href="javascript:void(0)" class="close-popdown">取　消</a></button>
           </div>
      </form>
     </div>

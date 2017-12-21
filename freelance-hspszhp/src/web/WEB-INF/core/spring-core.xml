@@ -10,7 +10,7 @@
 		</property>
 		<!-- 开发库	-->
 		<property name="url">
-			<value>jdbc:sqlserver://localhost:1433;DatabaseName=hsphzsp</value>
+			<value>jdbc:sqlserver://localhost:1433;DatabaseName=hspszhp</value>
 		</property>
 		<property name="username">
 			<value>sa</value>
