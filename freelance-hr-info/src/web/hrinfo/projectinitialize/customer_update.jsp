@@ -34,7 +34,7 @@
             	</div>
             	<div class="modal-row03">
             		<dl>
-            			<dt><b class="Required">* </b>原License码</dt>
+            			<dt><b class="Required">* </b>原License码：</dt>
             			<dd>
             				<label>
 	                             <input type="text" id="licenseCode" name="licenseCode" value='${projectInitializeForm.licenseCode }' class="modal_iput" maxlength="200" /> 
@@ -42,7 +42,7 @@
             			</dd>
             		</dl>
             		<dl>
-            			<dt>新License码</dt>
+            			<dt><b class="Required">* </b>新License码：</dt>
             			<dd>
             				<label>
 	                             <input type="text" id="newLicenseCode" name="newLicenseCode" value='${projectInitializeForm.newLicenseCode }' class="modal_iput" maxlength="200" /> 

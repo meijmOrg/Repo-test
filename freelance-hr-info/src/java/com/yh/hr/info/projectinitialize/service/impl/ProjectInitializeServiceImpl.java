@@ -61,13 +61,12 @@ public class ProjectInitializeServiceImpl implements ProjectInitializeService {
 	public void create(ProjectInitializeDTO dto) throws ServiceException{
 		ProjectInitialize bo = new ProjectInitialize();
 		BeanHelper.copyProperties(dto, bo);
-		bo.save();
 		
-		//如果是启动状态，则解密License码初始化单位信息
-		if("1".equals(bo.getStartStatus())){
-			try {
-				//用默认的key解密
-				String licenseStr = DESUtils.decrypt(bo.getLicenseCode());
+		try {
+			//用默认的key解密
+			String licenseStr = DESUtils.decrypt(bo.getLicenseCode());
+			//如果是启动状态，则解密License码初始化单位信息
+			if("1".equals(bo.getStartStatus())){
 				String unitName = "";
 				if(StringUtils.isNotEmpty(licenseStr)&&licenseStr.length()>8){
 					unitName = licenseStr.substring(0, licenseStr.length()-8);
@@ -75,14 +74,15 @@ public class ProjectInitializeServiceImpl implements ProjectInitializeService {
 				UbUnitDTO ubUnitDTO = new UbUnitDTO();
 				ubUnitDTO.setUnitName(unitName);
 				ubUnitService.create(ubUnitDTO);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException("null", "系统异常，请检查license码是否正确");
 		}
+		bo.save();
 	}
 	
 	/**
@@ -95,14 +95,13 @@ public class ProjectInitializeServiceImpl implements ProjectInitializeService {
 		ProjectInitialize bo = DaoUtil.get(ProjectInitialize.class, dto.getCustomerOid());
 		BeanHelper.copyProperties(dto,bo);
 		bo.setLicenseCode(dto.getNewLicenseCode());
-		bo.update();
 		
-		//如果是启动状态，则解密新License码初始化单位信息
-		if("1".equals(bo.getStartStatus())){
-			try {
-				//用默认的key解密
-				String licenseStr = DESUtils.decrypt(bo.getLicenseCode());
-				String oldLicenseStr = DESUtils.decrypt(dto.getLicenseCode());
+		try {
+			//用默认的key解密
+			String licenseStr = DESUtils.decrypt(bo.getLicenseCode());
+			String oldLicenseStr = DESUtils.decrypt(dto.getLicenseCode());
+			//如果是启动状态，则解密新License码初始化单位信息
+			if("1".equals(bo.getStartStatus())){
 				String unitName = "";
 				String oldUnitName = "";
 				if(StringUtils.isNotEmpty(licenseStr)&&licenseStr.length()>8){
@@ -113,6 +112,7 @@ public class ProjectInitializeServiceImpl implements ProjectInitializeService {
 				}
 				//更新单位名称
 				UbUnitDTO ubUnitDTO = new UbUnitDTO();
+				ubUnitDTO.setUnitName(unitName);
 				//根据之前写进去的单位名称查找单位信息
 				UbUnit ubUnit = ProjectInitializeQueryHelper.getUbUnit(oldUnitName);
 				if(null == ubUnit){//如果查不到  说明人为的改了单位名称
@@ -121,16 +121,18 @@ public class ProjectInitializeServiceImpl implements ProjectInitializeService {
 				}
 				if(null != ubUnit){
 					BeanHelper.copyProperties(ubUnit,ubUnitDTO);
-					ubUnitDTO.setUnitName(unitName);
 					ubUnitService.update(ubUnitDTO);
+				}else{
+					ubUnitService.create(ubUnitDTO);
 				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new ServiceException("null", "系统异常，请检查license码是否正确");
 		}
+		bo.update();
 	}
 }

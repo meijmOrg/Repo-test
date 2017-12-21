@@ -34,7 +34,7 @@
             	</div>
             	<div class="modal-row03">
             		<dl>
-            			<dt><b class="Required">* </b>License码</dt>
+            			<dt><b class="Required">* </b>License码：</dt>
             			<dd>
             				<label>
 	                             <input type="text" id="licenseCode" name="licenseCode" class="modal_iput" maxlength="200" /> 

@@ -4,9 +4,9 @@ $(function(){
     		licenseCode:{
 	            required: true
 	        },
-//	        newLicenseCode:{
-//	            required: true
-//	        },
+	        newLicenseCode:{
+	            required: true
+	        },
 	        startStatus:{
 	            required: true
 	        }
@@ -15,9 +15,9 @@ $(function(){
 	    	licenseCode: {
 	            required: "请输入License码"
 	        },
-//	        newLicenseCode: {
-//	            required: "请输入新License码"
-//	        },
+	        newLicenseCode: {
+	            required: "请输入新License码"
+	        },
 	        startStatus: {
 	            required: "请选择启动状态"
 	        }

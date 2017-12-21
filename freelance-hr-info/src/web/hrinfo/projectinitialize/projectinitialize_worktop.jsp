@@ -50,6 +50,12 @@ $(document).ready(function(){
 							function(){
 							worktop.form.goQuery();
 						    }); 
+				},
+				'create': function(grid,record,worktop){
+					 Widget.openContent("goCreateLicense.do?method=goCreateLicense",
+							function(){
+							worktop.form.goQuery();
+						    }); 
 				}
 			} 
 		}    
@@ -91,6 +97,7 @@ $(document).ready(function(){
 	<!-- 操作按钮 -->
 	<div class="handel" id="fr_tbar">
 		<button class="btn_add" button-click="add">启动配置</button>
+		<button class="btn_add" button-click="create">生成license码</button>
 	</div>
 	<!-- 列表内容展示-->
 	<table class="x-table sortable ellipsis striped hover"></table>

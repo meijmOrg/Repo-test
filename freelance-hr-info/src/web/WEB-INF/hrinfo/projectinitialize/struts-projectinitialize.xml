@@ -51,5 +51,17 @@
 	            parameter="method">
 	    	<description>客户修改（修改配置）</description>
 	    </action>
+	    <action path="/goCreateLicense"
+				type="org.apache.struts.actions.ForwardAction"
+				scope="request"
+				parameter="/hrinfo/projectinitialize/license_create.jsp">
+			<description>生成license码页面</description>
+		</action>
+		<action path="/createLicense"
+	            scope="request"
+	            type="com.yh.hr.info.projectinitialize.web.action.ProjectInitializeAction"
+	            parameter="method">
+	    	<description>生成license码</description>
+	    </action>
 	</action-mappings>
 </struts-config>

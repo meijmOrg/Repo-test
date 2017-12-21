@@ -20,6 +20,7 @@ import com.yh.hr.info.projectinitialize.facade.ProjectInitializeFacade;
 import com.yh.hr.info.projectinitialize.web.form.ProjectInitializeForm;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.BeanHelper;
+import com.yh.platform.core.util.DESUtils;
 import com.yh.platform.core.util.DateUtil;
 import com.yh.platform.core.util.JSONHelper;
 import com.yh.platform.core.util.SpringBeanUtil;
@@ -186,6 +187,29 @@ public class ProjectInitializeAction extends BaseAction {
 	        } catch (Exception e) {
 	            handleException(request, e, e.getMessage());
 	            response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(e.getMessage(), "系统异常，修改客户信息失败")).toString());
+	            return null;
+	       }
+		return null;
+	}
+	
+	/**
+	 * 生成license码
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward createLicense(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+		 	HttpServletResponse response) throws Exception{
+		 String mw = request.getParameter("mw");
+		 try {
+			 String licenseStr = DESUtils.encrypt(mw);
+			 response.getWriter().write(JSONHelper.fromObject(true, licenseStr).toString());
+	        } catch (Exception e) {
+	            handleException(request, e, e.getMessage());
+	            response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(e.getMessage(), "系统异常，生成license码失败")).toString());
 	            return null;
 	       }
 		return null;
