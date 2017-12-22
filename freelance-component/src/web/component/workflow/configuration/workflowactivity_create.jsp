@@ -41,7 +41,7 @@
             </div>
             <div class="md-main-content">
 	       		<input type="hidden" id="baseInfoId" name="baseInfoId" value="${baseInfoId}" />
-	        <jsp:include page="/component/workflow/configuration/workflowactivity_body.jsp"></jsp:include>    
+	        <jsp:include page="/component/workflow/configuration/drawing/demo.html"></jsp:include>    
         	</div>
         </div>
         
