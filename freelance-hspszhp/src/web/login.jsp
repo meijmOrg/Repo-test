@@ -68,7 +68,7 @@
 			<div class="mho_col mho_col_6 mho_login_img">
 			</div>
 			<div class="mho_col mho_col_6">
-				<form class="mho_login_form" action="login.do?method=login" method="post" >
+				<form class="mho_login_form" id="yhlogin" action="login.do?method=login" method="post" >
 					<h2>医院人事信息管理系统</h2>
 					<div class="mho_form_group yh_input">
 						<input type="text" name="userCode" placeholder="请输入用户名" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" >
@@ -78,7 +78,7 @@
 						<input type="password" name="password" placeholder="请输入密码" >
 					</div>
 					<div class="mho_form_group">
-                  		 <input type="submit" value="登 录">
+                  		 <input type="button" onclick="document.getElementById('yhlogin').submit();" value="登 录">
                   	</div>
                   	<div class="mho_form_group">
                   	 <div class="lg-error">
