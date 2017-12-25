@@ -46,13 +46,17 @@ public class DynamicPropertyQueryHelper {
 	 */
 	public static List<TablePropertyDTO> getTablePropertyList(TableTagBean ttb) throws ServiceException{
 		Map<String,Object> params = new HashMap<String,Object>();
-		//根据参数获取sql
-		String sql = "select  infs.column_name,infs.data_type from Information_schema.columns infs where infs.table_Name = 'yhf_dynamic_property'";
-		
+		StringBuffer sb = new StringBuffer();
+		//查询原表字段sql
+		String tSql = "select  infs.column_name,infs.data_type from Information_schema.columns infs where infs.table_Name = '"+ttb.getCondition().get("dpCode")+"'";
+		//查询管理库中字段sql
+		String dSql = "SELECT ydp.DP_Name from yhf_dynamic_property ydp where ydp.dp_code = '"+ttb.getCondition().get("dpCode")+"'";
+		sb.append(tSql);
+		sb.append(" and infs.column_name not in ("+dSql+") ");
 		if (ttb.getPageSize() != 0) {
-			ttb.setTotal(DaoUtil.countWithSQLByCondition((new StringBuilder().append("select count(*) from (").append(sql).append(") as total").toString()), params));
+			ttb.setTotal(DaoUtil.countWithSQLByCondition((new StringBuilder().append("select count(*) from (").append(sb.toString()).append(") as total").toString()), params));
 		}
-		List<Object[]> list = DaoUtil.listWithSQLByCondition(sql, params, ttb.getPage(), ttb.getPageSize());
+		List<Object[]> list = DaoUtil.listWithSQLByCondition(sb.toString(), params, 0, 0);
 		List<TablePropertyDTO> tableList = new ArrayList<TablePropertyDTO>();
 		for(Object[] obj:list){
 			TablePropertyDTO dto = new TablePropertyDTO();
@@ -72,7 +76,7 @@ public class DynamicPropertyQueryHelper {
 	public static List<JSONObject> getDynamicPropertyList(TableTagBean ttb) throws ServiceException{
 		Map<String,Object> params = new HashMap<String,Object>();
 		//根据参数获取sql
-		String sql = "SELECT ydp.DP_ID,ydp.DP_Name,ydp.DP_Type,ydp.DP_Description,ydp.DP_Category,ydp.DP_State,ydp.DP_Code,ydp.DP_Time from yhf_dynamic_property ydp";
+		String sql = "SELECT ydp.DP_ID,ydp.DP_Name,ydp.DP_Type,ydp.DP_Description,ydp.DP_Category,ydp.DP_State,ydp.DP_Code,ydp.DP_Time from yhf_dynamic_property ydp where ydp.dp_code = '"+ttb.getCondition().get("dpCode")+"'";
 		
 		if (ttb.getPageSize() != 0) {
 			ttb.setTotal(DaoUtil.countWithSQLByCondition((new StringBuilder().append("select count(*) from (").append(sql).append(") as total").toString()), params));
@@ -99,7 +103,8 @@ public class DynamicPropertyQueryHelper {
 			json.put("dpCategory", obj[4]==null?"":DicHelper.viewName(DynamicPropertyUtil.YHRS3001, obj[4].toString()));
 			json.put("dpStateCode", obj[5]==null?"":obj[5].toString());
 			json.put("dpState", obj[5]==null?"":DicHelper.viewName(DynamicPropertyUtil.YHRS3002, obj[5].toString()));
-			json.put("dpCode", obj[6]==null?"":DicHelper.viewName(DynamicPropertyUtil.YHRS3003, obj[6].toString()));
+			json.put("dpCode", obj[6]==null?"":obj[6].toString());
+			json.put("dpCodeName", obj[6]==null?"":DicHelper.viewName(DynamicPropertyUtil.YHRS3003, obj[6].toString()));
 			json.put("dpTime", obj[7]==null?"":obj[7].toString());
 			json.put("sc",DynamicPropertyUtil.DP_SC);
 			jsonList.add(json);

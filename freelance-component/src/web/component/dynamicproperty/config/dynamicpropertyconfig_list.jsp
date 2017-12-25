@@ -10,16 +10,24 @@
 <%-- <%@ include file="/include/js_css_admin_include.jsp"%> --%>
 <%@ include file="/include/js_css_base_include.jsp"%>
 <script type="text/javascript">
+$(function() {
+    var dpCode = $("#dpCode").find("option:selected")[0].value;
+    goToDynamicProperty(dpCode);
+});
+function changeDpCode(obj){
+    goToDynamicProperty(obj.value);
+}
 var worktop_dynamic = null;
-$(document).ready(function(){
+function goToDynamicProperty(dpCode){
+
 	worktop_dynamic = new Worktop([
 		{
 			xtype:'Xtable',
 			xname:'grid',
-			url: 'getPropertyList.do?method=getDynamicPropertyList&dpCode=${dpCode}',
+			url: 'getPropertyList.do?method=getDynamicPropertyList&dpCode='+dpCode,
 			rowNumber: true,
-			start : '1',
-			iPageLength:'30',
+			start : '${param.pageNo}'==''?1:'${param.pageNo}',
+			iPageLength: '${param.limit}'==''?30:'${param.limit}',
 			columns: [
 				{header:'操作', css:'operation', type: 'html', width:50, render: 
 					function(v,r){
@@ -43,7 +51,7 @@ $(document).ready(function(){
 					},width:80},
 				{header:'字段类别', field:'dpCategory', width:80},
 				{header:'字段状态', field:'dpState', width:80},
-				{header:'字段编码', field:'dpCode', width:80}
+				{header:'字段编码', field:'dpCodeName', width:80}
 			]
 		},
 		{
@@ -62,7 +70,8 @@ $(document).ready(function(){
 			);//48(分页48)
 	}).resize();
      worktop_dynamic.dynamicForm.goQuery();
-});
+}
+
 function doDpAvailiable(dpId,dpState){
 	var params = {};
 	params.dpId = dpId;

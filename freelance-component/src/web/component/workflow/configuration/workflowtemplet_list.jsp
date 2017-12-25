@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ include file="/include/jsp_headers.jsp"%>
 
 <!DOCTYPE html>
@@ -56,7 +56,10 @@
 
 <script type="text/javascript">
 var worktop = null;
+debugger
+var header = "${aa}";
 $(document).ready(function() {
+	
 	worktop = new Worktop([
 		{
 			xtype:'Xtable',
@@ -89,10 +92,12 @@ $(document).ready(function() {
 					return record;
 					}},
 				{header:'模板编码', field:'templateCode', width:150},
-				{header:'模板分类', field:'templateType', width:150}
-			]
+				{header:'模板分类', field:'templateType', width:150},
+				{header:'templateId', field:'templateId', width:150}			
+				]
 		}
 	]);
+	
 	$(worktop.grid.selectModel.selectRow).click(function(){
 		var records = worktop.grid.selectModel.getSelectRows();
 		if(records.length == 1){

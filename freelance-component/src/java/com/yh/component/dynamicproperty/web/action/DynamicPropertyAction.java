@@ -80,11 +80,11 @@ public class DynamicPropertyAction extends BaseAction {
 	 */
 	public ActionForward goToPropertyList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
-		String dpCode = request.getParameter("dpCode");
 		String flag = request.getParameter("flag");
-		request.setAttribute("dpCode", dpCode);
+		TableTagBean ttb = new TableTagBean(request);
+		request.setAttribute("dpCode", ttb.getCondition().get("dpCode"));
 		if(StringUtils.isNotEmpty(flag)){
-			TableTagBean ttb = TableTagBean.getFromRequest(request);
+			//获取原表字段列表
 			List<TablePropertyDTO> list = dynamicPropertyFacade.getTablePropertyList(ttb);
 			request.setAttribute("tableList", list);
 			return mapping.findForward("TABLE");//原表字段
@@ -136,7 +136,7 @@ public class DynamicPropertyAction extends BaseAction {
  		   HttpServletResponse response) throws Exception
 	{
 		try{
-			TableTagBean ttb = TableTagBean.getFromRequest(request);
+			TableTagBean ttb = new TableTagBean(request);
 			List<JSONObject> list = dynamicPropertyFacade.getDynamicPropertyList(ttb);
 			JSONObject obj = new JSONObject();
 			obj.put("total", ttb.getTotal());

@@ -27,13 +27,13 @@ $(function() {
             eachAreaHeight();
         }
     );
-    $.drag_top_bottom("index-main-id","index-top-id","index-bottom-id","index-line-id");
-    var dpCode = $(this).attr('dpCode');
+   //$.drag_top_bottom("index-main-id","index-top-id","index-bottom-id","index-line-id");
+    var dpCode = $("#dpCode").find("option:selected")[0].value;
     goToTableProperty(dpCode);
     goToDynamicProperty(dpCode);
 });
 function goToTableProperty(dpCode){
-	$("#messageContent").load("goToPropertyList.do?method=goToPropertyList&dpCode="+dpCode+"&flag='Y'");
+	$("#messageContent").load("goToPropertyList.do?method=goToPropertyList&dpCode="+dpCode+"&flag=Y");
 }
 
 function goToDynamicProperty(dpCode){
@@ -64,12 +64,12 @@ function changeDpCode(obj){
         </div>
         <div class="index-tabs clearfix" id="messageTab">
                 <div class="tabs-line" id="messageDragLine"></div>
-	      <div id="messageContent" class="i-tab-content">
+	      <div id="messageContent" class="i-tab-content" style="width:99.5%">
 	      </div>
       </div>
 </div>
-    
-    <div class="index-line" id="index-line-id"><img src="./hspszhphtml/images/index/drag-up-down.png"/></div>
+   <!--  <div class="index-line" id="index-line-id"><img src="./hspszhphtml/images/index/drag-up-down.png"/></div> -->
+   <div style="clear:both"></div>
     
     <div class="imain-list il-warning" id="index-bottom-id">
 	    <div class="img-text" id="img-warning-id">

@@ -55,6 +55,8 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 */
 	public ActionForward goWorkflowConfigurationUpdate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
+		String aa = "{header:'templateId', field:'templateId', width:150}";
+		request.setAttribute("aa", aa);
 		return mapping.findForward("success");
 	}
 	/**

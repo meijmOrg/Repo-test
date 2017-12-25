@@ -1,0 +1,233 @@
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="../mho.css">
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/Chart.min.js"></script>
+<!--<script src="../chart.js/dist/Chart.js"></script>-->
+<title>首页</title>
+</head>
+<body>
+<div class="mho">
+	<nav class="mho_nav">
+		<div class="mho_nav_logo">
+			<img src="../img/logo.png">
+		</div>
+		<div class="mho_nav_tools"></div>
+	</nav>
+	<div class="mho_main">
+		<div class="mho_left_menu">
+			<div class="mho_person">
+				<table>
+					<tr>
+						<td class="mho_person_img">
+							<img src="../img/person.png">
+						</td>
+						<td class="mho_person_info">
+							<p>admin</p>
+							<p>超级管理员</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<ul class="mho_left_menu_tree">
+				<li>
+					<a href="javascript:void(0)">常用示例</a><span class="mho_tag"></span>
+					<ul>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:void(0)">系统安全</a><span class="mho_tag mho_dep_blue">23</span>
+					<ul>
+						<li>
+							<a href="javascript:void(0)">系统设置</a><span class="mho_tag"></span>
+							<ul>
+								<li><a href="javascript:void(0)">第三极菜单</a><span class="mho_tag"></span></li>
+								<li><a href="javascript:void(0)">第三极菜单</a><span class="mho_tag"></span></li>
+								<li><a href="javascript:void(0)">第三极菜单</a><span class="mho_tag"></span></li>
+								<li><a href="javascript:void(0)">第三极菜单</a><span class="mho_tag"></span></li>
+							</ul>
+						</li>
+						<li><a href="javascript:void(0)">配置参数</a><span class="mho_tag"></span></li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:void(0)">统计报表</a><span class="mho_tag mho_green">3</span>
+					<ul>
+						<li><a href="javascript:void(0)">组织机构图</a><span class="mho_tag"></span></li>
+						<li><a href="javascript:void(0)">人员情况表</a><span class="mho_tag"></span></li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:void(0)">系统管理</a><span class="mho_tag mho_red">5</span>
+					<ul>
+						<li><a href="javascript:void(0)">机构管理</a><span class="mho_tag"></span></li>
+						<li><a href="javascript:void(0)">角色管理</a><span class="mho_tag"></span></li>
+						<li><a href="javascript:void(0)">岗位管理</a><span class="mho_tag"></span></li>
+						<li><a href="javascript:void(0)">用户管理</a><span class="mho_tag"></span></li>
+						<li><a href="javascript:void(0)">区域管理</a><span class="mho_tag"></span></li>
+						<li><a href="javascript:void(0)">数据字典</a><span class="mho_tag"></span></li>
+						<li><a href="javascript:void(0)">系统菜单</a><span class="mho_tag"></span></li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:void(0)">常用菜单</a><i class="mho_tag"></i>
+					<ul>
+						<li><a href="javascript:void(0)">功能大全</a><span class="mho_tag"></span></li>
+						<li><a href="javascript:void(0)">百度</a><span class="mho_tag"></span></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="mho_center">
+			<ul class="mho_center_tabs">
+				<li id="toggleLeft"><i class="fa fa-arrow-left"></i></li>
+				<li class="mho_selected"><a href="javascript:void(0);">首页</a></li>
+			</ul>
+			<iframe class="mho_center_main" src="home.html" style="width:100%;height:100%;border:0;">
+				<!--<div class="mho_row">
+					<div class="mho_col mho_col_3 mho_panel">
+						<div class="mho_task_panel_content mho_dep_blue_color">
+							<h2>8</h2>
+							<span>Total</span>
+							<i class="fa fa-paperclip fa-3x"></i>
+						</div>
+						<div class="mho_panel_foot mho_dep_blue mho_white_color">对私待处理任务</div>
+					</div>
+					<div class="mho_col mho_col_3 mho_panel">
+						<div class="mho_task_panel_content mho_red_color">
+							<h2>8</h2>
+							<span>Total</span>
+							<i class="fa fa-paper-plane-o fa-3x"></i>
+						</div>
+						<div class="mho_panel_foot mho_red mho_white_color">对私待签收任务</div>
+					</div>
+					<div class="mho_col mho_col_3 mho_panel">
+						<div class="mho_task_panel_content mho_green_color">
+							<h2>8</h2>
+							<span>Total</span>
+							<i class="fa fa-unlock-alt fa-3x"></i>
+						</div>
+						<div class="mho_panel_foot mho_green mho_white_color">对公待处理任务</div>
+					</div>
+					<div class="mho_col mho_col_3 mho_panel">
+						<div class="mho_task_panel_content mho_dep_yellow_color">
+							<h2>8</h2>
+							<span>Total</span>
+							<i class="fa fa-file-text-o fa-3x"></i>
+						</div>
+						<div class="mho_panel_foot mho_dep_yellow mho_white_color">对公待签收任务</div>
+					</div>
+				</div>
+				<div class="mho_row">
+					<div class="mho_col mho_col_6 mho_panel">
+						<div class="mho_panel_head">考勤统计</div>
+						<div class="mho_panel_content">
+							<canvas id="barChart" width="360" height="260"></canvas>
+						</div>
+					</div>
+					<div class="mho_col mho_col_6">
+						<div class="mho_row" style="height:100%;">
+							<div class="mho_col mho_col_12 mho_panel">
+								<div class="mho_panel_head">请假统计</div>
+								<div class="mho_panel_content">
+									<div style="width:145px;">
+										<canvas id="pieChart" width="80" height="80"></canvas>
+									</div>
+								</div>
+							</div>
+							<div class="mho_col mho_col_12 mho_panel" style="margin:0;">
+								<div class="mho_panel_head">请假统计</div>
+								<div class="mho_panel_content">
+									<div style="width:145px;">
+										<canvas id="pieChart1" width="80" height="80"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mho_row">
+					<div class="mho_col mho_col_6 mho_panel">
+						<div class="mho_panel_head">最新签约</div>
+						<div class="mho_panel_content">
+							<ul class="mho_dot_line">
+								<li>
+									<a href="javascript:void(0)">
+										<small class="mho_gray_color">2016-7-21</small>
+										<p class="mho_ellipsis">特朗普幕僚擅发飓风假新闻 吐嘈声完全挡不住！</p>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0)">
+										<small class="mho_gray_color">2016-7-21</small>
+										<p class="mho_ellipsis">特朗普幕僚擅发飓风假新闻 吐嘈声完全挡不住！</p>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0)">
+										<small class="mho_gray_color">2016-7-21</small>
+										<p class="mho_ellipsis">特朗普幕僚擅发飓风假新闻 吐嘈声完全挡不住！</p>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0)">
+										<small class="mho_gray_color">2016-7-21</small>
+										<p class="mho_ellipsis">特朗普幕僚擅发飓风假新闻 吐嘈声完全挡不住！</p>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0)">
+										<small class="mho_gray_color">2016-7-21</small>
+										<p class="mho_ellipsis">特朗普幕僚擅发飓风假新闻 吐嘈声完全挡不住！</p>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="mho_col mho_col_6 mho_panel">
+						<div class="mho_panel_head">最新签约</div>
+						<div class="mho_panel_content">
+							<ul class="mho_dot_line">
+								<li>
+									<a href="javascript:void(0)">
+										<small class="mho_gray_color">2016-7-21</small>
+										<p class="mho_ellipsis">特朗普幕僚擅发飓风假新闻 吐嘈声完全挡不住！</p>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0)">
+										<small class="mho_gray_color">2016-7-21</small>
+										<p class="mho_ellipsis">特朗普幕僚擅发飓风假新闻 吐嘈声完全挡不住！</p>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0)">
+										<small class="mho_gray_color">2016-7-21</small>
+										<p class="mho_ellipsis">特朗普幕僚擅发飓风假新闻 吐嘈声完全挡不住！</p>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0)">
+										<small class="mho_gray_color">2016-7-21</small>
+										<p class="mho_ellipsis">特朗普幕僚擅发飓风假新闻 吐嘈声完全挡不住！</p>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0)">
+										<small class="mho_gray_color">2016-7-21</small>
+										<p class="mho_ellipsis">特朗普幕僚擅发飓风假新闻 吐嘈声完全挡不住！</p>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>-->
+			</iframe>
+		</div>
+	</div>
+</div>
+<script src="index.js"></script>
+</body>
+</html>
