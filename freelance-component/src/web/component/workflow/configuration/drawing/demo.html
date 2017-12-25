@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="component/workflow/configuration/drawing/index.css">
 	<script type="text/javascript" src="component/workflow/configuration/drawing/lib/raphael-min.js"></script>
 	<script type="text/javascript" src="component/workflow/configuration/drawing/lib/jquery-ui-1.8.4.custom/js/jQuery-2.2.0.min.js"></script>
+	<!--<script type="text/javascript" src="component/workflow/configuration/drawing/lib/jquery-ui-1.8.4.custom/js/jquery-ui.min.js"></script>-->
 	<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript" src="component/workflow/configuration/drawing/myflow.js"></script>
 	<script type="text/javascript" src="component/workflow/configuration/drawing/myflow.jpdl4.js"></script>
@@ -14,13 +15,13 @@
 </head>
 <body>
 	<div id="myflow_tools" class="ui-widget-content">
-	<div id="myflow_tools_handle" style="text-align: center;"
-		class="ui-widget-header">工具集 </div>
-
-	<div class="node" id="myflow_revoke"><img src="component/workflow/configuration/drawing/img/save.gif" />&nbsp;&nbsp;撤销</div>
-	<div class="node" id="myflow_redraw"><img src="component/workflow/configuration/drawing/img/save.gif" />&nbsp;&nbsp;重绘</div>
-	<div class="node" id="myflow_save"><img src="component/workflow/configuration/drawing/img/save.gif" />&nbsp;&nbsp;保存</div>
-	<div class="node" id="myflow_publish"><img src="component/workflow/configuration/drawing/img/save.gif" />&nbsp;&nbsp;发布</div>
+		<div id="myflow_tools_handle" style="text-align: left;"
+			class="ui-widget-header"> 工具集 
+		</div>
+		<div class="node" id="myflow_revoke"><img src="component/workflow/configuration/drawing/img/save.gif" />&nbsp;&nbsp;撤销</div>
+		<div class="node" id="myflow_redraw"><img src="component/workflow/configuration/drawing/img/save.gif" />&nbsp;&nbsp;重绘</div>
+		<div class="node" id="myflow_save"><img src="component/workflow/configuration/drawing/img/save.gif" />&nbsp;&nbsp;保存</div>
+		<div class="node" id="myflow_publish"><img src="component/workflow/configuration/drawing/img/save.gif" />&nbsp;&nbsp;发布</div>
 	<div>
 
 	<hr />
@@ -34,10 +35,8 @@
 	</div>
 	<div class="node state" id="start" type="start"><img
 		src="component/workflow/configuration/drawing/img/16/start_event_empty.png" />&nbsp;&nbsp;开始</div>
-	<div class="node state" id="state" type="state"><img
-		src="component/workflow/configuration/drawing/img/16/task_empty.png" />&nbsp;&nbsp;状态</div>
-	<div class="node state" id="task" type="task"><img
-		src="component/workflow/configuration/drawing/img/16/task_empty.png" />&nbsp;&nbsp;任务</div>
+	<div class="node state" id="activity" type="state"><img
+		src="component/workflow/configuration/drawing/img/16/task_empty.png" />&nbsp;&nbsp;活动</div>
 	<div class="node state" id="fork" type="fork"><img
 		src="component/workflow/configuration/drawing/img/16/gateway_parallel.png" />&nbsp;&nbsp;分支</div>
 	<div class="node state" id="join" type="join"><img

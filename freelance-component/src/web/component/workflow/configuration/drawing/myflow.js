@@ -112,8 +112,8 @@
         },
         tools: {// 工具栏
             attr: {
-                left: 200,
-                top: 50
+                left: 10,
+                top: 10
             },
             pointer: {},
             path: {},
@@ -126,8 +126,8 @@
         },
         props: {// 属性编辑器
             attr: {
-                top: 50,
-                right: 30
+                top: 10,
+                right: 10
             },
             props: {}
         },
@@ -688,23 +688,23 @@
         };
 
         // 函数----------------
-        // 转化json字串
-        this.toJson = function () {
-            var data = "{type:'" + _o.type + "',ID:'" + (!_o.ID ? "" : _o.ID) + "',text:{text:'"
-                + (!_text.node.textContent ? "" : _text.node.textContent) + "'}, attr:{ x:"
-                + Math.round(_rect.attr('x')) + ", y:"
-                + Math.round(_rect.attr('y')) + ", width:"
-                + Math.round(_rect.attr('width')) + ", height:"
-                + Math.round(_rect.attr('height')) + "},";
-            //for (var k in _o.props) {
-            //    data += k + ":{value:'"
-            //        + _o.props[k].value + "'},";
-            //}
-            if (data.substring(data.length - 1, data.length) == ',')
-                data = data.substring(0, data.length - 1);
-            data += "}";
-            return data;
-        };
+       // 转化json字串
+		this.toJson = function () {
+		var data = "{type:'" + _o.type + "',ID:'" + (!_o.ID ? "" : _o.ID) + "',text:{text:'"
+		+ (!_text.node.textContent ? "" : _text.node.textContent) + "'}, attr:{ x:"
+		+ Math.round(_rect.attr('x')) + ", y:"
+		+ Math.round(_rect.attr('y')) + ", width:"
+		+ Math.round(_rect.attr('width')) + ", height:"
+		+ Math.round(_rect.attr('height')) + "},"
+		+ " props:{";
+		for (var o in _o.props) {
+		data += o + ":{value:'" + _o.props[o].value + "'},"
+		}
+		if (data.substring(data.length - 1, data.length) == ',')
+		data = data.substring(0, data.length - 1);
+		data += "}}";
+		return data;
+		};
         // 从数据中恢复图
         this.restore = function (data) {
             var obj = data;
