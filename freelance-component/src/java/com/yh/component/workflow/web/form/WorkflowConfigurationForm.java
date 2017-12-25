@@ -3,8 +3,11 @@ package com.yh.component.workflow.web.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.json.JSONObject;
+
 import org.apache.struts.action.ActionForm;
 
+import com.yh.component.dynamicproperty.dto.DynamicPropertyDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
 
 /**
@@ -30,8 +33,9 @@ public class WorkflowConfigurationForm extends ActionForm{
 	private java.util.Date		templateModifyDate;//最新修改时间
 	private java.lang.String    templateModifyUserName;//最近修改人
 	private java.lang.String    templateDescription;//模板描述
+	private java.lang.String bak1;//扩展字段
 	private List<WorkflowBaseInfoDTO> baseInfoList = new ArrayList<WorkflowBaseInfoDTO>();
-	
+	private List<JSONObject> dpList = new ArrayList<JSONObject>();
 	private java.lang.String flagStatus;
 	
 	public java.lang.String getFlagStatus() {
@@ -135,6 +139,18 @@ public class WorkflowConfigurationForm extends ActionForm{
 	}
 	public void setBaseInfoList(List<WorkflowBaseInfoDTO> baseInfoList) {
 		this.baseInfoList = baseInfoList;
+	}
+	public java.lang.String getBak1() {
+		return bak1;
+	}
+	public void setBak1(java.lang.String bak1) {
+		this.bak1 = bak1;
+	}
+	public List<JSONObject> getDpList() {
+		return dpList;
+	}
+	public void setDpList(List<JSONObject> dpList) {
+		this.dpList = dpList;
 	}
 
 }

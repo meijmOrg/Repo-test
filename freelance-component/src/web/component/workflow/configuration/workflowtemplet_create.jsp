@@ -37,7 +37,7 @@
                 	</ol>
             </div>
             <input type="hidden" name="flagStatus" value="INSERT"/>
-	       	<jsp:include page="/component/workflow/configuration/workflowtemplet_body.jsp"></jsp:include> 	
+	       	<jsp:include page="/component/workflow/configuration/workflowtemplet_body_dp.jsp"></jsp:include> 	
         </div>
         
          <div class="modal-footer">

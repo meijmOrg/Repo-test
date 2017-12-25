@@ -56,8 +56,6 @@
 
 <script type="text/javascript">
 var worktop = null;
-debugger
-var header = "${aa}";
 $(document).ready(function() {
 	
 	worktop = new Worktop([
@@ -92,8 +90,7 @@ $(document).ready(function() {
 					return record;
 					}},
 				{header:'模板编码', field:'templateCode', width:150},
-				{header:'模板分类', field:'templateType', width:150},
-				{header:'templateId', field:'templateId', width:150}			
+				{header:'模板分类', field:'templateType', width:150}		
 				]
 		}
 	]);

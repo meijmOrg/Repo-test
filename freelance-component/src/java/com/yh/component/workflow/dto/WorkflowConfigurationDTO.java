@@ -25,6 +25,7 @@ public class WorkflowConfigurationDTO {
 	private java.util.Date		templateModifyDate;//最新修改时间
 	private java.lang.String    templateModifyUserName;//最近修改人
 	private java.lang.String    templateDescription;//模板描述
+	private java.lang.String bak1;//扩展字段
 	
 	private java.lang.String  	flowId;	//主键
 	private java.lang.String	flowName;	//流程名称	
@@ -221,6 +222,12 @@ public class WorkflowConfigurationDTO {
 	}
 	public void setTfForbidden(java.lang.Long tfForbidden) {
 		this.tfForbidden = tfForbidden;
+	}
+	public java.lang.String getBak1() {
+		return bak1;
+	}
+	public void setBak1(java.lang.String bak1) {
+		this.bak1 = bak1;
 	}
 
 }

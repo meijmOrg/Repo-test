@@ -24,7 +24,7 @@ function goToDynamicProperty(dpCode){
 		{
 			xtype:'Xtable',
 			xname:'grid',
-			url: 'getPropertyList.do?method=getDynamicPropertyList&dpCode='+dpCode,
+			url: 'getPropertyList.do?method=getDynamicPropertyList&config=Y&dpCode='+dpCode,
 			rowNumber: true,
 			start : '${param.pageNo}'==''?1:'${param.pageNo}',
 			iPageLength: '${param.limit}'==''?30:'${param.limit}',
@@ -76,7 +76,6 @@ function doDpAvailiable(dpId,dpState){
 	var params = {};
 	params.dpId = dpId;
 	params.status = dpState;
-	debugger
 	if(dpId){
 		//MessageBox.yes('提示','请确认是否删除?', function(){
 			$.ajax({   										 

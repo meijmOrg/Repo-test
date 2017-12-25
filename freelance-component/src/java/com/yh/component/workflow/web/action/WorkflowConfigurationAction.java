@@ -4,6 +4,7 @@
 **/
 package com.yh.component.workflow.web.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import com.yh.component.dynamicproperty.dto.DynamicPropertyDTO;
+import com.yh.component.dynamicproperty.facade.DynamicPropertyConfigFacade;
+import com.yh.component.dynamicproperty.util.DynamicPropertyUtil;
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
@@ -43,7 +47,7 @@ import com.yh.platform.core.web.action.BaseAction;
 public class WorkflowConfigurationAction extends BaseAction {
 	
 	private WorkflowConfigurationFacade workflowConfigurationFacade = (WorkflowConfigurationFacade) SpringBeanUtil.getBean("workflowConfigurationFacade");
-
+	private DynamicPropertyConfigFacade dynamicPropertyConfigFacade = (DynamicPropertyConfigFacade) SpringBeanUtil.getBean("dynamicPropertyConfigFacade");
 	/**
 	 * 跳转至模板管理页面
 	 * @param mapping
@@ -55,8 +59,6 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 */
 	public ActionForward goWorkflowConfigurationUpdate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
-		String aa = "{header:'templateId', field:'templateId', width:150}";
-		request.setAttribute("aa", aa);
 		return mapping.findForward("success");
 	}
 	/**
@@ -129,6 +131,20 @@ public class WorkflowConfigurationAction extends BaseAction {
 	public ActionForward goInsertTemplet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
+		/**
+		 * 调用动态字段方法 获取动态字段配置信息
+		 */
+		List<DynamicPropertyDTO> dpList = dynamicPropertyConfigFacade.getDynamicPropertyConfig(DynamicPropertyUtil.yhf_file_template);
+		List<JSONObject> jsonList = new ArrayList<JSONObject>();
+		if(CollectionUtils.isNotEmpty(dpList)){
+			for(DynamicPropertyDTO dto:dpList){
+				JSONObject json = JSONHelper.fromObject(dto);
+				jsonList.add(json);
+			}
+		}
+		WorkflowConfigurationForm workflowConfigurationForm = new WorkflowConfigurationForm();
+		workflowConfigurationForm.setDpList(jsonList);
+		request.setAttribute("workflowConfigurationForm", workflowConfigurationForm);
 		String templateId = request.getParameter("templateId");
 		request.setAttribute("templateId", templateId);
 		return mapping.findForward(FORWARD_SUCCESS);
@@ -184,6 +200,18 @@ public class WorkflowConfigurationAction extends BaseAction {
 			if(null != workflowConfigurationDto)
 			{
 				WorkflowConfigurationForm workflowConfigurationForm = BeanHelper.copyProperties(workflowConfigurationDto, WorkflowConfigurationForm.class);
+				/**
+				 * 调用动态字段方法 获取动态字段配置信息
+				 */
+				List<DynamicPropertyDTO> dpList = dynamicPropertyConfigFacade.getDynamicPropertyConfig(DynamicPropertyUtil.yhf_file_template);
+				List<JSONObject> jsonList = new ArrayList<JSONObject>();
+				if(CollectionUtils.isNotEmpty(dpList)){
+					for(DynamicPropertyDTO dto:dpList){
+						JSONObject json = JSONHelper.fromObject(dto);
+						jsonList.add(json);
+					}
+				}
+				workflowConfigurationForm.setDpList(jsonList);
 				request.setAttribute("workflowConfigurationForm", workflowConfigurationForm);
 			}
 			else

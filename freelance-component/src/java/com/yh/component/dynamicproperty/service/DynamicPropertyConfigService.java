@@ -1,5 +1,7 @@
 package com.yh.component.dynamicproperty.service;
 
+import java.util.List;
+
 import com.yh.component.dynamicproperty.dto.DynamicPropertyDTO;
 import com.yh.platform.core.exception.ServiceException;
 /**
@@ -21,6 +23,12 @@ public interface DynamicPropertyConfigService {
 	 * @throws ServiceException
 	 */
 	public void updateDpDescription(DynamicPropertyDTO dynamicPropertyDto)throws ServiceException;
+	/**
+	 * 根据条件获取动态字段配置信息
+	 * @param tableName
+	 * @return
+	 */
+	public List<DynamicPropertyDTO> getDynamicPropertyConfig(String tableName)throws ServiceException;
 
 
 }

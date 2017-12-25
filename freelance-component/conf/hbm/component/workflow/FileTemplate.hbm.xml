@@ -80,5 +80,10 @@
                 <comment>模板描述</comment>
             </column>
         </property> 
+          <property name="bak1" type="java.lang.String">
+            <column name="bak_1">
+                <comment>扩展字段</comment>
+            </column>
+        </property> 
     </class>
 </hibernate-mapping>

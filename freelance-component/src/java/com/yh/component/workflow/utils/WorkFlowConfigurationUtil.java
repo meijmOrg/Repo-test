@@ -30,5 +30,13 @@ public class WorkFlowConfigurationUtil {
 	/**
 	 * 模板分类（备用）
 	 */
-	
+	public static final String YHRS4003 = "YHRS4003"; 
+	/**人事信息*/
+	public static final String YHRS4003_1 = "1";
+	/**人事业务*/
+	public static final String YHRS4003_2 = "2";
+	/**综合管理*/
+	public static final String YHRS4003_3 = "3";
+	/**其它*/
+	public static final String YHRS4003_4 = "4";
 }

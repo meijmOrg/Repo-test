@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.yh.platform.core.constant.Constant"%>
 <%@ page import="com.yh.component.workflow.utils.WorkFlowConfigurationUtil"%>
+<%@taglib uri="dictionary.tld" prefix="dictionary" %>
+<%@taglib uri="c.tld" prefix="c"%>
 <%-- <%@ include file="/include/jsp_headers.jsp"%>
  --%>
 <!--
@@ -25,7 +27,7 @@
 		<input type="hidden" name="templateId" value="${workflowConfigurationForm.templateId }"/>
 		<div class="modal-row01">
 			<dl>
-	            <dt><b class="Required">* </b>模板名称</dt>
+	            <dt><b class="Required">* </b>模板名称:</dt>
 	            <dd>
 					<label><input type="text" name="templateName" class="modal_iput" id="templateName" value="${workflowConfigurationForm.templateName }" maxlength="100"/> </label>
 	            </dd>
@@ -39,12 +41,14 @@
 				</dd>
 			</dl>
 		</div>
-		<%-- <dl>
-			<dt><b class="Required">* </b>模板分类：</dt>
-			<dd>
-				<label><dictionary:dicItemSelect id="templateType" name="templateType" styleClass="modal_select" emptyText="<%=WorkFlowConfigurationUtil.EMPTY_SELECT %>" selected="${workflowConfigurationForm.templateType}" dicTypeCode="<%=WorkFlowConfigurationUtil.%>" /> </label>
-			</dd>
-		</dl> --%>
+		<div class="modal-row01">
+			<dl>
+				<dt><b class="Required">* </b>模板分类：</dt>
+				<dd>
+					<label><dictionary:dicItemSelect id="templateType" name="templateType" styleClass="modal_select" emptyText="<%=WorkFlowConfigurationUtil.EMPTY_SELECT %>" selected="${workflowConfigurationForm.templateType}" dicTypeCode="<%=WorkFlowConfigurationUtil.YHRS4003%>" /> </label>
+				</dd>
+			</dl>
+			</div>
 		<div class="modal-row01">
 			<dl>
 				<dt><b class="Required">* </b>新增页面：</dt>
