@@ -1,5 +1,9 @@
 package com.yh.component.workflow.dto;
 
+import java.util.ArrayList;
+
+import com.yh.component.workflow.bo.FlowKeyWord;
+
 
 /**
  * 流程规则信息DTO
@@ -17,6 +21,8 @@ public class WorkflowRuleDTO{
 	private java.lang.String  	ruleEndActId;	//后置活动
 	private java.lang.String 	ruleType;//规则类型
 	private java.lang.String  	ruleSysType;	// 规则系统类型
+	
+	private java.util.List<FlowKeyWord> kwList = new ArrayList<FlowKeyWord>();
 	public java.lang.String getRuleId() {
 		return ruleId;
 	}

@@ -8,7 +8,10 @@
 package com.yh.platform.core.dao;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -272,7 +275,46 @@ public class DaoUtil {
             throw new DataAccessFailureException(e);
         }
     }
-
+    /**
+     * hibernate 执行sql语句
+     * @param sql
+     * @return
+     * @throws DataAccessFailureException
+     */
+    public static int executeSqlUpdate(final String sql) throws DataAccessFailureException {
+        try {
+            return (Integer) getHibernateTemplate().execute(new HibernateCallback() {
+                public Object doInHibernate(Session session) throws HibernateException, SQLException {
+                	int i = 0;
+                	if(session.isConnected()) {
+	                	final Connection con = session.connection();
+	                	final PreparedStatement psmt = con.prepareStatement(sql);
+	                    i = psmt.executeUpdate();
+	                    if(psmt!=null) {
+	                    	try {
+								close(psmt);
+							} catch (DataAccessFailureException e) {
+								e.printStackTrace();
+							}
+	                    }
+                	}
+                	System.out.println("Hibernate: "+sql);
+                    return i;
+                }
+            });
+        } catch (DataAccessException e) {
+            throw new DataAccessFailureException(e);
+        }
+    }
+    private static void close(Statement stmt) throws DataAccessFailureException {
+		try {
+			if (stmt != null) {
+				stmt.close();
+			}
+		} catch (SQLException e) {
+			throw new DataAccessFailureException("关闭Statement失败", e);
+		}
+	}
     /**
      * @param sql
      * @param params

@@ -114,75 +114,75 @@ public class WorkflowConfigurationFacade {
 	 * @param activityId
 	 * @return
 	 * @throws ServiceException
-	 */
+	 *//*
 	public WorkflowActivityDTO getActivityInfo(Long activityId) throws ServiceException{
 		// TODO Auto-generated method stub
 		return workflowConfigurationService.getActivityInfo(activityId);
 	}
-	/**
+	*//**
 	 * 删除活动记录
 	 * @param activityId
 	 * @throws ServiceException
-	 */
+	 *//*
 	public void deleteActivity(Long activityId) throws ServiceException{
 		// TODO Auto-generated method stub
 		workflowConfigurationService.deleteActivity(activityId);
 		
 	}
-	/**
+	*//**
 	 * 修改活动信息
 	 * @param workflowActivityDto
 	 * @throws ServiceException
-	 */
+	 *//*
 	public void updateActivity(WorkflowActivityDTO workflowActivityDto) throws ServiceException{
 		// TODO Auto-generated method stub
 		workflowConfigurationService.updateActivity(workflowActivityDto);
 	}
-	/**
+	*//**
 	 * 新增活动信息
 	 * @param workflowActivityDto
 	 * @throws ServiceException
-	 */
+	 *//*
 	public void insertActivity(WorkflowActivityDTO workflowActivityDto) throws ServiceException{
 		// TODO Auto-generated method stub
 		workflowConfigurationService.insertActivity(workflowActivityDto);
 	}
-	/**
+	*//**
 	 * 获取规则信息、构置转移条件信息
 	 * @param ruleId
 	 * @return
 	 * @throws ServiceException
-	 */
+	 *//*
 	public WorkflowRuleDTO getRuleInfo(Long ruleId) throws ServiceException{
 		// TODO Auto-generated method stub
 		return workflowConfigurationService.getRuleInfo(ruleId);
 	}
-	/**
+	*//**
 	 * 删除规则记录
 	 * @param ruleId
 	 * @throws ServiceException
-	 */
+	 *//*
 	public void deleteRule(Long ruleId) throws ServiceException{
 		// TODO Auto-generated method stub
 		workflowConfigurationService.deleteRule(ruleId);
 		
 	}
-	/**
+	*//**
 	 * 修改规则信息
 	 * @param workflowRuleDto
 	 * @throws ServiceException
-	 */
+	 *//*
 	public void updateRule(WorkflowRuleDTO workflowRuleDto) throws ServiceException{
 		// TODO Auto-generated method stub
 		workflowConfigurationService.updateRule(workflowRuleDto);
 	}
-	/**
+	*//**
 	 * 新增规则信息
 	 * @param workflowRuleDto
 	 * @throws ServiceException
-	 */
+	 *//*
 	public void insertRule(WorkflowRuleDTO workflowRuleDto) throws ServiceException{
 		// TODO Auto-generated method stub
 		workflowConfigurationService.insertRule(workflowRuleDto);
-	}
+	}*/
 }

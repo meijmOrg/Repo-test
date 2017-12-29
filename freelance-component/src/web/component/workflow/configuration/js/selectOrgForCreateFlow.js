@@ -56,7 +56,7 @@ function selectOrgForCreateFlow(obj,isPersonInfo,templetId)
 				 		$("#right_wfc").load('goViewWorkflowConfiguration.do?method=goViewWorkflowConfiguration',{"templetId":templetId});
 				    }); */
 		 HistoryRegister.set("goWorkflowConfigurationUpdate", "goWorkflowConfigurationUpdate.do?method=goWorkflowConfigurationUpdate");
-         location.href = "goCreateWorkflowBaseInfo.do?method=goCreateFlow&templetId="+templetId+"&orgName="+selectOrgName+"&orgOid="+selectOrgOid;
+         location.href = "goCreateWorkflowBaseInfo.do?method=goUpdateFlow&templetId="+templetId+"&orgName="+selectOrgName+"&orgOid="+selectOrgOid;
          selectOrgName = "";
          selectOrgOid = "";
 
