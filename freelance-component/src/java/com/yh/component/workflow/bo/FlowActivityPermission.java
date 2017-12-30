@@ -13,7 +13,7 @@ public class FlowActivityPermission extends BaseBo{
 	private static final long serialVersionUID = -1646221010312595831L;
 	private java.lang.String apId;//活动单元权限配置唯一ID
 	private java.lang.String actId;//活动单元ID
-	private java.lang.String apCancoordination;//是否可以协同
+	private java.lang.String apCanCoordination;//是否可以协同
 	private java.lang.String apCanFinish;//是否可以结束
 	private java.lang.String apCanSkip;//是否允许跳过
 	private java.lang.String apCanCarbanCopy;//是否允许抄送
@@ -31,11 +31,11 @@ public class FlowActivityPermission extends BaseBo{
 	public void setActId(java.lang.String actId) {
 		this.actId = actId;
 	}
-	public java.lang.String getApCancoordination() {
-		return apCancoordination;
+	public java.lang.String getApCanCoordination() {
+		return apCanCoordination;
 	}
-	public void setApCancoordination(java.lang.String apCancoordination) {
-		this.apCancoordination = apCancoordination;
+	public void setApCanCoordination(java.lang.String apCanCoordination) {
+		this.apCanCoordination = apCanCoordination;
 	}
 	public java.lang.String getApCanFinish() {
 		return apCanFinish;
