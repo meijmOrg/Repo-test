@@ -197,38 +197,27 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 	}
 	public void insertFlow(WorkflowBaseInfoDTO workflowBaseInfoDTO)
 	throws ServiceException {
-		//1、流程信息
-		Flow flowBo=new Flow();
-		BeanUtils.copyProperties(workflowBaseInfoDTO, flowBo);
-		flowBo.setFlowId(StringUtil.getUUID());
-		flowBo.save();
-		//2、模板-流程关联信息
-		TemplateFlow tfBo = new TemplateFlow();
-		tfBo.setTfId(StringUtil.getUUID());
-		tfBo.setTemplateId(workflowBaseInfoDTO.getTemplateId());
-		tfBo.setFlowId(flowBo.getFlowId());
-		tfBo.save();
-		//3、活动信息
-		FlowActivity actBo = new FlowActivity();
-		actBo.setActId(StringUtil.getUUID());
-		actBo.setFlowId(flowBo.getFlowId());
-			//其他信息
-		//actBo.setActAuditContent(actAuditContent);
-		actBo.save();
-		//4、规则信息
-		FlowRule ruleBo = new FlowRule();
-		ruleBo.setRuleId(StringUtil.getUUID());
-		ruleBo.setFlowId(flowBo.getFlowId());
-			//其他信息
-		//ruleBo.setActAuditContent(actAuditContent);
-		ruleBo.save();
+		// TODO Auto-generated method stub
 		//1、权限控制信息
 		FlowActivityPermission apBo = new FlowActivityPermission();
 		FlowActivityPerCombination pcBo = new FlowActivityPerCombination();
 		//2、任务通知
 		FlowActivityNotice anBo = new FlowActivityNotice();
-		
-		
+		//3、活动信息
+		FlowActivity actBo = new FlowActivity();
+		//4、规则信息
+		FlowRule ruleBo = new FlowRule();
+		//5、流程信息
+		Flow flowBo=new Flow();
+		BeanUtils.copyProperties(workflowBaseInfoDTO, flowBo);
+		flowBo.setFlowId(StringUtil.getUUID());
+		flowBo.save();
+		//模板-流程关联信息
+		TemplateFlow tfBo = new TemplateFlow();
+		tfBo.setTfId(StringUtil.getUUID());
+		tfBo.setTemplateId(workflowBaseInfoDTO.getTemplateId());
+		tfBo.setFlowId(flowBo.getFlowId());
+		tfBo.save();
 	}
 	/*
 	 * (non-Javadoc)

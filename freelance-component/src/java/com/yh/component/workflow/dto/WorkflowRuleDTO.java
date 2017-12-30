@@ -77,11 +77,5 @@ public class WorkflowRuleDTO{
 	public void setRuleSysType(java.lang.String ruleSysType) {
 		this.ruleSysType = ruleSysType;
 	}
-	public java.util.List<FlowKeyWord> getKwList() {
-		return kwList;
-	}
-	public void setKwList(java.util.List<FlowKeyWord> kwList) {
-		this.kwList = kwList;
-	}
 
 }
