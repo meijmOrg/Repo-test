@@ -78,53 +78,53 @@ public interface WorkflowConfigurationService {
 	 * 新增规则信息
 	 * @param workflowRuleDto
 	 * @throws ServiceException
-	 */
+	 *//*
 	void insertRule(WorkflowRuleDTO workflowRuleDto)throws ServiceException;
-	/**
+	*//**
 	 * 修改规则信息
 	 * @param workflowRuleDto
 	 * @throws ServiceException
-	 */
+	 *//*
 	void updateRule(WorkflowRuleDTO workflowRuleDto)throws ServiceException;
-	/**
+	*//**
 	 * 删除规则信息
 	 * @param ruleId
 	 * @throws ServiceException
-	 */
+	 *//*
 	void deleteRule(Long ruleId)throws ServiceException;
-	/**
+	*//**
 	 * 获取规则信息、 构置转移条件信息
 	 * @param ruleId
 	 * @return
 	 * @throws ServiceException
-	 */
+	 *//*
 	WorkflowRuleDTO getRuleInfo(Long ruleId)throws ServiceException;
-	/**
+	*//**
 	 * 新增活动信息
 	 * @param workflowActivityDto
 	 * @throws ServiceException
-	 */
+	 *//*
 	void insertActivity(WorkflowActivityDTO workflowActivityDto)throws ServiceException;
 	
-	/**
+	*//**
 	 * 修改活动信息
 	 * @param workflowActivityDto
 	 * @throws ServiceException
-	 */
+	 *//*
 	void updateActivity(WorkflowActivityDTO workflowActivityDto)throws ServiceException;
-	/**
+	*//**
 	 * 删除活动信息
 	 * @param activityId
 	 * @throws ServiceException
-	 */
+	 *//*
 	void deleteActivity(Long activityId)throws ServiceException;
-	/**
+	*//**
 	 * 获取活动信息、权限控制信息、任务通知信息
 	 * @param activityId
 	 * @return
 	 * @throws ServiceException
-	 */
-	WorkflowActivityDTO getActivityInfo(Long activityId)throws ServiceException;
+	 *//*
+	WorkflowActivityDTO getActivityInfo(Long activityId)throws ServiceException;*/
 
 
 }

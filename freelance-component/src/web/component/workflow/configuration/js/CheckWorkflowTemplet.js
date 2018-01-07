@@ -2,7 +2,6 @@
  * 模板信息校验
  */
 $(function(){
-	debugger
     $("#workflowConfigurationForm").validate({
         rules:{
         	templateName: {
@@ -10,6 +9,19 @@ $(function(){
             },
             templateCode:{
                 required: true
+            },
+            templateType:{
+            	required:true
+            },templateCreatePage:{
+            	required: true
+            },templateEditPage:{
+            	required: true
+            },templateInfoPage:{
+            	required: true
+            },templateFlowPage:{
+            	required: true
+            },templateReportPage:{
+            	required: true
             }
         },   
         messages: {
@@ -17,6 +29,18 @@ $(function(){
                 required: "请输入模板名称"
             },templateCode: {
                 required: "请输入模板编码"
+            },templateType:{
+            	required:"请选择模板分类"
+            },templateCreatePage:{
+            	required: "请输入新增页面"
+            },templateEditPage:{
+            	required: "请输入编辑页面"
+            },templateInfoPage:{
+            	required: "请输入详细页面"
+            },templateFlowPage:{
+            	required: "请输入流程页面"
+            },templateReportPage:{
+            	required: "请输入报表页面"
             }
         },
         errorPlacement: function (error, element)

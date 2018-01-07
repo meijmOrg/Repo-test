@@ -8,7 +8,7 @@ ol {
   list-style: none;
 }
 body {
-  font: 14px '微软雅黑', Verdana, Helvetica, Arial, sans-serif;
+  font: 14px 'å¾®è½¯é›…é»‘', Verdana, Helvetica, Arial, sans-serif;
 }
 a {
   text-decoration: none;
@@ -349,13 +349,131 @@ a:hover {
   outline: none;
   width: 90%;
 }
+/**È¥µô»ÆÉ«±³¾°**/
+.yh_input input {
+   -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
 .mho_login_form input[type=button] {
   border: 0;
   color: #fff;
   background: #303f9f;
   cursor: pointer;
+ 
 }
 .mho_login_form input[type=button]:hover {
   background: #3f51b5;
 }
 /**login**/
+
+.lg-error{
+    height: 30px;
+    padding-left: 6px;
+    padding-top: 2px;
+    color: #ff0000;
+    font-size: 12px;
+}
+/**accordion**/
+.mho_accordion {
+	border: 1px solid #dedede;
+}
+.mho_accordion_item {
+	border-bottom: 1px solid #dedede;
+}
+.mho_accordion_title {
+	height: 40px;
+    line-height: 40px;
+    font-weight: 800;
+    padding: 0 20px;
+    border-bottom: 1px solid #d7e0f1;
+}
+.mho_accordion_body {
+	padding: 10px 10px;
+}
+/**accordion**/
+/**form**/
+.mho_form input[type=number], .mho_form input[type=search], 
+.mho_form input[type=text], .mho_form input[type=password], 
+.mho_form input[type=datetime], .mho_form input[type=datetime-local], 
+.mho_form input[type=date], .mho_form input[type=month], 
+.mho_form input[type=time], .mho_form input[type=week], 
+.mho_form input[type=email], .mho_form input[type=url], 
+.mho_form input[type=tel], .mho_form input[type=color], 
+.mho_form select, .mho_form textarea, .mho_form_field {
+    display: inline-block;
+	height: 30px;
+    font-size: 14px;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    -webkit-transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+}
+.mho_form_group {
+	display: flex;
+}
+.mho_form_group label {
+	display: inline-block;
+    height: 30px;
+	line-height: 30px;
+	padding: 0 5px;
+}
+.mho_form_group input[type=number], .mho_form_group input[type=search], 
+.mho_form_group input[type=text], .mho_form_group input[type=password], 
+.mho_form_group input[type=datetime], .mho_form_group input[type=datetime-local], 
+.mho_form_group input[type=date], .mho_form_group input[type=month], 
+.mho_form_group input[type=time], .mho_form_group input[type=week], 
+.mho_form_group input[type=email], .mho_form_group input[type=url], 
+.mho_form_group input[type=tel], .mho_form_group input[type=color], 
+.mho_form_group select, .mho_form_group textarea {
+	flex-grow: 1;
+}
+input[type=checkbox], 
+input[type=checkbox], 
+input[type=radio], 
+input[type=radio] {
+	margin: 0 5px;
+}
+/**form**/
+/**tabs**/
+.mho_tabs {
+	
+}
+.mho_tabs_nav {
+    line-height: 40px;
+    background-color: #eee;
+	text-align: center;
+	display: flex;
+}
+.mho_tabs_nav li {
+	flex: 1;
+}
+.mho_tabs_nav li a {
+	display: block;
+    word-wrap: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.mho_tabs_nav .mho_active a {
+	background-color: #303f9f;
+	color: #fff;
+}
+.mho_tabs_body {
+	position: relative;
+	overflow: hidden;
+	border: 1px solid #ddd;
+}
+.mho_tab_panel {
+	display: none;
+	width: 100%;
+	padding: 10px 10px;
+}
+.mho_tab_panel.mho_active {
+	display: block;
+}
+/**tabs**/

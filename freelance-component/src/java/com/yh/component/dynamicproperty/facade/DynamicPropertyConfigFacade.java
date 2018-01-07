@@ -1,5 +1,7 @@
 package com.yh.component.dynamicproperty.facade;
 
+import java.util.List;
+
 import com.yh.component.dynamicproperty.dto.DynamicPropertyDTO;
 import com.yh.component.dynamicproperty.service.DynamicPropertyConfigService;
 import com.yh.platform.core.exception.ServiceException;
@@ -27,6 +29,15 @@ public class DynamicPropertyConfigFacade {
 	public void updateDpDescription(DynamicPropertyDTO dynamicPropertyDto) throws ServiceException{
 		// TODO Auto-generated method stub
 		dynamicPropertyConfigService.updateDpDescription(dynamicPropertyDto);
+	}
+	/**
+	 * 根据条件获取动态字段配置信息
+	 * @param tableName
+	 * @return
+	 */
+	public List<DynamicPropertyDTO> getDynamicPropertyConfig(String tableName) throws ServiceException{
+		// TODO Auto-generated method stub
+		return dynamicPropertyConfigService.getDynamicPropertyConfig(tableName);
 	}
 
 }

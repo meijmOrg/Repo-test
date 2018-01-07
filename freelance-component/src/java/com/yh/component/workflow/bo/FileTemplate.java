@@ -26,6 +26,7 @@ public class FileTemplate extends BaseBo{
 	private java.util.Date		templateModifyDate;//最新修改时间
 	private java.lang.String    templateModifyUserName;//最近修改人
 	private java.lang.String    templateDescription;//模板描述
+	private java.lang.String bak1;//扩展字段
 	public java.lang.String getTemplateId() {
 		return templateId;
 	}
@@ -115,6 +116,12 @@ public class FileTemplate extends BaseBo{
 	}
 	public void setTemplateDescription(java.lang.String templateDescription) {
 		this.templateDescription = templateDescription;
+	}
+	public java.lang.String getBak1() {
+		return bak1;
+	}
+	public void setBak1(java.lang.String bak1) {
+		this.bak1 = bak1;
 	}
 	
 }

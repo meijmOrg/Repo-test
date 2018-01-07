@@ -45,7 +45,7 @@
             </div>
             <div class="md-main-content">
             	<input type="hidden" name="flagStatus" value="UPDATE"/>
-	       		<jsp:include page="/component/workflow/configuration/workflowtemplet_body.jsp"></jsp:include>    	
+	       		<jsp:include page="/component/workflow/configuration/workflowtemplet_body_dp.jsp"></jsp:include>    	
         	</div>
         </div>
         
