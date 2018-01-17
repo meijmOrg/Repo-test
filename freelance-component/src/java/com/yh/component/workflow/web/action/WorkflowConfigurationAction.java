@@ -311,7 +311,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public ActionForward goCreateFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception
+	public ActionForward goUpdateFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
 		String templetId = request.getParameter("templetId");//模板Id
 		String orgName = request.getParameter("orgName");//所属部门名称
@@ -331,7 +331,6 @@ public class WorkflowConfigurationAction extends BaseAction {
 				workflowConfigurationDto.setFlowOrgOid(Long.valueOf(orgOid));
 			}
 		}
-		//流程示意图？？？？？？
 		request.setAttribute("workflowConfigurationDto", workflowConfigurationDto);//流程基本信息
 		request.setAttribute("templetId", templetId);
 		return mapping.findForward("success");
@@ -345,7 +344,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public ActionForward goUpdateFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	/*public ActionForward goUpdateFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
 		String baseInfoId = request.getParameter("baseInfoId");
@@ -372,7 +371,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 			return mapping.getInputForward();
 		}
 		return mapping.findForward(FORWARD_SUCCESS);
-	}
+	}*/
 	
 	/**
 	 * 修改流程信息
@@ -386,20 +385,22 @@ public class WorkflowConfigurationAction extends BaseAction {
 	public ActionForward updateFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
+		String templateId = request.getParameter("templetId");
 		String baseInfoId = request.getParameter("baseInfoId");
 		WorkflowConfigurationForm workflowConfigurationForm = (WorkflowConfigurationForm) form;
 		try
 		{
-			if(StringUtils.isEmpty(baseInfoId))
+			/*if(StringUtils.isEmpty(baseInfoId))
 			{
 				throw new ServiceException(null, "baseInfoId is null");
-			}
-			WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getBaseFlowInfo(baseInfoId);
-			if(null == workflowConfigurationDto)
+			}*/
+			//WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getBaseFlowInfo(baseInfoId);
+			/*if(null == workflowConfigurationDto)
 			{
 				throw new ServiceException(null, "查询不到相关信息");
-			}
-			BeanHelper.copyProperties(workflowConfigurationForm, workflowConfigurationDto);
+			}*/
+			//BeanHelper.copyProperties(workflowConfigurationForm, workflowConfigurationDto);
+			WorkflowConfigurationDTO workflowConfigurationDto = new WorkflowConfigurationDTO();
 			workflowConfigurationFacade.updateFlow(workflowConfigurationDto);
 			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
 		}
@@ -498,7 +499,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	public ActionForward goInsertActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
@@ -507,7 +508,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 		return mapping.findForward(FORWARD_SUCCESS);
 	}
 	
-	/**
+	*//**
 	 * 新增活动信息
 	 * @param mapping
 	 * @param form
@@ -515,7 +516,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	public ActionForward insertActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
@@ -532,7 +533,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 			response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(se.getMessage(), "新增失败")).toString());
 		}
 		return null;
-	}
+	}*/
 	
 	/**
 	 * 跳转到修改活动信息
@@ -542,7 +543,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	public ActionForward goUpdateActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
@@ -572,7 +573,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 		return mapping.findForward(FORWARD_SUCCESS);
 	}
 	
-	/**
+	*//**
 	 * 修改活动信息
 	 * @param mapping
 	 * @param form
@@ -580,7 +581,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	public ActionForward updateActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
@@ -609,7 +610,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 		return null;
 	}
 	
-	/**
+	*//**
 	 * 删除活动记录
 	 * @param mapping
 	 * @param form
@@ -617,7 +618,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	public ActionForward deleteActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
@@ -638,7 +639,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 		}
 		return null;
 	}
-	/**
+	*//**
 	 * 跳转到新增规则信息
 	 * @param mapping
 	 * @param form
@@ -646,7 +647,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	public ActionForward goInsertRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
@@ -654,7 +655,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 		return mapping.findForward(FORWARD_SUCCESS);
 	}
 	
-	/**
+	*//**
 	 * 新增规则信息
 	 * @param mapping
 	 * @param form
@@ -662,7 +663,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	public ActionForward insertRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
@@ -681,7 +682,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 		return null;
 	}
 	
-	/**
+	*//**
 	 * 跳转到修改规则信息
 	 * @param mapping
 	 * @param form
@@ -689,7 +690,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	public ActionForward goUpdateRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
@@ -719,7 +720,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 		return mapping.findForward(FORWARD_SUCCESS);
 	}
 	
-	/**
+	*//**
 	 * 修改规则信息
 	 * @param mapping
 	 * @param form
@@ -727,7 +728,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	public ActionForward updateRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
@@ -756,6 +757,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 		return null;
 	}
 	
+	*/
 	/**
 	 * 删除规则记录
 	 * @param mapping
@@ -765,7 +767,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public ActionForward deleteRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	/*public ActionForward deleteRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
 		String ruleId = request.getParameter("ruleId");
@@ -784,5 +786,5 @@ public class WorkflowConfigurationAction extends BaseAction {
 			response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(se.getMessage(), "删除失败")).toString());
 		}
 		return null;
-	}
+	}*/
 }

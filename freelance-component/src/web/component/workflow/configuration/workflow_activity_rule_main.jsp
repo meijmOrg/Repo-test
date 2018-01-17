@@ -21,6 +21,25 @@
 function goback(){
 	HistoryRegister.go("goWorkflowConfigurationUpdate");
 }
+function sendData(data){
+	$.ajax({   										 
+		url : 'updateWorkflowBaseInfo.do?method=updateFlow',
+		data : '',
+		dataType : 'json',
+		type:'POST',
+		error : function(){
+			MessageBox.alert('提示',"操作失败，请重新操作！");
+		},
+		success : function(data) {
+			if(data.success==true){
+				worktop_dynamic.dynamicForm.goQuery();
+			}else{
+				MessageBox.alert("提示","操作失败,请重新操作！");
+			}
+		}
+	});
+	
+}
 </script>
 </head>
 <body>

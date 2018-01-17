@@ -1,5 +1,9 @@
 package com.yh.component.workflow.dto;
 
+import java.util.ArrayList;
+
+import com.yh.component.workflow.bo.FlowActivityNotice;
+
 
 /**
  * 流程活动信息DTO
@@ -19,6 +23,13 @@ public class WorkflowActivityDTO{
 	private java.lang.String    actBackType;//退回方式
 	private java.lang.String	actFinishType;//结束方式
 	private java.lang.String    actAuditContent;//默认审核内容
+	
+	private java.lang.String  	tfId;	//主键
+	private java.lang.String	templateId;	//模板ID	
+	private java.lang.Long 		tfForbidden;//停用Or启用，默认启用，用于后期扩展
+	
+	private java.util.List<FlowActivityNotice>			anList = new ArrayList<FlowActivityNotice>();
+	private java.util.List<FlowActivityPermissionDTO>	apList = new ArrayList<FlowActivityPermissionDTO>();
 	public java.lang.String getActId() {
 		return actId;
 	}
@@ -84,6 +95,36 @@ public class WorkflowActivityDTO{
 	}
 	public void setActAuditContent(java.lang.String actAuditContent) {
 		this.actAuditContent = actAuditContent;
+	}
+	public java.lang.String getTfId() {
+		return tfId;
+	}
+	public void setTfId(java.lang.String tfId) {
+		this.tfId = tfId;
+	}
+	public java.lang.String getTemplateId() {
+		return templateId;
+	}
+	public void setTemplateId(java.lang.String templateId) {
+		this.templateId = templateId;
+	}
+	public java.lang.Long getTfForbidden() {
+		return tfForbidden;
+	}
+	public void setTfForbidden(java.lang.Long tfForbidden) {
+		this.tfForbidden = tfForbidden;
+	}
+	public java.util.List<FlowActivityNotice> getAnList() {
+		return anList;
+	}
+	public void setAnList(java.util.List<FlowActivityNotice> anList) {
+		this.anList = anList;
+	}
+	public java.util.List<FlowActivityPermissionDTO> getApList() {
+		return apList;
+	}
+	public void setApList(java.util.List<FlowActivityPermissionDTO> apList) {
+		this.apList = apList;
 	}
 
 }
