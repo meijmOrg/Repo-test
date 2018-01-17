@@ -38,10 +38,10 @@
 			</dt>
 			<dd>
 				<div class="md-unit-img">
-					<img name="offerImg" id="previewImg" src="<%=request.getContextPath() %>/admin/imageinstall/image_view.jsp?systemCode=1000&flag=logo&_<%=new java.util.Random().nextInt(1000) %>" alt="照片" />
+					<img name="offerImg" id="previewImg" src="<%=request.getContextPath() %>/admin/imageinstall/image_view.jsp?systemCode=<%=com.yh.admin.imageinstall.queryhelper.ImageInstallQueryHelper.getSystemCode()%>&flag=logo&_<%=new java.util.Random().nextInt(1000) %>" alt="照片" />
 				</div>
 				<a class="img-upload"> <input type="file" id="file_upload" name="logoPhotoPath" accept="image/*">选择照片 </a>
-				<p class="md-unit-p" title="图片请小于100K（jpg、png、bmp、gif、tif等）">图片请小于500K（jpg、png、bmp、gif、tif等）</p>
+				<p class="md-unit-p" title="图片请小于500K（jpg、png、bmp、gif、tif等）">图片请小于500K（jpg、png、bmp、gif、tif等）</p>
 			</dd>
 		</dl>
 		<div class="md-btn">
@@ -53,10 +53,10 @@
 			</dt>
 			<dd>
 				<div class="md-unit-img">
-					<img name="offerImg2" id="previewImg2" src="<%=request.getContextPath() %>/admin/imageinstall/image_view.jsp?systemCode=1000&flag=banner&_<%=new java.util.Random().nextInt(1000) %>" alt="照片" />
+					<img name="offerImg2" id="previewImg2" src="<%=request.getContextPath() %>/admin/imageinstall/image_view.jsp?systemCode=<%=com.yh.admin.imageinstall.queryhelper.ImageInstallQueryHelper.getSystemCode()%>&flag=banner&_<%=new java.util.Random().nextInt(1000) %>" alt="照片" />
 				</div>
 				<a class="img-upload"> <input type="file" id="file_upload2" name="bannerPhotoPath" accept="image/*">选择照片 </a>
-				<p class="md-unit-p" title="图片请小于100K（jpg、png、bmp、gif、tif等）">图片请小于500K（jpg、png、bmp、gif、tif等）</p>
+				<p class="md-unit-p" title="图片请小于500K（jpg、png、bmp、gif、tif等）">图片请小于500K（jpg、png、bmp、gif、tif等）</p>
 			</dd>
 		</dl>
 	<!-- </div>

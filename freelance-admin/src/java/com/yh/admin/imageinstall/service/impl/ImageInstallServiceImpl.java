@@ -76,9 +76,9 @@ public class ImageInstallServiceImpl implements ImageInstallService {
 	                        throw new ServiceException(null, "上传照片超过了"+500+"k");
 	                    }
 
-	                    fileName = banner.getFileName();
-	                    int i = fileName.lastIndexOf(".");
-	                    fileName = fileName.substring(i + 1);
+	                    fileName2 = banner.getFileName();
+	                    int i = fileName2.lastIndexOf(".");
+	                    fileName2 = fileName2.substring(i + 1);
 	                }
 	            }
 			}else{
