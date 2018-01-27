@@ -325,7 +325,7 @@ a:hover {
 }
 .mho_login_img {
   background: url(img/login.png) center no-repeat;
-  background-size: 50%;
+  background-size: 50%; 
 }
 .mho_login_form {
   width: 90%;
@@ -349,6 +349,7 @@ a:hover {
   outline: none;
   width: 90%;
 }
+/**ȥ����ɫ����**/
 /**È¥µô»ÆÉ«±³¾°**/
 .yh_input input {
    -webkit-box-shadow: 0 0 0px 1000px white inset;

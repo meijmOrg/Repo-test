@@ -33,11 +33,15 @@
 				}
 			}
 		}
-		
-		if(imageInstallDTO==null || imageInstallDTO.getLogoPhotoPathB().length < 100||imageInstallDTO.getBannerPhotoPathB().length < 100)
-		{			
-			File file = new File(ConfigUtil.getProperty("file.path.affiche")+"photo.jpg");
-			//File file = new File(getServletContext().getRealPath("/")+"photo.jpg");
+		if(bs==null)
+		{		
+			File file = null;
+			//File file = new File(ConfigUtil.getProperty("file.path.affiche")+"photo.jpg");
+			if("logo".equals(flag)){
+				file = new File(getServletContext().getRealPath("/")+"yhhtml/img/logo.png");
+			}else if("banner".equals(flag)){
+				file = new File(getServletContext().getRealPath("/")+"yhhtml/img/login.png");
+			}
 			InputStream ip = new FileInputStream(file);
 			
 			bs = new byte[(int)file.length()];
@@ -49,10 +53,10 @@
 		{
 			if(imageInstallDTO == null)
 				response.setContentType("image/jpg"); 
-			else
+			/* else
 				if(imageInstallDTO.getLogoPhotoPathB().length < 100||imageInstallDTO.getBannerPhotoPathB().length < 100) {
 					response.setContentType("image/jpg"); 
-				} 
+				}  */
 				else {	
 					if("logo".equals(flag)){
 						response.setContentType("image/"+imageInstallDTO.getLogoPhotoType());
