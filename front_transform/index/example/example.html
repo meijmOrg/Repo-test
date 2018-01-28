@@ -1,0 +1,30 @@
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../font-awesome-4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="../../mho.css">
+<script src="../../lib/jquery-3.2.1.min.js"></script>
+<script src="../../component/dialog/dialog.js"></script>
+<title>首页</title>
+</head>
+<body>
+	<button id="modal1" type="button" class="mho_btn mho_btn_primary" style="margin-left:20px;">打开模态框1</button>
+	<button id="modal2" type="button" class="mho_btn mho_btn_primary" style="margin-left:20px;">打开模态框2</button>
+	<script>
+		$('#modal1').click(function() {
+			var dialog = new Dialog({
+				url: '../example/modal1/modal1.html',
+				width: 800,
+				title: '用户选择'
+			});
+		});
+        $('#modal2').click(function() {
+            var dialog = new Dialog({
+                url: '../example/modal2/modal2.html',
+                width: '80%',
+                title: '流程下一步'
+            });
+        });
+	</script>
+</body>
+</html>
