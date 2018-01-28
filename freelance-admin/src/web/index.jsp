@@ -7,9 +7,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
     <title>医院人事管理系统</title>
-    <%@ include file="/include/js_css_base_include.jsp"%>
-    <link rel="stylesheet" href="hspszhphtml/css/components/head_nav.css">
-    <link rel="stylesheet" href="hspszhphtml/css/common/reset.css">
+   <%@ include file="/include/js_css_base_include.jsp"%> 
+    <link rel="stylesheet" href="yhhtml/mho.css">
+    <link rel="stylesheet" href="yhhtml/font-awesome-4.7.0/css/font-awesome.css">
+
     <script src="admin/js/jTopMenu.js" type="text/javascript"></script>
     <script type="text/javascript">
     $(function(){
@@ -23,34 +24,50 @@
     	$('[button-click=downDoc]').click(function(){
     		MessageBox.openWindow('downFile.do?method=downFile&fileName=help.rar');
     	});
+    	$('.mho_left_menu_tree li').click(function(e) {
+    		e.stopPropagation();
+    		$(this).children('ul').slideToggle();
+    	});
     })
     
     </script>
  </head>
-<body style="overflow: hidden;">
-	<div id="headerMenuId" class="head-nav">
-		<div class="index-logo"></div>
-             <ul class="h-nav-ul h-nav-item _jTopMenu">
-             </ul>
-	         <ul class="h-nav-ul h-nav-icon">
-	           <li class="h-nav-li h-person-info">当前用户：<%= UserContext.getLoginUserID()%></li>
-	           <li class="h-nav-li">
-	               <a class="h-nav-link hn-question" href="<%=request.getContextPath()%>/hspszhphtml/helpdoc/helpdoc.rar" title="帮助中心"></a>
-	           </li>
-	           <li class="h-nav-li">
-	               <a class="h-nav-link hn-key" id="updatepassword" title="修改密码"></a>
-	           </li>
-	           <li class="h-nav-li">
-	               <a class="h-nav-link hn-exit" id="logoutId"  title="退出"></a>
-	           </li>
-          </ul>
-    </div>
-   <div class="navigation-down _jChildMenu">
-    </div>
-<!--导航结束-->
-<!--主体内容-->
-<iframe name="szghrsmain" frameborder="0" width="100%" style="margin: 0;"></iframe>
-<!-- <div style="height:40px;width:100%;background-color:#1fc7aa;color:#fff;text-align:center;line-height:40px;font-size:12px;">版权所有&copy;深圳市嘉德永丰开发科技股份有限公司   粤ICP备06063907号-1&nbsp;&nbsp;&nbsp;Copyright 2016 &copy;  Technology All rights reserved</div> -->
+<body>
+	<div class="mho">
+	<nav class="mho_nav" id="mho_nav">
+		<div class="mho_nav_logo">
+			<img src="yhhtml/img/logo.png">
+		</div>
+		<div class="mho_nav_tools">
+		</div>
+	</nav>
+	<div class="mho_main">
+		<div class="mho_left_menu" id="menuId">
+			<div class="mho_person">
+				<table>
+					<tr>
+						<td class="mho_person_img">
+							<img src="yhhtml/img/person.png">
+						</td>
+						<td class="mho_person_info">
+							<p><%= UserContext.getLoginUserID()%></p>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<ul class="mho_left_menu_tree">
+			</ul>
+		</div>
+		<div class="mho_center">
+			<ul class="mho_center_tabs">
+				<li id="toggleLeft"><i class="fa fa-arrow-left"></i></li>
+				<!-- <li class="mho_selected"><a href="javascript:void(0);">首页</a></li> -->
+			</ul>
+			<iframe class="mho_center_main" name="szghrsmain" style="width:100%;height:100%;border:0;">
+			</iframe>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
     $('#logoutId').click(function(){
 		MessageAction.yeah('是否要退出系统？', function(){
@@ -63,10 +80,10 @@
    	var jViewer = (function($, window, document){
    		var $frame = $('iframe[name=szghrsmain]');
    		
-   		$(window).resize(function(){
-   			$frame.height($(window).height() - $('#headerMenuId ').outerHeight(true));//头部菜单
+   		 $(window).resize(function(){
+   			$frame.height($(window).height() - $('#mho_nav ').outerHeight(true)-40);//头部菜单
    		}).resize();
-   		
+   		 
    		return {
    			go: function(url) {
    				$frame.attr('src', url+"&_ts="+(new Date().getTime()));
@@ -76,8 +93,9 @@
    	
    	//初始化事件
    	$(function(){
-   		jTopMenu.init('#headerMenuId', jViewer);
+   		jTopMenu.init('#menuId',jViewer);
    	}); 
 </script>
+<script src="yhhtml/index/index.js"></script>
 </body>
 </html>
