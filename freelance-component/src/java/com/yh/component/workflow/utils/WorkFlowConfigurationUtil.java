@@ -39,4 +39,13 @@ public class WorkFlowConfigurationUtil {
 	public static final String YHRS4003_3 = "3";
 	/**其它*/
 	public static final String YHRS4003_4 = "4";
+	
+	/**
+	 * 流程类别
+	 */
+	public static final String YHRS4004 = "YHRS4004"; 
+	/**通用流程*/
+	public static final String YHRS4004_0 = "0";
+	/**专属流程*/
+	public static final String YHRS4004_1 = "1";
 }
