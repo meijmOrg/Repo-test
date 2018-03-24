@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>流程启动</title>
+<title>流程操作</title>
 <link rel="stylesheet"
 	href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
 <script src="component/front_transform/component/dialog/dialog.js"></script>
