@@ -1,5 +1,6 @@
 $(function() {
 	var flowdata=window.localStorage.getItem("data");
+	//获取后台传值
 	$('#myflow').myflow(
 		{
 			basePath : "",
@@ -7,9 +8,12 @@ $(function() {
 			restore : eval("(" + flowdata + ")"),
 			tools : {
 				save : function(data) {
+					debugger
 					console.log("保存",eval("("+data+")"));
-					//console.log(data);
-					window.localStorage.setItem("data",data)
+					console.log(data);
+					window.localStorage.setItem("data",data);
+					//往后台传值
+					sendData(data);
 				},
 				publish:function(data){
 					console.log("发布",eval("("+data+")"));

@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 
+import com.yh.component.dictionary.utils.DicHelper;
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.bo.FileTemplate;
 import com.yh.component.workflow.bo.Flow;
@@ -27,6 +28,7 @@ import com.yh.component.workflow.dto.WorkflowConfigurationDTO;
 import com.yh.component.workflow.dto.WorkflowRuleDTO;
 import com.yh.component.workflow.queryhelper.WorkflowConfigurationQueryHelper;
 import com.yh.component.workflow.service.WorkflowConfigurationService;
+import com.yh.component.workflow.utils.WorkFlowConfigurationUtil;
 import com.yh.platform.core.dao.DaoUtil;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.JSONHelper;
@@ -55,6 +57,7 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 		WorkflowConfigurationDTO dto = new WorkflowConfigurationDTO();
 		//获取模板信息
 		FileTemplate bo =DaoUtil.get(FileTemplate.class, templetId);
+		bo.setTemplateType(bo.getTemplateType()==null?"":DicHelper.viewName(WorkFlowConfigurationUtil.YHRS4003, bo.getTemplateType()));
 		BeanUtils.copyProperties(bo, dto);
 		//获取流程信息 （并获取流程是否能删除标识？？？？？）
 		List<WorkflowBaseInfoDTO> list= WorkflowConfigurationQueryHelper.listFlowBaseInfo(templetId);
