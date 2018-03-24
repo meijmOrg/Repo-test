@@ -1,0 +1,110 @@
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../mho.css">
+<script src="../../lib/jquery-3.2.1.min.js"></script>
+<title>Accordion</title>
+</head>
+<body>
+<section class="mho_accordion" style="width:300px;">
+	<dl class="mho_accordion_item">
+		<dt class="mho_accordion_title mho_dep_yellow">基本属性</dt>
+		<dd class="mho_accordion_body">
+			<div class="mho_form_group">
+				<label>活动名称</label>
+				<input type="text" class="mho_form_field">
+			</div>
+			<div class="mho_form_group">
+				<label>活动序号</label>
+				<input type="text" class="mho_form_field">
+			</div>
+			<div class="mho_form_group">
+				<label>活动类型</label>
+				<select class="mho_form_field">
+					<option>初始化活动</option>
+				</select>
+			</div>
+		</dd>
+	</dl>
+	<dl class="mho_accordion_item">
+		<dt class="mho_accordion_title mho_dep_yellow">权限控制</dt>
+		<dd class="mho_accordion_body">
+			<div class="mho_form_group">
+				<label>允许协同</label>
+				<select class="mho_form_field">
+					<option>是</option>
+					<option>否</option>
+				</select>
+			</div>
+			<div class="mho_form_group">
+				<label>允许结束</label>
+				<select class="mho_form_field">
+					<option>是</option>
+					<option>否</option>
+				</select>
+			</div>
+			<div class="mho_tabs">
+				<ul class="mho_tabs_nav">
+					<li class="mho_active"><a href="javascript:void(0)">部门</a></li>
+					<li><a href="javascript:void(0)">小组</a></li>
+				</ul>
+				<div class="mho_tabs_body">
+					<div class="mho_tab_panel mho_active">
+						<div class="mho_form_group">
+							<label><input type="checkbox">部门：医务科</label>
+							<label><input type="checkbox">部门：医务科</label>
+						</div>
+						<div class="mho_form_group">
+							<label><input type="checkbox">部门：医务科</label>
+							<label><input type="checkbox">部门：医务科</label>
+						</div>
+						<div class="mho_form_group">
+							<label><input type="checkbox">部门：医务科</label>
+							<label><input type="checkbox">部门：医务科</label>
+						</div>
+						<div class="mho_form_group">
+							<label><input type="checkbox">部门：医务科</label>
+							<label><input type="checkbox">部门：医务科</label>
+						</div>
+					</div>
+					<div class="mho_tab_panel">
+						<div class="mho_form_group">
+							<label><input type="checkbox">组织：医务科</label>
+							<label><input type="checkbox">组织：医务科</label>
+						</div>
+						<div class="mho_form_group">
+							<label><input type="checkbox">组织：医务科</label>
+							<label><input type="checkbox">组织：医务科</label>
+						</div>
+						<div class="mho_form_group">
+							<label><input type="checkbox">组织：医务科</label>
+							<label><input type="checkbox">组织：医务科</label>
+						</div>
+						<div class="mho_form_group">
+							<label><input type="checkbox">组织：医务科</label>
+							<label><input type="checkbox">组织：医务科</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</dd>
+	</dl>
+	<dl class="mho_accordion_item">
+		<dt class="mho_accordion_title mho_dep_yellow">任务通知</dt>
+		<dd class="mho_accordion_body">
+			<div class="mho_form_group">
+				<label>启用通知<input type="checkbox"></label>
+			</div>
+			<div class="mho_form_group">
+				<label>消息模板</label>
+				<textarea rows=5></textarea>
+			</div>
+			<div class="mho_form_group">
+				<label>手机短信<input type="checkbox"></label>
+			</div>
+		</dd>
+	</dl>
+</section>
+<script src="accordion.js"></script>
+</body>
+</html>
