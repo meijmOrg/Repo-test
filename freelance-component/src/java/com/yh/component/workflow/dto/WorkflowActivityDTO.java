@@ -28,6 +28,7 @@ public class WorkflowActivityDTO{
 	
 	private java.util.List<FlowActivityNoticeDTO>			anList = new ArrayList<FlowActivityNoticeDTO>();
 	private java.util.List<FlowActivityPermissionDTO>	apList = new ArrayList<FlowActivityPermissionDTO>();
+	private java.util.List<PermissionUsersDTO>	puList = new ArrayList<PermissionUsersDTO>();
 	public java.lang.String getActId() {
 		return actId;
 	}
@@ -123,6 +124,12 @@ public class WorkflowActivityDTO{
 	}
 	public void setApList(java.util.List<FlowActivityPermissionDTO> apList) {
 		this.apList = apList;
+	}
+	public java.util.List<PermissionUsersDTO> getPuList() {
+		return puList;
+	}
+	public void setPuList(java.util.List<PermissionUsersDTO> puList) {
+		this.puList = puList;
 	}
 
 }

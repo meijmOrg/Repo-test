@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.yh.component.workflow.bo.FlowActivityNotice;
+import com.yh.component.workflow.bo.FlowActivityPerCombination;
 import com.yh.component.workflow.bo.FlowActivityPermission;
 import com.yh.component.workflow.dto.FlowActivityNoticeDTO;
 import com.yh.component.workflow.dto.FlowActivityPermissionDTO;
@@ -36,7 +37,7 @@ public class YhFlowComponentQueryHelper {
 	public static WorkflowBaseInfoDTO getYhFlowByTemplateId(String templateId) throws ServiceException {
 
 		Map<String, Object> params = new HashMap<String, Object>();
-		Object[] objUser = YhFlowComponentQueryHelper.getUserInfoByUserCode(UserContext.getLoginUserID());
+		Object[] objUser = getUserInfoByUserCode(UserContext.getLoginUserID());
 		Long deptOid = objUser[5] == null ? null:Long.valueOf(objUser[5].toString());//用户所在部门id
 		params.put("templateId", templateId);
 		params.put("deptOid", deptOid);
@@ -143,6 +144,17 @@ public class YhFlowComponentQueryHelper {
 	public static List<FlowActivityPermissionDTO> getActivityPermissionByActId(String actId) throws ServiceException {
 		List<FlowActivityPermission> list=DaoUtil.find(" from FlowActivityPermission fap where fap.actId=?",Long.valueOf(actId));
 		return BeanHelper.copyProperties(list, FlowActivityPermissionDTO.class);
+	}
+	
+	/**
+     * 根据权限控制ID获取权限组合信息
+     * @param apId
+     * @return List<FlowActivityPerCombination>
+     * @throws ServiceException
+     */
+	public static List<FlowActivityPerCombination> getFlowActivityPerCombinationByApId(String apId) throws ServiceException {
+		List<FlowActivityPerCombination> list=DaoUtil.find(" from FlowActivityPerCombination fapc where fapc.apId=?",Long.valueOf(apId));
+		return list;
 	}
 	
 	/**
