@@ -1,10 +1,3 @@
-var uploader = WebUploader.create({
-	pick: '#pick_file',
-	resize: false
-});
-uploader.on('fileQueued', function(file) {
-	$('#file_name').val(file.name);
-});
 /**流程按钮控制**/
 function buttonControl(params){
 	debugger
@@ -24,12 +17,3 @@ function buttonControl(params){
 		$('#duplicate').hide();
 	}
 }
-/**流程流转**/
-$('#submitFlow').click(function() {
-	debugger
-    var dialog = new Dialog({
-        url: 'goSubmitFlow.do',
-        width: '80%',
-        title: '流程下一步'
-    });
-});
