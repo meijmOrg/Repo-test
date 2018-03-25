@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 
 import net.sf.json.JSONObject;
 
+import com.yh.component.dictionary.utils.DicHelper;
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
@@ -57,7 +58,7 @@ public class WorkflowConfigurationQueryHelper {
 			json.put("templateName", obj[1]==null?"":obj[1].toString());	//模板名称	
 			json.put("templateCode", obj[2]==null?"":obj[2].toString());//编码
 			json.put("templateIsUniversal", obj[3]==null?"":obj[3].toString());//是否通用模板
-			json.put("templateType", obj[4]==null?"":obj[4].toString());//模板类别
+			json.put("templateType", obj[4]==null?"":DicHelper.viewName(WorkFlowConfigurationUtil.YHRS4003, obj[4].toString()));//模板类别
 			json.put("templateCreatePage", obj[5]==null?"":obj[5].toString());//创建页面
 			json.put("templateEditPage", obj[6]==null?"":obj[6].toString());//编辑页面
 			json.put("templateInfoPage", obj[7]==null?"":obj[7].toString());//详细页面
@@ -68,6 +69,7 @@ public class WorkflowConfigurationQueryHelper {
 			json.put("templateModifyDate", obj[12]==null?"":obj[12].toString());//修改时间
 			json.put("templateModifyUserName", obj[13]==null?"":obj[13].toString());//修改人
 			json.put("templateDescription", obj[14]==null?"":obj[14].toString());//模板描述
+			
 			jsonList.add(json);
 		}
 		

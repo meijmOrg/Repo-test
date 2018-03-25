@@ -40,10 +40,10 @@ public class UbOrgServiceUtil {
 	public static String getHierarchyCodeByParentOrgOid(String parentHierarchyCode) throws ServiceException {
 		String sql = "";
 		if(parentHierarchyCode!=null) {
-			sql = "select max(uo.HIERARCHY_CODE) from yhe_ub_org uo where CHAR_LENGTH(uo.HIERARCHY_CODE)<=(CHAR_LENGTH('"+parentHierarchyCode+"')+3)" +
-				" and CHAR_LENGTH(uo.HIERARCHY_CODE)>CHAR_LENGTH('"+parentHierarchyCode+"') and uo.HIERARCHY_CODE like concat('"+parentHierarchyCode+"','%')";
+			sql = "select max(uo.HIERARCHY_CODE) from yhe_ub_org uo where len(uo.HIERARCHY_CODE)<=(len('"+parentHierarchyCode+"')+3)" +
+				" and len(uo.HIERARCHY_CODE)>len('"+parentHierarchyCode+"') and uo.HIERARCHY_CODE like '"+parentHierarchyCode+"'+'%'";
 		}else {
-			sql = "select max(uo.HIERARCHY_CODE) from yhe_ub_org uo where CHAR_LENGTH(uo.HIERARCHY_CODE)<=3";
+			sql = "select max(uo.HIERARCHY_CODE) from yhe_ub_org uo where len(uo.HIERARCHY_CODE)<=3";
 		}
 		return DaoUtil.uniqueResultWithSQL(sql);
 	}

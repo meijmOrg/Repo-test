@@ -158,13 +158,13 @@
     text-decoration: underline;
 }
 .clearfix { zoom: 1; }
-/*渚涘簲鍟嗕俊鎭�/
+/*供应商信息*/
 .supplier-info{
     background-color: #edf4fd;
     padding: 10px 0 10px 20px;
     box-sizing: border-box;
 }
-/*鍗曠嫭璁剧疆渚涘簲鍟嗕俊鎭ā鎬佹涓讳綋閮ㄥ垎*/
+/*单独设置供应商信息模态框主体部分*/
 .md-body .supplier-info{
     padding: 0;
     max-height: 440px;
@@ -194,7 +194,7 @@
     border: 1px solid #edf4fd;
 }
 .supplier-info li.blue:after{
-    content: '鈭�';
+    content: '√';
     float: right;
     position: absolute;
     right: 6px;
@@ -203,7 +203,7 @@
     border: 1px solid #5097ed;
     color: #5097ed;
 }
-/*娴佷綋甯冨眬*/
+/*流体布局*/
 @media screen and (min-width:1280px) {
     .fluid li {
         /*width: 33%;*/

@@ -2,8 +2,6 @@ package com.yh.component.workflow.dto;
 
 import java.util.ArrayList;
 
-import com.yh.component.workflow.bo.FlowActivityNotice;
-
 
 /**
  * 流程活动信息DTO
@@ -28,8 +26,9 @@ public class WorkflowActivityDTO{
 	private java.lang.String	templateId;	//模板ID	
 	private java.lang.Long 		tfForbidden;//停用Or启用，默认启用，用于后期扩展
 	
-	private java.util.List<FlowActivityNotice>			anList = new ArrayList<FlowActivityNotice>();
+	private java.util.List<FlowActivityNoticeDTO>			anList = new ArrayList<FlowActivityNoticeDTO>();
 	private java.util.List<FlowActivityPermissionDTO>	apList = new ArrayList<FlowActivityPermissionDTO>();
+	private java.util.List<PermissionUsersDTO>	puList = new ArrayList<PermissionUsersDTO>();
 	public java.lang.String getActId() {
 		return actId;
 	}
@@ -114,10 +113,10 @@ public class WorkflowActivityDTO{
 	public void setTfForbidden(java.lang.Long tfForbidden) {
 		this.tfForbidden = tfForbidden;
 	}
-	public java.util.List<FlowActivityNotice> getAnList() {
+	public java.util.List<FlowActivityNoticeDTO> getAnList() {
 		return anList;
 	}
-	public void setAnList(java.util.List<FlowActivityNotice> anList) {
+	public void setAnList(java.util.List<FlowActivityNoticeDTO> anList) {
 		this.anList = anList;
 	}
 	public java.util.List<FlowActivityPermissionDTO> getApList() {
@@ -125,6 +124,12 @@ public class WorkflowActivityDTO{
 	}
 	public void setApList(java.util.List<FlowActivityPermissionDTO> apList) {
 		this.apList = apList;
+	}
+	public java.util.List<PermissionUsersDTO> getPuList() {
+		return puList;
+	}
+	public void setPuList(java.util.List<PermissionUsersDTO> puList) {
+		this.puList = puList;
 	}
 
 }
