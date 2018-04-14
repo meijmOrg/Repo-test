@@ -14,7 +14,7 @@
 				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
 				parameter="method">
 			<description>跳转到提交流程(用户弹框)页面</description>
-			<forward name="success" path="/hrcomponent/info/infoManage.jsp"/>
+			<forward name="success" path="/hrcomponent/flow/yhflow_submit.jsp"/>
 		</action>
 		<action path="/submitFlowStart"
 				scope="request"
