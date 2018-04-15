@@ -5,14 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
-
 import net.sf.json.JSONObject;
+
+import org.apache.commons.collections.CollectionUtils;
 
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.bo.File;
 import com.yh.component.workflow.bo.FlowActivity;
-import com.yh.component.workflow.bo.FlowActivityPerCombination;
 import com.yh.component.workflow.bo.FlowRule;
 import com.yh.component.workflow.bo.Task;
 import com.yh.component.workflow.bo.TaskProcess;
@@ -95,14 +94,26 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 	 * @throws ServiceException
 	 */
 	private List<PermissionUsersDTO> listPermissionUsers(String actId) throws ServiceException{
+		String apUserType = "AND";//默认
+		//拼动态查询sql语句
+		StringBuilder sql = new StringBuilder();
 		//1.根据活动单元id查询权限控制信息
 		List<FlowActivityPermissionDTO> apList = YhFlowComponentQueryHelper.getActivityPermissionByActId(actId);
 		//2.根据权限控制id查询权限组合信息(活动单元和权限控制信息为1对1关系)
-		List<FlowActivityPerCombination> apcList = null;
+		List<Object[]> apcList = null;
 		if(CollectionUtils.isNotEmpty(apList)){
-			apcList = YhFlowComponentQueryHelper.getFlowActivityPerCombinationByApId(apList.get(0).getApId());
+			apUserType = apList.get(0).getApUserType()==null? apUserType:apList.get(0).getApUserType();
+			apcList = YhFlowComponentQueryHelper.getFlowActivityPerCombinationByApIdView(apList.get(0).getApId());
 		}
-		return null;
+		if(null == apcList){
+			return null;
+		}
+		sql.append(" select * from YHF_Combination_Person_View cpv where 1=1 ");
+		for(int i=0;i<apcList.size();i++){
+			sql.append(apUserType+" cpv."+apcList.get(i)[1]+" in ("+apcList.get(i)[2]+") ");
+		}
+		
+		return YhFlowComponentQueryHelper.getPermissionUsersDTO(sql.toString());
 	}
 	
 	/**

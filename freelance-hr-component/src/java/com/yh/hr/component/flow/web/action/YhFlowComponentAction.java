@@ -47,7 +47,8 @@ public class YhFlowComponentAction extends BaseAction {
 	public ActionForward goUserListPartial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
 		try {
-			String templateId = request.getParameter("templateId");
+			//String templateId = request.getParameter("templateId");
+			String templateId = "68785b4b-e1cd-43dc-877a-79ef103d1c95";
 			Map<String,List<WorkflowActivityDTO>> ActInfo = yhFlowComponentFacade.goUserListPartial(templateId);
 			if(!MapUtils.isEmpty(ActInfo)){
 	        	 for(Map.Entry<String, List<WorkflowActivityDTO>> me:ActInfo.entrySet()){
