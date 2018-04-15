@@ -190,8 +190,7 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 		// 部门信息
 		List<UtOrgDTO> orgList = JhcOrgTreeQueryHelper.findAllOrgList();
 		//小组信息
-		
-		
+				
 		//角色信息
 		List<RolesDTO> roleList = RolesQueryHelper.findAllRoles(AuthConstants.ROLE_TYPE_FUNCTION);
 		JSONObject jsonObject = new JSONObject();
