@@ -6,5 +6,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/freelance-core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/freelance-hr-res"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/freelance-libs"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/freelance-admin"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
