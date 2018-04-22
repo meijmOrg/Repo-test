@@ -198,9 +198,9 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 		//角色信息
 		List<RolesDTO> roleList = RolesQueryHelper.findAllRoles(AuthConstants.ROLE_TYPE_FUNCTION);
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("orgInfo", CollectionUtils.isEmpty(orgList) ? JSON.toJSON("{}") : JSON.toJSON(orgList).toString());
+		jsonObject.put("orgInfo", CollectionUtils.isEmpty(orgList) ? JSON.toJSON("{}") : JSON.toJSON(orgList));
 		jsonObject.put("groupInfo", CollectionUtils.isEmpty(wgList) ? JSON.toJSON("{}") : JSON.toJSON(wgList));
-		jsonObject.put("roleInfo", CollectionUtils.isEmpty(orgList) ? JSON.toJSON("{}") : JSON.toJSON(roleList).toString());
+		jsonObject.put("roleInfo", CollectionUtils.isEmpty(roleList) ? JSON.toJSON("{}") : JSON.toJSON(roleList));
 		return jsonObject;
 	}
 	
