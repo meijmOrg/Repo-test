@@ -230,7 +230,8 @@ public class JhcOrgTreeQueryHelper {
 		if (CollectionUtils.isNotEmpty(list)) {
 			List<UtOrgDTO> items = new ArrayList<UtOrgDTO>();
 
-			for (Object[] objs : list) {
+			for (int i=0;i<list.size();i++) {
+				Object[] objs=list.get(i);
 				UtOrgDTO dto = new UtOrgDTO();
 				dto.setOrgOid(objs[0] == null ? null : Long.valueOf(objs[0]
 						.toString()));
@@ -239,8 +240,7 @@ public class JhcOrgTreeQueryHelper {
 						.valueOf(objs[2].toString()));
 				dto.setIsleaf("Y".equals(objs[3]));
 				dto.setOrgType(objs[4] == null ? null : objs[4].toString());
-				dto.setHierarchyCode(objs[5] == null ? null : objs[5]
-						.toString());
+				dto.setHierarchyCode(objs[5] == null ? null : objs[5].toString());
 				items.add(dto);
 			}
 			return items;

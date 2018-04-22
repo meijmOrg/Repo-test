@@ -22,7 +22,7 @@
 				parameter="method">
 			<description>提交流程(确定)</description>
 		</action>
-		<action path="queryDepGroRole"
+		<action path="/queryDepGroRole"
 				scope="request"
 				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
 				parameter="method">

@@ -193,7 +193,7 @@ public class RolesQueryHelper {
 	 * 角色信息查询（roleType：0 为功能角色 ，1位数据角色）
 	 * */
 	public static List<RolesDTO> findAllRoles(String roleType) throws ServiceException {
-		List<Roles> rolesBo = DaoUtil.find(" from Roles r where r.roleType=?", roleType.trim(),roleType);
+		List<Roles> rolesBo = DaoUtil.find(" from Roles r where r.roleType=?", roleType.trim());
 		return BeanHelper.copyProperties(rolesBo, RolesDTO.class);
 	}
 }

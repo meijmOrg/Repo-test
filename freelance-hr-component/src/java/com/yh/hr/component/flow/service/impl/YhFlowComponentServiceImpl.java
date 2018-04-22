@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -194,9 +196,9 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 		//角色信息
 		List<RolesDTO> roleList = RolesQueryHelper.findAllRoles(AuthConstants.ROLE_TYPE_FUNCTION);
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("orgInfo", CollectionUtils.isEmpty(orgList) ? JSONHelper.fromObject("{}") : JSONHelper.fromObject(orgList));
-		jsonObject.put("groupInfo", CollectionUtils.isEmpty(orgList) ? JSONHelper.fromObject("{}") : JSONHelper.fromObject(orgList));
-		jsonObject.put("roleInfo", CollectionUtils.isEmpty(orgList) ? JSONHelper.fromObject("{}") : JSONHelper.fromObject(roleList));
+		jsonObject.put("orgInfo", CollectionUtils.isEmpty(orgList) ? JSONObject.fromObject("{}") : com.alibaba.fastjson.JSON.toJSON(orgList).toString());
+		//jsonObject.put("groupInfo", CollectionUtils.isEmpty(orgList) ? JSONObject.fromObject("{}") : JSONHelper.fromObject(orgList));
+		jsonObject.put("roleInfo", CollectionUtils.isEmpty(orgList) ? JSONObject.fromObject("{}") : com.alibaba.fastjson.JSON.toJSON(roleList).toString());
 		return jsonObject;
 	}
 }
