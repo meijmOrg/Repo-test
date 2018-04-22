@@ -20,6 +20,16 @@
             <column name="kw_description">
                 <comment>关键字描述</comment>
             </column>
-        </property>      
+        </property>  
+        <property name="kwType" type="java.lang.String">
+            <column name="kw_type">
+                <comment>关键字类别</comment>
+            </column>
+        </property>  
+         <property name="kwStatus" type="java.lang.String">
+            <column name="kw_status">
+                <comment>关键字状态</comment>
+            </column>
+        </property>   
     </class>
 </hibernate-mapping>
