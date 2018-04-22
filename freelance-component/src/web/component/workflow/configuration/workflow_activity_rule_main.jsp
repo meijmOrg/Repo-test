@@ -10,7 +10,6 @@
     <meta charset="UTF-8">
     <title>流程设置</title>
 	<link href="hspszhphtml/css/components/search_unit.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="js/comm/customJs.js"></script>
     <%-- <%@ include file="/include/js_css_admin_include.jsp"%> --%>
     <%@ include file="/include/js_css_base_include.jsp"%>
     
@@ -54,9 +53,9 @@ function sendData(data){
     <div class="go_back"><a href="javascript:void(0);" onclick="goback();"><span style="font-family: sans-serif;"><< </span>返回</a></div>
     <div style="clear: both"></div>
 </div>
-<div class="md-main-content">
-	        <jsp:include page="/component/workflow/configuration/drawing/demo.html"></jsp:include>    
-        	</div>
+
+ <jsp:include page="/component/workflow/configuration/drawing/demo.jsp"></jsp:include>    
+ 	
 </body>
 
 </html>
