@@ -8,12 +8,29 @@ $(function() {
 			restore : eval("(" + flowdata + ")"),
 			tools : {
 				save : function(data) {
-					debugger
-					console.log("保存",eval("("+data+")"));
-					console.log(data);
-					window.localStorage.setItem("data",data);
-					//往后台传值
-					sendData(data);
+					 var id=$("#ruleId").val();
+                     var ruleFlowId=$("#ruleFlowId").val();
+                     console.log(data);
+					jQuery.ajax({
+                        url: 'saveRuleFlow.do?method=saveRuleFlow',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            "ruleFlowContent": encodeURI(data).replace(/\+/g,'%2B'),
+                            "id":id,
+                            "ruleFlowId":ruleFlowId,
+                        },
+                        error: function () {
+                        	MessageBox.alert('提示',"失败");
+                        },
+                        success: function (data) {
+                            if (data.success) {
+                            	MessageBox.alert('提示',"成功");
+                            } else {
+                                $.message.pop(data.msg, "warning", 3000);
+                            }
+                        }
+                    });
 				},
 				publish:function(data){
 					console.log("发布",eval("("+data+")"));

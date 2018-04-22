@@ -117,16 +117,7 @@
             },
             onDbclick:function(){
             },
-            props: {
-                text: {
-                    name: 'text',
-                    label: '显示',
-                    value: '',
-                    editor: function () {
-                        return new myflow.editors.textEditor();
-                    }
-                }
-            }
+            ruleProps:{},
         },
         tools: {// 工具栏
             attr: {
@@ -1297,7 +1288,7 @@
                 + _text.attr('text') + "',textPos:{x:"
                 + Math.round(_textPos.x) + ",y:" + Math.round(_textPos.y)
                 + "}},";
-            	+ (!$.asset["ruleParams"][_o.id] ? "" : 'ruleProps:'+JSON.stringify($.asset["ruleParamsPath"][_o.id])+",")
+            	+ (!$.asset["ruleParamsPath"][_o.id] ? "" : 'ruleProps:'+JSON.stringify($.asset["ruleParamsPath"][_o.id])+",")
 
             if (data.substring(data.length - 1, data.length) == ',')
                 data = data.substring(0, data.length - 1);
@@ -1307,7 +1298,7 @@
         // 恢复
         this.restore = function (data) {
             var obj = data;
-
+            $.asset["ruleParamsPath"][data.id]=data.ruleProps;
             _o = $.extend(true, _o, data);
             //$('body').append('['+_text.attr('text')+','+_o.text.text+']');
             /*if (_text.attr('text') != _o.text.text) {
@@ -1735,11 +1726,12 @@
 
             $('#myflow_save').click(function () {// 保存
                 if(!($(_r).data('haveStart'))){
-                    $.message.pop('保存失败！没有开始节点！', "warning", 1500);
+                    MessageBox.alert("warning", '保存失败！没有开始节点！')
                     return;
                 }
                 if(!($(_r).data('haveEnd'))){
-                    $.message.pop('保存失败！没有结束节点！', "warning", 1500);
+                    MessageBox.alert("warning", '保存失败！没有结束节点！')
+                    MessageBox.alert(f, "warning")
                     return;
                 }
                 myflow.config.tools.save(getJson())

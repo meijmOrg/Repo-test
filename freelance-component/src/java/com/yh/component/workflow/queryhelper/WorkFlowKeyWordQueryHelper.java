@@ -21,7 +21,7 @@ public class WorkFlowKeyWordQueryHelper {
 	 */
 	public static List<WorkFlowKeyWordDTO> queryAllKeyWord() throws ServiceException {
 		StringBuilder hql = new StringBuilder();
-		hql.append("from FlowKeyWord f where 1=1 and kwStatus = '2'");
+		hql.append("from FlowKeyWord f where 1=1 and kwStatus = '0'");
 		return BeanHelper.copyProperties(DaoUtil.find(hql.toString()), WorkFlowKeyWordDTO.class);
 	}
 

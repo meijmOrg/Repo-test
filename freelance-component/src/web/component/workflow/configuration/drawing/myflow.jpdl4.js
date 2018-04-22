@@ -19,6 +19,9 @@ $.extend(true,myflow.config.rect,{
 
 });
 $.extend(true,myflow.config.path,{
+	ruleProps:{
+     
+    },
     onDbclick:function(id,_path,r){
         $.ruleFlowProps.initPageDataOfPath(id,_path,r);
     },
