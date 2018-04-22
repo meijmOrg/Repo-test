@@ -211,9 +211,28 @@ public class YhFlowComponentAction extends BaseAction {
 			JSONObject jsonObject = yhFlowComponentFacade.queryDepGroRole();
 			response.getWriter().print(jsonObject.toString());
 		} catch (Exception e) {
-			this.handleException(request, e, "查询所在部门、小组、角色信息失败!");
+			this.handleException(request, e, "查询部门、小组、角色信息失败!");
 		}
 		return null;
 	}
 	
+	/**
+	 * 查询关键字信息
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward queryKeyWord(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		try {
+			JSONObject jsonObject = yhFlowComponentFacade.queryKeyWord();
+			response.getWriter().print(jsonObject.toString());
+		} catch (Exception e) {
+			this.handleException(request, e, "查询关键字信息");
+		}
+		return null;
+	}
 }

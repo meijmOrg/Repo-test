@@ -68,5 +68,13 @@ public interface YhFlowComponentService {
 	 * @throws ServiceException
 	 */
 	public JSONObject queryDepGroRole() throws ServiceException;
-
+	
+	/**
+	 * 查询关键字
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public JSONObject queryKeyWords() throws ServiceException;
+	
 }

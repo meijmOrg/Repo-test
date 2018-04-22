@@ -92,4 +92,13 @@ public class YhFlowComponentFacade {
 		
 	}
 	
+	/**
+	 * 查询关键字信息
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public JSONObject queryKeyWord() throws ServiceException {
+		return yhFlowComponentService.queryKeyWords();
+	}
 }

@@ -21,8 +21,10 @@ import com.yh.component.workflow.bo.Task;
 import com.yh.component.workflow.bo.TaskProcess;
 import com.yh.component.workflow.dto.FlowActivityPermissionDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
+import com.yh.component.workflow.dto.WorkFlowKeyWordDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
+import com.yh.component.workflow.queryhelper.WorkFlowKeyWordQueryHelper;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.queryhelper.YhFlowComponentQueryHelper;
 import com.yh.hr.component.flow.service.YhFlowComponentService;
@@ -33,7 +35,6 @@ import com.yh.hr.res.unit.queryhelper.WorkGroupQueryHelper;
 import com.yh.platform.core.dao.DaoUtil;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.BeanHelper;
-import com.yh.platform.core.util.JSONHelper;
 import com.yh.platform.core.util.UuidUtils;
 /**
  * @description 流程启动组件ServiceImpl
@@ -200,6 +201,19 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 		jsonObject.put("orgInfo", CollectionUtils.isEmpty(orgList) ? JSON.toJSON("{}") : JSON.toJSON(orgList).toString());
 		jsonObject.put("groupInfo", CollectionUtils.isEmpty(wgList) ? JSON.toJSON("{}") : JSON.toJSON(wgList));
 		jsonObject.put("roleInfo", CollectionUtils.isEmpty(orgList) ? JSON.toJSON("{}") : JSON.toJSON(roleList).toString());
+		return jsonObject;
+	}
+	
+	/**
+	 * 查询关键字
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public JSONObject queryKeyWords() throws ServiceException {
+		List<WorkFlowKeyWordDTO> keyWordList = WorkFlowKeyWordQueryHelper.queryAllKeyWord();
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("keyWord", CollectionUtils.isEmpty(keyWordList) ? JSON.toJSON("{}") : JSON.toJSON(keyWordList).toString());
 		return jsonObject;
 	}
 }
