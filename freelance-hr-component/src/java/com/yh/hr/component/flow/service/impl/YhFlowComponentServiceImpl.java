@@ -5,10 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import com.yh.admin.dto.RolesDTO;
+import com.yh.admin.roles.queryhelper.RolesQueryHelper;
+import com.yh.admin.util.AuthConstants;
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.bo.File;
 import com.yh.component.workflow.bo.FlowActivity;
@@ -22,9 +27,12 @@ import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.queryhelper.YhFlowComponentQueryHelper;
 import com.yh.hr.component.flow.service.YhFlowComponentService;
+import com.yh.hr.component.orgtree.queryhelper.JhcOrgTreeQueryHelper;
+import com.yh.hr.res.unit.dto.UtOrgDTO;
 import com.yh.platform.core.dao.DaoUtil;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.BeanHelper;
+import com.yh.platform.core.util.JSONHelper;
 import com.yh.platform.core.util.UuidUtils;
 /**
  * @description 流程启动组件ServiceImpl
@@ -177,5 +185,20 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 	 */
 	public void submitCcUsers(YhFlowComponentDTO dto) throws ServiceException{
 		
+	}
+
+	@Override
+	public JSONObject queryDepGroRole() throws ServiceException {
+		// 部门信息
+		List<UtOrgDTO> orgList = JhcOrgTreeQueryHelper.findAllOrgList();
+		//小组信息
+				
+		//角色信息
+		List<RolesDTO> roleList = RolesQueryHelper.findAllRoles(AuthConstants.ROLE_TYPE_FUNCTION);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("orgInfo", CollectionUtils.isEmpty(orgList) ? JSONObject.fromObject("{}") : com.alibaba.fastjson.JSON.toJSON(orgList).toString());
+		//jsonObject.put("groupInfo", CollectionUtils.isEmpty(orgList) ? JSONObject.fromObject("{}") : JSONHelper.fromObject(orgList));
+		jsonObject.put("roleInfo", CollectionUtils.isEmpty(orgList) ? JSONObject.fromObject("{}") : com.alibaba.fastjson.JSON.toJSON(roleList).toString());
+		return jsonObject;
 	}
 }

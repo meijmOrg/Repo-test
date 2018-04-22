@@ -22,5 +22,11 @@
 				parameter="method">
 			<description>提交流程(确定)</description>
 		</action>
+		<action path="/queryDepGroRole"
+				scope="request"
+				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
+				parameter="method">
+			<description>查询部门小组角色信息</description>
+		</action>
 	</action-mappings>
 </struts-config>

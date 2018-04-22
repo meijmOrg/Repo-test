@@ -80,4 +80,16 @@ public class YhFlowComponentFacade {
 	public void submitCcUsers(YhFlowComponentDTO dto) throws ServiceException{
 		yhFlowComponentService.submitCcUsers(dto);
 	}
+	
+	/**
+	 * 查询部门、小组、角色
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public JSONObject queryDepGroRole() throws ServiceException {
+		return yhFlowComponentService.queryDepGroRole();
+		
+	}
+	
 }
