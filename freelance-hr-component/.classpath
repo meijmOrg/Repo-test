@@ -7,6 +7,5 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/freelance-hr-res"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/freelance-libs"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/freelance-admin"/>
-	<classpathentry kind="lib" path="/Users/halfsummer/Documents/workspace/Repo-test/freelance-libs/base-libs/fastjson-1.2.47.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
