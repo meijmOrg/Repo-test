@@ -20,6 +20,7 @@ public class WorkGroup extends BaseBo{
 	private java.lang.String wpDepId;//隶属部门
 	private java.util.Date   wpCreateDate;//创建时间
 	private java.lang.String wpCreateUser;//创建人
+	private java.lang.String wpStatus;//小组状态
 	public java.lang.String getWpId() {
 		return wpId;
 	}
@@ -55,6 +56,12 @@ public class WorkGroup extends BaseBo{
 	}
 	public void setWpCreateUser(java.lang.String wpCreateUser) {
 		this.wpCreateUser = wpCreateUser;
+	}
+	public java.lang.String getWpStatus() {
+		return wpStatus;
+	}
+	public void setWpStatus(java.lang.String wpStatus) {
+		this.wpStatus = wpStatus;
 	}
 	
 }

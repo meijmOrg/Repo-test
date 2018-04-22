@@ -36,5 +36,10 @@
                 <comment>创建人</comment>
             </column>
         </property>
+        <property name="wpStatus" type="java.lang.String">
+            <column name="wp_status">
+                <comment>小组状态</comment>
+            </column>
+        </property>
     </class>
 </hibernate-mapping>

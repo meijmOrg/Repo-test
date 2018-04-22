@@ -5,12 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.json.JSON;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.yh.admin.dto.RolesDTO;
 import com.yh.admin.roles.queryhelper.RolesQueryHelper;
 import com.yh.admin.util.AuthConstants;
@@ -29,6 +28,8 @@ import com.yh.hr.component.flow.queryhelper.YhFlowComponentQueryHelper;
 import com.yh.hr.component.flow.service.YhFlowComponentService;
 import com.yh.hr.component.orgtree.queryhelper.JhcOrgTreeQueryHelper;
 import com.yh.hr.res.unit.dto.UtOrgDTO;
+import com.yh.hr.res.unit.dto.WorkGroupDTO;
+import com.yh.hr.res.unit.queryhelper.WorkGroupQueryHelper;
 import com.yh.platform.core.dao.DaoUtil;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.BeanHelper;
@@ -192,13 +193,13 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 		// 部门信息
 		List<UtOrgDTO> orgList = JhcOrgTreeQueryHelper.findAllOrgList();
 		//小组信息
-				
+		List<WorkGroupDTO> wgList = WorkGroupQueryHelper.queryWorkGroupList();	
 		//角色信息
 		List<RolesDTO> roleList = RolesQueryHelper.findAllRoles(AuthConstants.ROLE_TYPE_FUNCTION);
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("orgInfo", CollectionUtils.isEmpty(orgList) ? JSONObject.fromObject("{}") : com.alibaba.fastjson.JSON.toJSON(orgList).toString());
-		//jsonObject.put("groupInfo", CollectionUtils.isEmpty(orgList) ? JSONObject.fromObject("{}") : JSONHelper.fromObject(orgList));
-		jsonObject.put("roleInfo", CollectionUtils.isEmpty(orgList) ? JSONObject.fromObject("{}") : com.alibaba.fastjson.JSON.toJSON(roleList).toString());
+		jsonObject.put("orgInfo", CollectionUtils.isEmpty(orgList) ? JSON.toJSON("{}") : JSON.toJSON(orgList).toString());
+		jsonObject.put("groupInfo", CollectionUtils.isEmpty(wgList) ? JSON.toJSON("{}") : JSON.toJSON(wgList));
+		jsonObject.put("roleInfo", CollectionUtils.isEmpty(orgList) ? JSON.toJSON("{}") : JSON.toJSON(roleList).toString());
 		return jsonObject;
 	}
 }
