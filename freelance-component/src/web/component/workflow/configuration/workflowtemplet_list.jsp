@@ -53,7 +53,6 @@
 	<div id="right_wfc"></div>
 	</div>
 </body>
-
 <script type="text/javascript">
 var worktop = null;
 $(document).ready(function() {

@@ -5,24 +5,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
-
 import net.sf.json.JSONObject;
 
+import org.apache.commons.collections.CollectionUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.yh.admin.dto.RolesDTO;
+import com.yh.admin.roles.queryhelper.RolesQueryHelper;
+import com.yh.admin.util.AuthConstants;
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.bo.File;
 import com.yh.component.workflow.bo.FlowActivity;
-import com.yh.component.workflow.bo.FlowActivityPerCombination;
 import com.yh.component.workflow.bo.FlowRule;
 import com.yh.component.workflow.bo.Task;
 import com.yh.component.workflow.bo.TaskProcess;
 import com.yh.component.workflow.dto.FlowActivityPermissionDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
+import com.yh.component.workflow.dto.WorkFlowKeyWordDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
+import com.yh.component.workflow.queryhelper.WorkFlowKeyWordQueryHelper;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.queryhelper.YhFlowComponentQueryHelper;
 import com.yh.hr.component.flow.service.YhFlowComponentService;
+import com.yh.hr.component.orgtree.queryhelper.JhcOrgTreeQueryHelper;
+import com.yh.hr.res.unit.dto.UtOrgDTO;
+import com.yh.hr.res.unit.dto.WorkGroupDTO;
+import com.yh.hr.res.unit.queryhelper.WorkGroupQueryHelper;
 import com.yh.platform.core.dao.DaoUtil;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.BeanHelper;
@@ -95,14 +104,26 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 	 * @throws ServiceException
 	 */
 	private List<PermissionUsersDTO> listPermissionUsers(String actId) throws ServiceException{
+		String apUserType = "AND";//默认
+		//拼动态查询sql语句
+		StringBuilder sql = new StringBuilder();
 		//1.根据活动单元id查询权限控制信息
 		List<FlowActivityPermissionDTO> apList = YhFlowComponentQueryHelper.getActivityPermissionByActId(actId);
 		//2.根据权限控制id查询权限组合信息(活动单元和权限控制信息为1对1关系)
-		List<FlowActivityPerCombination> apcList = null;
+		List<Object[]> apcList = null;
 		if(CollectionUtils.isNotEmpty(apList)){
-			apcList = YhFlowComponentQueryHelper.getFlowActivityPerCombinationByApId(apList.get(0).getApId());
+			apUserType = apList.get(0).getApUserType()==null? apUserType:apList.get(0).getApUserType();
+			apcList = YhFlowComponentQueryHelper.getFlowActivityPerCombinationByApIdView(apList.get(0).getApId());
 		}
-		return null;
+		if(null == apcList){
+			return null;
+		}
+		sql.append(" select * from YHF_Combination_Person_View cpv where 1=1 ");
+		for(int i=0;i<apcList.size();i++){
+			sql.append(apUserType+" cpv."+apcList.get(i)[1]+" in ("+apcList.get(i)[2]+") ");
+		}
+		
+		return YhFlowComponentQueryHelper.getPermissionUsersDTO(sql.toString());
 	}
 	
 	/**
@@ -166,5 +187,33 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 	 */
 	public void submitCcUsers(YhFlowComponentDTO dto) throws ServiceException{
 		
+	}
+
+	@Override
+	public JSONObject queryDepGroRole() throws ServiceException {
+		// 部门信息
+		List<UtOrgDTO> orgList = JhcOrgTreeQueryHelper.findAllOrgList();
+		//小组信息
+		List<WorkGroupDTO> wgList = WorkGroupQueryHelper.queryWorkGroupList();	
+		//角色信息
+		List<RolesDTO> roleList = RolesQueryHelper.findAllRoles(AuthConstants.ROLE_TYPE_FUNCTION);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("orgInfo", CollectionUtils.isEmpty(orgList) ? JSON.toJSON("{}") : JSON.toJSON(orgList));
+		jsonObject.put("groupInfo", CollectionUtils.isEmpty(wgList) ? JSON.toJSON("{}") : JSON.toJSON(wgList));
+		jsonObject.put("roleInfo", CollectionUtils.isEmpty(roleList) ? JSON.toJSON("{}") : JSON.toJSON(roleList));
+		return jsonObject;
+	}
+	
+	/**
+	 * 查询关键字
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public JSONObject queryKeyWords() throws ServiceException {
+		List<WorkFlowKeyWordDTO> keyWordList = WorkFlowKeyWordQueryHelper.queryAllKeyWord();
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("keyWord", CollectionUtils.isEmpty(keyWordList) ? JSON.toJSON("{}") : JSON.toJSON(keyWordList).toString());
+		return jsonObject;
 	}
 }

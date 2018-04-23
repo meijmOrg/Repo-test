@@ -188,4 +188,12 @@ public class RolesQueryHelper {
 		List<RoleFunc> list=DaoUtil.find(" from RoleFunc r where r.roleId=? and r.funcId=?",Long.valueOf(roleId),funcId);
 		return CollectionUtils.isNotEmpty(list);
 	}
+	
+	/**
+	 * 角色信息查询（roleType：0 为功能角色 ，1位数据角色）
+	 * */
+	public static List<RolesDTO> findAllRoles(String roleType) throws ServiceException {
+		List<Roles> rolesBo = DaoUtil.find(" from Roles r where r.roleType=?", roleType.trim());
+		return BeanHelper.copyProperties(rolesBo, RolesDTO.class);
+	}
 }

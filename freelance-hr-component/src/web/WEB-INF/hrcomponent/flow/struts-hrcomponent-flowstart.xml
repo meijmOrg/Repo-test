@@ -14,13 +14,25 @@
 				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
 				parameter="method">
 			<description>跳转到提交流程(用户弹框)页面</description>
-			<forward name="success" path="/hrcomponent/info/infoManage.jsp"/>
+			<forward name="success" path="/hrcomponent/flow/yhflow_submit.jsp"/>
 		</action>
 		<action path="/submitFlowStart"
 				scope="request"
 				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
 				parameter="method">
 			<description>提交流程(确定)</description>
+		</action>
+		<action path="/queryDepGroRole"
+				scope="request"
+				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
+				parameter="method">
+			<description>查询部门小组角色信息</description>
+		</action>
+		<action path="/queryKeyWord"
+				scope="request"
+				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
+				parameter="method">
+			<description>查询关键字信息</description>
 		</action>
 	</action-mappings>
 </struts-config>

@@ -47,7 +47,8 @@ public class YhFlowComponentAction extends BaseAction {
 	public ActionForward goUserListPartial(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
 		try {
-			String templateId = request.getParameter("templateId");
+			//String templateId = request.getParameter("templateId");
+			String templateId = "68785b4b-e1cd-43dc-877a-79ef103d1c95";
 			Map<String,List<WorkflowActivityDTO>> ActInfo = yhFlowComponentFacade.goUserListPartial(templateId);
 			if(!MapUtils.isEmpty(ActInfo)){
 	        	 for(Map.Entry<String, List<WorkflowActivityDTO>> me:ActInfo.entrySet()){
@@ -195,4 +196,43 @@ public class YhFlowComponentAction extends BaseAction {
 		}
 	}
 	
+	/**
+	 * 查询部门、小组、角色
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward queryDepGroRole(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		try {
+			JSONObject jsonObject = yhFlowComponentFacade.queryDepGroRole();
+			response.getWriter().print(jsonObject.toString());
+		} catch (Exception e) {
+			this.handleException(request, e, "查询部门、小组、角色信息失败!");
+		}
+		return null;
+	}
+	
+	/**
+	 * 查询关键字信息
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward queryKeyWord(ActionMapping mapping, ActionForm form, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		try {
+			JSONObject jsonObject = yhFlowComponentFacade.queryKeyWord();
+			response.getWriter().print(jsonObject.toString());
+		} catch (Exception e) {
+			this.handleException(request, e, "查询关键字信息");
+		}
+		return null;
+	}
 }

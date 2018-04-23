@@ -1,5 +1,16 @@
 (function ($) {
+	$.asset={};
     var myflow = {};
+    //判断生成的id是否在数组中
+    function isInArray(arr,value){
+        for(var i = 0; i < arr.length; i++){
+            if(value === arr[i]){
+                return true;
+            }
+        }
+        return false;
+    }
+   $.asset["createId"]=[];
     myflow.config = {
         editable: true,
         allowStateMutiLine:true,
@@ -15,11 +26,12 @@
         lineHeight: 15,
         basePath: '',
         rect: {// 状态
+            id:"",
             attr: {
                 x: 10,
                 y: 10,
-                width: 100,
-                height: 50,
+                width: 120,
+                height: 30,
                 r: 5,
                 fill: '90-#fff-#C0C0C0',
                 stroke: '#000',
@@ -37,21 +49,25 @@
             },
             margin: 5,
             props: [],
-            img: {}
+            ruleProps:{},
+            img: {},
+            onDbclick:function(){
+            },
         },
         path: {// 路径转换
+            id:"",
             attr: {
                 path: {
                     path: 'M10 10L100 100',
-                    stroke: '#808080',
+                    stroke: '#149de4',
                     fill: "none",
                     "stroke-width": 2,
                     cursor: "pointer"
                 },
                 arrow: {
                     path: 'M10 10L10 10',
-                    stroke: '#808080',
-                    fill: "#808080",
+                    stroke: '#149de4',
+                    fill: "#149de4",
                     "stroke-width": 2,
                     radius: 4
                 },
@@ -99,35 +115,28 @@
                     y: -10
                 }
             },
-            props: {
-                text: {
-                    name: 'text',
-                    label: '显示',
-                    value: '',
-                    editor: function () {
-                        return new myflow.editors.textEditor();
-                    }
-                }
-            }
+            onDbclick:function(){
+            },
+            ruleProps:{},
         },
         tools: {// 工具栏
             attr: {
-                left: 10,
-                top: 10
+                left: 20,
+                top: 20
             },
             pointer: {},
             path: {},
             states: {},
             save: {
                 onclick: function (data) {
-                    alert(data);
+                    //alert(data);
                 }
             }
         },
         props: {// 属性编辑器
             attr: {
-                top: 10,
-                right: 10
+                top: 50,
+                right: 30
             },
             props: {}
         },
@@ -181,7 +190,22 @@
         //     };
         // })(),
         nextId:function(){
-            return new Date().getTime();
+           /* return new Date().getTime();*/
+            var len = 5; //10长度
+            var radix = 10; //10进制
+            var chars = '0123456789'.split('');
+            var uuid = [],i;
+            radix = radix || chars.length;
+            if (len) {
+                for (i = 0; i < len; i++)
+                {uuid[i] = chars[0 | Math.random() * radix];}
+                if(isInArray($.asset["createId"],uuid.join('')))
+                {
+                    myflow.util.nextId();
+                }
+                $.asset["createId"].push(uuid.join(''))
+                return uuid.join('');
+            }
         },
         connPoint: function (rect, p) {// 计算矩形中心到p的连线与矩形的交叉点
             var start = p, end = {
@@ -239,14 +263,19 @@
     }
 
     myflow.rect = function (o, r,id) {
+
         var _this = this, _uid = myflow.util.nextId(), _o = $.extend(true, {},
-            myflow.config.rect, o), _id =id || 'rect' + _uid, _r = r, // Raphael画笔
+            myflow.config.rect, o), _id =id || "99"+ _uid, _r = r, // Raphael画笔
             _rect, _img, // 图标
             _name, // 状态名称
             _text, // 显示文本
             _ox, _oy; // 拖动时，保存起点位置;
+        if(!_o.id){
+            _o.id=_id;
 
-
+        }
+        this.id=_o.id;
+        this.type=_o.type;
         _rect = _r.rect(_o.attr.x, _o.attr.y, _o.attr.width, _o.attr.height,
             _o.attr.r).hide().attr(_o.attr);
 
@@ -342,8 +371,8 @@
 
         _bpath = _r.path('M0 0L1 1').hide();
         _bdots['t'] = _r.rect(0, 0, _bw, _bw).attr({
-            fill: '#000',
-            stroke: '#fff',
+           /* fill: '#000',*/
+            stroke: '#0092cc',
             cursor: 's-resize'
         }).hide().drag(function (dx, dy) {
             bdragMove(dx, dy, 't');
@@ -353,8 +382,8 @@
         }, function () {
         }); // 上
         _bdots['lt'] = _r.rect(0, 0, _bw, _bw).attr({
-            fill: '#000',
-            stroke: '#fff',
+           /* fill: '#000',*/
+            stroke: '#0092cc',
             cursor: 'nw-resize'
         }).hide().drag(function (dx, dy) {
             bdragMove(dx, dy, 'lt');
@@ -364,8 +393,8 @@
         }, function () {
         }); // 左上
         _bdots['l'] = _r.rect(0, 0, _bw, _bw).attr({
-            fill: '#000',
-            stroke: '#fff',
+           /* fill: '#000',*/
+            stroke: '#0092cc',
             cursor: 'w-resize'
         }).hide().drag(function (dx, dy) {
             bdragMove(dx, dy, 'l');
@@ -375,8 +404,8 @@
         }, function () {
         }); // 左
         _bdots['lb'] = _r.rect(0, 0, _bw, _bw).attr({
-            fill: '#000',
-            stroke: '#fff',
+            /*fill: '#000',*/
+            stroke: '#0092cc',
             cursor: 'sw-resize'
         }).hide().drag(function (dx, dy) {
             bdragMove(dx, dy, 'lb');
@@ -386,8 +415,8 @@
         }, function () {
         }); // 左下
         _bdots['b'] = _r.rect(0, 0, _bw, _bw).attr({
-            fill: '#000',
-            stroke: '#fff',
+            /*fill: '#000',*/
+            stroke: '#0092cc',
             cursor: 's-resize'
         }).hide().drag(function (dx, dy) {
             bdragMove(dx, dy, 'b');
@@ -397,8 +426,8 @@
         }, function () {
         }); // 下
         _bdots['rb'] = _r.rect(0, 0, _bw, _bw).attr({
-            fill: '#000',
-            stroke: '#fff',
+            /*fill: '#000',*/
+            stroke: '#0092cc',
             cursor: 'se-resize'
         }).hide().drag(function (dx, dy) {
             bdragMove(dx, dy, 'rb');
@@ -408,8 +437,8 @@
         }, function () {
         }); // 右下
         _bdots['r'] = _r.rect(0, 0, _bw, _bw).attr({
-            fill: '#000',
-            stroke: '#fff',
+           /* fill: '#000',*/
+            stroke: '#0092cc',
             cursor: 'w-resize'
         }).hide().drag(function (dx, dy) {
             bdragMove(dx, dy, 'r');
@@ -419,8 +448,8 @@
         }, function () {
         }); // 右
         _bdots['rt'] = _r.rect(0, 0, _bw, _bw).attr({
-            fill: '#000',
-            stroke: '#fff',
+           /* fill: '#000',*/
+            stroke: '#0092cc',
             cursor: 'ne-resize'
         }).hide().drag(function (dx, dy) {
             bdragMove(dx, dy, 'rt');
@@ -497,12 +526,16 @@
 
                         var moving=myflow.config.moving;
 
-                        //处理：禁止两个状态间有重复的线
+                        //处理：禁止两个状态间有重复的线 连线只能是单向的
                         if(myflow.config.allowStateMutiLine){
                             var paths=myflow.config.tempData.paths,flag=false;
                             for(var k in paths){
                                 if(paths[k]){
                                     if((moving.preRect&&moving.preRect.getId()==paths[k].from().getId())&&(_this.getId()==paths[k].to().getId())){
+                                        flag=true;
+                                        break;
+                                    }
+                                    if((moving.preRect&&moving.preRect.getId()==paths[k].to().getId())&&(_this.getId()==paths[k].from().getId())){
                                         flag=true;
                                         break;
                                     }
@@ -535,7 +568,7 @@
                             $(_r).data('currNode',null);
                             break;
                         }
-                        if (pre && pre.getId().substring(0, 4) == 'rect') {
+                        if (pre && pre.getId().substring(0, 2) == '99') {
                             if(pre.getId() != _id){
                                 $(_r).trigger('addpath', [pre, _this]);
                             }
@@ -547,7 +580,23 @@
                 $(_r).trigger('click', _this);
                 return false;
             });
+        // 事件处理--------------------------------
+        $([_rect.node, _text.node, _name.node, _img.node]).bind('dblclick',
+            function () {
+                if (!myflow.config.editable)
+                    return;
 
+                showBox();
+                myflow.config.tools.clickRect(_this.getId(),_this.toJson());
+                var mod = $(_r).data('mod');
+                if(mod=="pointer")
+                {
+                    $(_r).data('currNode', _this);
+                    myflow.config.rect.onDbclick(_this.getId(),_this,_r);
+                }
+                $(_r).trigger('click', _this);
+                return false;
+            });
         var clickHandler = function (e, src) {
             if (!myflow.config.editable)
                 return;
@@ -564,8 +613,8 @@
                 }
             }
 
-            if (src.getId() == _id) {
-                $(_r).trigger('showprops', [_o.props, src]);
+           if (src.getId() == _id) {
+               /* $(_r).trigger('showprops', [_o.props, src]);*/
             } else {
                 hideBox();
             }
@@ -688,26 +737,34 @@
         };
 
         // 函数----------------
-       // 转化json字串
-		this.toJson = function () {
-		var data = "{type:'" + _o.type + "',ID:'" + (!_o.ID ? "" : _o.ID) + "',text:{text:'"
-		+ (!_text.node.textContent ? "" : _text.node.textContent) + "'}, attr:{ x:"
-		+ Math.round(_rect.attr('x')) + ", y:"
-		+ Math.round(_rect.attr('y')) + ", width:"
-		+ Math.round(_rect.attr('width')) + ", height:"
-		+ Math.round(_rect.attr('height')) + "},"
-		+ " props:{";
-		for (var o in _o.props) {
-		data += o + ":{value:'" + _o.props[o].value + "'},"
-		}
-		if (data.substring(data.length - 1, data.length) == ',')
-		data = data.substring(0, data.length - 1);
-		data += "}}";
-		return data;
-		};
+        // 转化json字串
+        this.toJson = function () {
+            var data = "{type:'" + _o.type + "',id:'" + (!_o.id ? "" : _o.id) + "',text:{text:'"
+                + (!_text.node.textContent ? "" : _text.node.textContent) + "'}, attr:{ x:"
+                + Math.round(_rect.attr('x')) + ", y:"
+                + Math.round(_rect.attr('y')) + ", width:"
+                + Math.round(_rect.attr('width')) + ", height:"
+                + Math.round(_rect.attr('height')) + "},"
+                + (!$.asset["ruleParams"][_o.id] ? "" : 'ruleProps:'+JSON.stringify($.asset["ruleParams"][_o.id])+",")
+               /* + " props:{";
+            for (var o in _o.props) {
+                data += o + ":{value:'" + _o.props[o].value + "'},"
+            }*/
+            if (data.substring(data.length - 1, data.length) == ',')
+                data = data.substring(0, data.length - 1);
+            data += "}";
+            console.log(data);
+            return data;
+        };
         // 从数据中恢复图
         this.restore = function (data) {
             var obj = data;
+           
+            if("task"==data.type||"start"==data.type||"end"==data.type)
+            {
+                $.asset["ruleParams"][data.id]=data.ruleProps;
+            }
+
             // if (typeof data === 'string')
             // obj = eval(data);
 
@@ -724,6 +781,9 @@
         };
         this.getId = function () {
             return _id;
+        };
+        this.getType = function () {
+            return _o.type;
         };
         this.remove = function () {
             _rect.remove();
@@ -749,7 +809,7 @@
     myflow.path = function (o, r, from, to, guid, ec,dots,id) {
         var _this = this, _r = r, _o = $.extend(true, {}, myflow.config.path), _path,_markpath, _arrow, _text, _textPos = _o.text.textPos, _ox, _oy, _from = from, _to = to, _id = id || 'path'
             + myflow.util.nextId(), _dotList, _autoText = true; _o.lineID = guid; oec = (ec > 0 ? (parseInt(ec) == 1 ? 25 : parseInt(ec) * 9 + 22) : 0);
-
+        _o.id=_id;
         // 点
         function dot(type, pos, left, right) {
             var _this = this, _t = type, _n, _lt = left, _rt = right, _ox, _oy, // 缓存移动前时位置
@@ -1099,7 +1159,23 @@
             myflow.config.tools.clickPath(_id);
             return false;
         });
+        // 事件处理--------------------------------
+        $([_path.node,_markpath.node, _arrow.node, _text.node]).bind('dblclick',
+            function () {
+                if (!myflow.config.editable)
+                    return;
 
+                myflow.config.tools.clickPath(_id);
+                $(_r).trigger('click', _this);
+                var mod = $(_r).data('mod');
+                if(mod=="pointer")
+                {
+                    $(_r).data('currNode', _this);
+                    myflow.config.path.onDbclick(_this.getId(),_this,_r);
+                }
+                
+                return false;
+            });
         // 处理点击事件，线或矩形
         var clickHandler = function (e, src) {
             if (!myflow.config.editable)
@@ -1107,7 +1183,7 @@
 
             if (src && src.getId() == _id) {
                 _dotList.show();
-                $(_r).trigger('showprops', [_o.props, _this]);
+               /* $(_r).trigger('showprops', [_o.props, _this]);*/
             } else {
                 _dotList.hide();
             }
@@ -1207,33 +1283,34 @@
         };
         // 转化json数据
         this.toJson = function () {
-            var data = "{lineID:'" + (!_o.lineID ? "" : _o.lineID) + "',from:'" + _from.getId() + "',to:'" + _to.getId()
+            var data = "{id:'" + (!_o.id ? "" : _o.id) + "',from:'" + _from.getId() + "',to:'" + _to.getId()
                 + "', dots:" + _dotList.toJson() + ",text:{text:'"
                 + _text.attr('text') + "',textPos:{x:"
                 + Math.round(_textPos.x) + ",y:" + Math.round(_textPos.y)
-                + "}}, props:{";
-            for (var k in _o.props) {
-                data += k + ":{value:'"
-                    + _o.props[k].value + "'},";
-            }
+                + "}},";
+            	+ (!$.asset["ruleParamsPath"][_o.id] ? "" : 'ruleProps:'+JSON.stringify($.asset["ruleParamsPath"][_o.id])+",")
+
             if (data.substring(data.length - 1, data.length) == ',')
                 data = data.substring(0, data.length - 1);
-            data += '}}';
+            data += '}';
             return data;
         };
         // 恢复
         this.restore = function (data) {
             var obj = data;
-
+            $.asset["ruleParamsPath"][data.id]=data.ruleProps;
             _o = $.extend(true, _o, data);
             //$('body').append('['+_text.attr('text')+','+_o.text.text+']');
-            if (_text.attr('text') != _o.text.text) {
+            /*if (_text.attr('text') != _o.text.text) {
                 //$('body').append('['+_text.attr('text')+','+_o.text.text+']');
-                _text.attr({ text: _o.text.text });
+                _text.attr({text: _o.text.text});
                 _autoText = false;
-            }
+            }*/
+            if (undefined != obj.dots && null != obj.dots && "" != obj.dots)
+            {
+                _dotList.restore(obj.dots);
+                }
 
-            _dotList.restore(obj.dots);
         };
         // 删除
         this.remove = function () {
@@ -1329,8 +1406,33 @@
                 // $('body').append(props[i].editor+'a');
             }
         };
-        $(_r).bind('showprops', showpropsHandler);
+   /*     var showHandler = function (e, props, src) {
+          if(src.attr==null||src.attr==undefined||src.attr==""){// 空格不显示属性
+              return;
+          }
+           /!* if (_src && _src.getId() == src.getId()) {// 连续点击不刷新
+                return;
+            }*!/
+           _src = src;
+            $(_tb).find('.editor').each(function () {
+                var e = $(this).data('editor');
+                if (e)
+                    e.destroy();
+            });
 
+            for (var k in props) {
+                if (props[k])
+                {
+                    props[k].init();
+                    props[k].editor();
+                }
+
+                // $('body').append(props[i].editor+'a');
+            }
+        };*/
+        //点击属性处理
+       /* $(_r).bind('showprops', showpropsHandler);*/
+        //$(_r).bind('showprops', showHandler);
     };
 
     // 属性编辑器
@@ -1370,22 +1472,30 @@
 
         $.extend(true, myflow.config, o);
 
-
         /**
          * 删除： 删除状态时，触发removerect事件，连接在这个状态上当路径监听到这个事件，触发removepath删除自身；
          * 删除路径时，触发removepath事件
          */
-        $(document).keydown(function (arg) {
+        function doKey(arg) {
             if (!myflow.config.editable)
                 return;
-            if (arg.keyCode == 46 /*|| (arg.originalEvent && arg.originalEvent.code == 'Backspace')*/) {
+            if (arg.keyCode == 46 || (arg.keyCode == 8)) {
                 var c = $(_r).data('currNode');
                 if (c) {
-                    if (c.getId().substring(0, 4) == 'rect') {
+                    if (c.getId().substring(0, 2) == '99') {
+
                         //添加到历史记录
                         myflow.config.historys.push({state:"removerect",object:c,data:getJson()});
-
+                        if(c.getType()=="start")
+                        {
+                            $(_r).data('haveStart',false);
+                        }
+                        else if(c.getType()=="end")
+                        {
+                            $(_r).data('haveEnd',false);
+                        }
                         myflow.config.tools.deleteRect(c.getId(),c.toJson());
+                        $.ruleFlowProps.handlers.removeByValue($.asset["ruleParams"],c.getId());
                         $(_r).trigger('removerect', c);
 
                         /*清除自定义轨迹*/
@@ -1409,10 +1519,15 @@
                         $(_r).trigger('removepath', c);
                     }
                     $(_r).removeData('currNode');
+                    arg.preventDefault();
                 }
-            }
-        });
 
+            }
+        };
+        //禁止后退键 作用于Firefox、Opera
+        document.onkeypress=doKey;
+        //禁止后退键  作用于IE、Chrome
+        document.onkeydown=doKey;
         $(document).click(function () {
             $(_r).data('currNode', null);
 
@@ -1420,24 +1535,23 @@
                 paths:_paths,
                 states:_states
             }
-
             $(_r).trigger('click', {
                 getId: function () {
                     return '00000000';
                 }
             });
-            $(_r).trigger('showprops', [myflow.config.props.props, {
+         /*   $(_r).trigger('showprops', [myflow.config.props.props, {
                 getId: function () {
                     return '00000000';
                 }
-            }]);
+            }]);*/
         });
 
         // 删除事件
         var removeHandler = function (e, src) {
             if (!myflow.config.editable)
                 return;
-            if (src.getId().substring(0, 4) == 'rect') {
+            if (src.getId().substring(0, 2) == '99') {
                 _states[src.getId()] = null;
                 src.remove();
             } else if (src.getId().substring(0, 4) == 'path') {
@@ -1450,6 +1564,22 @@
 
         // 添加状态
         $(_r).bind('addrect', function (e, type, o) {
+            if("start" == type){
+                if($(_r).data('haveStart')){
+                    return;
+                }
+                else{
+                    $(_r).data('haveStart',true);
+                }
+            }
+            if("end" == type){
+                if($(_r).data('haveEnd')){
+                    return;
+                }
+                else{
+                    $(_r).data('haveEnd',true);
+                }
+            }
             var data=getJson();
             var rect = new myflow.rect($.extend(true, {},myflow.config.tools.states[type], o), _r);
             myflow.config.tools.addRect(rect.getId(),rect.toJson());
@@ -1496,11 +1626,11 @@
                     dot = myflow.util.connPoint(pre.getBBox(), {x:e.pageX,y:e.pageY});
                 }
                 //修改-偏移量
-                var x = e.pageX-$("#myflow").offset().left, y = e.pageY-$("#myflow").offset().top-20;
+                var x = e.pageX-$("#myflow").offset().left-10, y = e.pageY-$("#myflow").offset().top-10;
                 circle=_r.circle(x, y, 6).attr({fill: 'red',stroke: '#fff',cursor: 'move'});
 
                 path = _r.path('M' + dot.x + ' ' + dot.y + 'L' + x + ' ' + y + 'z')
-                    .attr({stroke: '#808080',fill: "none","stroke-width": 2,cursor: "pointer"});
+                    .attr({stroke: '#149de4',fill: "none","stroke-width": 2,cursor: "pointer"});
 
                 moving.temp.push(circle);
                 moving.temp.push(path);
@@ -1518,8 +1648,8 @@
         $("#myflow").click(function(e){
             if(myflow.config.moving.flag){
                 var dot={
-                    x:e.pageX,
-                    y:e.pageY
+                    x:e.pageX-$("#myflow").offset().left-10,
+                    y:e.pageY-$("#myflow").offset().top-10
                 };
                 myflow.config.moving.prepdot=dot;
                 myflow.config.moving.dots.push(dot);
@@ -1595,6 +1725,15 @@
             }
 
             $('#myflow_save').click(function () {// 保存
+                if(!($(_r).data('haveStart'))){
+                    MessageBox.alert("warning", '保存失败！没有开始节点！')
+                    return;
+                }
+                if(!($(_r).data('haveEnd'))){
+                    MessageBox.alert("warning", '保存失败！没有结束节点！')
+                    MessageBox.alert(f, "warning")
+                    return;
+                }
                 myflow.config.tools.save(getJson())
             });
             $('#myflow_publish').click(function () {// 发布
@@ -1618,7 +1757,7 @@
                             break;
                     }
                 }else{
-                    alert("没有东西可以撤销！");
+                    $.message.pop('没有东西可以撤销！', "warning", 1500);
                 }
             });
 

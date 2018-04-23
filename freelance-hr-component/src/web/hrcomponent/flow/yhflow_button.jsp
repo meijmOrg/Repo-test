@@ -7,8 +7,13 @@
 <title>流程操作</title>
 <link rel="stylesheet"
 	href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
+<script src="component/front_transform/lib/jquery-3.2.1.min.js"></script>
 <script src="component/front_transform/component/dialog/dialog.js"></script>
+<<<<<<< HEAD
 <script src="hrcomponent/flow/js/yhflow_button.js"></script>
+=======
+<script src="hrcomponent/flow/js/yhflow_start.js"></script>
+>>>>>>> 7b4967f06d58ecc96532de12b86fe2e45a3eecb7
 <script type="text/javascript">
 $(document).ready(function() {
 	var params={};
@@ -20,7 +25,7 @@ $(document).ready(function() {
 	buttonControl(params);
 	$('#submitFlow').click(function() {
 	    var dialog = new Dialog({
-	        url: 'goSubmitFlow.do',
+	        url: 'goUserListPartial.do?method=goUserListPartial',
 	        width: '80%',
 	        title: '流程下一步'
 	    });

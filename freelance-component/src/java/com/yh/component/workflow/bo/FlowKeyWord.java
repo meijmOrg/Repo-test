@@ -14,6 +14,8 @@ public class FlowKeyWord extends BaseBo{
 	private java.lang.String kwId;//关键字唯一ID
 	private java.lang.String kwCode;//关键字编码
 	private java.lang.String kwDescription;//关键字描述
+	private java.lang.String kwType;//关键字类型
+	private java.lang.String kwStatus;//关键字状态
 	public java.lang.String getKwId() {
 		return kwId;
 	}
@@ -31,6 +33,18 @@ public class FlowKeyWord extends BaseBo{
 	}
 	public void setKwDescription(java.lang.String kwDescription) {
 		this.kwDescription = kwDescription;
+	}
+	public java.lang.String getKwType() {
+		return kwType;
+	}
+	public void setKwType(java.lang.String kwType) {
+		this.kwType = kwType;
+	}
+	public java.lang.String getKwStatus() {
+		return kwStatus;
+	}
+	public void setKwStatus(java.lang.String kwStatus) {
+		this.kwStatus = kwStatus;
 	}
 	
 }

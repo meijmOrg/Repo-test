@@ -48,4 +48,15 @@ public class WorkFlowConfigurationUtil {
 	public static final String YHRS4004_0 = "0";
 	/**专属流程*/
 	public static final String YHRS4004_1 = "1";
+	
+	/**
+	 * 活动单元类型
+	 */
+	public static final String YHRS4005 = "YHRS4005"; 
+	
+	/**
+	 * 退回方式
+	 */
+	public static final String YHRS4006 = "YHRS4006"; 
+	
 }

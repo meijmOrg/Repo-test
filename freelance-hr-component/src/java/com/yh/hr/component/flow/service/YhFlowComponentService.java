@@ -59,5 +59,22 @@ public interface YhFlowComponentService {
 	 * @throws ServiceException
 	 */
 	public void submitCcUsers(YhFlowComponentDTO dto) throws ServiceException;
+	
 
+	/**
+	 * 查询部门、小组、角色
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public JSONObject queryDepGroRole() throws ServiceException;
+	
+	/**
+	 * 查询关键字
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public JSONObject queryKeyWords() throws ServiceException;
+	
 }

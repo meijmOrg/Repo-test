@@ -12,6 +12,7 @@ import com.yh.component.workflow.bo.FlowActivityPerCombination;
 import com.yh.component.workflow.bo.FlowActivityPermission;
 import com.yh.component.workflow.dto.FlowActivityNoticeDTO;
 import com.yh.component.workflow.dto.FlowActivityPermissionDTO;
+import com.yh.component.workflow.dto.PermissionUsersDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
 import com.yh.component.workflow.utils.WorkFlowConfigurationUtil;
@@ -36,13 +37,15 @@ public class YhFlowComponentQueryHelper {
      */
 	public static WorkflowBaseInfoDTO getYhFlowByTemplateId(String templateId) throws ServiceException {
 
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params1 = new HashMap<String, Object>();
+		Map<String, Object> params2 = new HashMap<String, Object>();
 		Object[] objUser = getUserInfoByUserCode(UserContext.getLoginUserID());
 		Long deptOid = objUser[5] == null ? null:Long.valueOf(objUser[5].toString());//用户所在部门id
-		params.put("templateId", templateId);
-		params.put("deptOid", deptOid);
-		params.put("flowType1", WorkFlowConfigurationUtil.YHRS4004_0);
-		params.put("flowType2", WorkFlowConfigurationUtil.YHRS4004_1);
+		params1.put("templateId", templateId);
+		params2.put("templateId", templateId);
+		params2.put("deptOid", deptOid);
+		params1.put("flowType1", WorkFlowConfigurationUtil.YHRS4004_0);
+		params2.put("flowType2", WorkFlowConfigurationUtil.YHRS4004_1);
 		StringBuilder sql = new StringBuilder();
 		StringBuilder sql1 = new StringBuilder();
 		StringBuilder sql2 = new StringBuilder();
@@ -56,13 +59,15 @@ public class YhFlowComponentQueryHelper {
 		sql.append("       from yhf_file_template yft,yhf_flow yf,yhf_template_flow ytf");
 		sql.append("       where yft.template_Id=ytf.template_Id");
 		sql.append("       and yf.flow_id=ytf.flow_id");
-		sql.append("       and yft.template_Id : templateId");
-		sql1.append(" and yf.flow_type : flowType1");
-		sql2.append(" and yf.flow_type : flowType2");
-		sql2.append(" and yf.flow_org_oid : deptOid");
+		sql.append("       and yft.template_Id = :templateId");
+		sql1.append(" and yf.flow_type = :flowType1");
+		sql2.append(" and yf.flow_type = :flowType2");
+		sql2.append(" and yf.flow_org_oid = :deptOid");
 		List<Object[]> list = null;
-		List<Object[]> tylist = DaoUtil.findWithSQL(sql.append(sql1).toString(),params);//通用流程
-		List<Object[]> zslist = DaoUtil.findWithSQL(sql.append(sql2).toString(),params);//专属流程
+		List<Object[]> tylist = DaoUtil.findWithSQL(sql.append(sql1).toString(),params1);//通用流程
+		//减去sql1内容
+		sql.delete(sql.length()-sql1.length(), sql.length());
+		List<Object[]> zslist = DaoUtil.findWithSQL(sql.append(sql2).toString(),params2);//专属流程
 		if(CollectionUtils.isEmpty(zslist)&&CollectionUtils.isEmpty(tylist)){
 			return null;
 		}
@@ -142,7 +147,7 @@ public class YhFlowComponentQueryHelper {
      * @throws ServiceException
      */
 	public static List<FlowActivityPermissionDTO> getActivityPermissionByActId(String actId) throws ServiceException {
-		List<FlowActivityPermission> list=DaoUtil.find(" from FlowActivityPermission fap where fap.actId=?",Long.valueOf(actId));
+		List<FlowActivityPermission> list=DaoUtil.find(" from FlowActivityPermission fap where fap.actId=?",actId);
 		return BeanHelper.copyProperties(list, FlowActivityPermissionDTO.class);
 	}
 	
@@ -153,8 +158,7 @@ public class YhFlowComponentQueryHelper {
      * @throws ServiceException
      */
 	public static List<FlowActivityPerCombination> getFlowActivityPerCombinationByApId(String apId) throws ServiceException {
-		List<FlowActivityPerCombination> list=DaoUtil.find(" from FlowActivityPerCombination fapc where fapc.apId=?",Long.valueOf(apId));
-		return list;
+		return DaoUtil.find(" from FlowActivityPerCombination fapc where fapc.apId=?",apId);
 	}
 	
 	/**
@@ -164,7 +168,7 @@ public class YhFlowComponentQueryHelper {
      * @throws ServiceException
      */
 	public static List<FlowActivityNoticeDTO> getActivityNoticeByActId(String actId) throws ServiceException {
-		List<FlowActivityNotice> list=DaoUtil.find(" from FlowActivityNotice fan where fan.actId=?",Long.valueOf(actId));
+		List<FlowActivityNotice> list=DaoUtil.find(" from FlowActivityNotice fan where fan.actId=?",actId);
 		return BeanHelper.copyProperties(list, FlowActivityNoticeDTO.class);
 	}
 	
@@ -191,4 +195,52 @@ public class YhFlowComponentQueryHelper {
 		}
 		return list.get(0);
 	}
+	
+	/**
+     * 根据权限控制ID获取权限组合信息(查询视图)
+     * @param apId
+     * @return List<Object[]>
+     * @throws ServiceException
+     */
+	public static List<Object[]> getFlowActivityPerCombinationByApIdView(String apId) throws ServiceException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select ycv.ap_id,");
+		sql.append("       ycv.pc_type,");
+		sql.append("       ycv.NS,");
+		sql.append("       ycv.NSValue");
+		sql.append("       from YHF_Combination_View ycv");
+		sql.append("       where 1=1");
+		sql.append("       and ycv.ap_id='"+apId+"'");
+		List<Object[]> list = DaoUtil.findWithSQL(sql.toString());
+		if(CollectionUtils.isEmpty(list)){
+			return null;
+		}
+		return list;
+	}
+	
+	/**
+     * 活动单元权限的用户
+     * @param sql
+     * @return List<PermissionUsersDTO>
+     * @throws ServiceException
+     */
+	public static List<PermissionUsersDTO> getPermissionUsersDTO(String sql) throws ServiceException {
+		List<Object[]> list = DaoUtil.findWithSQL(sql);
+		if(CollectionUtils.isEmpty(list)){
+			return null;
+		}
+		List<PermissionUsersDTO> permissionUsersDTOList = new ArrayList<PermissionUsersDTO>();
+		for(int i = 0; i < list.size(); i++){
+			Object[] o = list.get(i);
+			PermissionUsersDTO dto = new PermissionUsersDTO();
+			dto.setUserId(o[0] == null? "":o[0].toString());
+			dto.setUnitName(o[1] == null? "":o[1].toString());
+			dto.setPassword(o[2] == null? "":o[2].toString());
+			dto.setPersonOid(o[3] == null? null:Long.valueOf(o[3].toString()));
+			dto.setDeptId(o[6] == null? null:Long.valueOf(o[6].toString()));
+			permissionUsersDTOList.add(dto);
+		}
+		return permissionUsersDTOList;
+	}
+	
 }
