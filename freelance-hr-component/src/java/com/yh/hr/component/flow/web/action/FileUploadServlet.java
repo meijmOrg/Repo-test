@@ -76,7 +76,7 @@ public class FileUploadServlet extends HttpServlet {
 					}
 					// 保存文件
 					File chunkFile = new File(serverPath + "/" + fileMd5 + "/" + chunk);
-					FileUtils.copyInputStreamToFile(fileItem.getInputStream(), chunkFile);
+					//FileUtils.copyInputStreamToFile(fileItem.getInputStream(), chunkFile);
 
 				}
 
