@@ -235,4 +235,17 @@ public class YhFlowComponentAction extends BaseAction {
 		}
 		return null;
 	}
+	/**
+	 * 跳转到流程过程主页面
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward goFlowProcedureMainPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception{
+		return mapping.findForward(FORWARD_SUCCESS);
+	}
 }
