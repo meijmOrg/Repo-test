@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="include/jsp_headers.jsp"%>
+<%@ include file="/include/jsp_headers.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +8,14 @@
 <title>流程过程</title>
 <link rel="stylesheet" href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
 <link rel="stylesheet" href="component/front_transform/mho.css">
+
+<!-- <link rel="stylesheet" type="text/css" href="component/front_transform/webuploader-0.1.5/webuploader.css"> -->
 <script src="component/front_transform/lib/jquery-3.2.1.min.js"></script>
+<!-- <script src="js/jquery.form.min.js"></script> -->
 <script src="component/front_transform/webuploader-0.1.5/webuploader.js"></script>
 <script src="component/front_transform/component/accordion/accordion.js"></script>
+<script type="text/javascript">
+</script>
 </head>
 <body>
 	<div style="background:#fff;padding:20px 60px 20px 0;">
@@ -128,6 +133,7 @@
 		</jsp:include>
 		<jsp:include page="../yhflow_button.jsp"></jsp:include>
 	</div>
-	<script src="component/front_transform/index/flow/flow.js"></script>
+	<!-- <script src="component/front_transform/index/flow/flow.js"></script> -->
+	<script src="hrcomponent/flow/js/YhflowAttachment.js"></script>
 </body>
 </html>

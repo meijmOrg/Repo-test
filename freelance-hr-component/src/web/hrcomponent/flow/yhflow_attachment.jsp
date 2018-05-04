@@ -5,9 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>附件</title>
-<script src="hrcomponent/flow/js/YhflowAttachment.js"></script>
+<style type="text/css">
+	/* #dndArea {
+		width: 200px;
+		height: 100px;
+		border-color: red;
+		border-style: dashed;
+	} */
+</style>
 <script type="text/javascript">
-	(function($, window, document){
+	/*  (function($, window, document){
 		var params = {};
 		params.templateId = ;
 		params.templateCode = ;
@@ -22,10 +29,10 @@
 		file_create_org_oid文档创建部门
 		file_emergency_level紧急程度
 		file_security_rate文档密级
-		/* params.refRoleCode = params.refRoleCode || refRoleCode;		// 操作角色
+		 params.refRoleCode = params.refRoleCode || refRoleCode;		// 操作角色
 		params.refCode = params.refCode || itemNodeCode;			// 当前环节的来源代码
 		params.viewRefCodes = params.viewRefCodes || viewRefCodes;	// 要查看的所有来源（为空时查看所有来源，默认为空）
-		params.refOid = selectRow[0].data.taskOid;					// 来源主键，业务主键（taskOid） */
+		params.refOid = selectRow[0].data.taskOid;					// 来源主键，业务主键（taskOid） 
 		params.maxFileSize = 50*1024*1024;		// 字节 50MB
 //		params.acceptFileTypes = (params.acceptFileTypes == undefined || params.acceptFileTypes == null) ? "doc,docx,xls,xlsx,zip,pdf,jpg,png,tif" : params.acceptFileTypes; // 默认为doc,zip,pdf,jpg,tif
 		params.noAcceptFileTypes = (params.noAcceptFileTypes == undefined || params.noAcceptFileTypes == null) ? "exe" : params.noAcceptFileTypes; // 默认为exe
@@ -282,7 +289,7 @@
 		function downloadFile(fileOid) {
 			MessageBox.openWindow('downloadUploadFile.do?method=downloadUploadFile&fileOid='+fileOid);
 		};
-	})(jQuery, window, document);
+	})(jQuery, window, document); */
 	</script>
 </head>
 <body>
@@ -295,9 +302,21 @@
 				<button id="pick_file" type="button"
 					class="mho_btn mho_btn_primary mho_btn_file"
 					style="margin-left: 20px;">浏览</button>
-				<button type="button" class="mho_btn mho_btn_primary"
+				<button id="upload_file" type="button" class="mho_btn mho_btn_primary"
 					style="margin-left: 20px;">上传</button>
 			</div>
+			<!-- <div id="uploader" class="mho_form_group">
+			<input id="file_name" type="text" readonly class="mho_form_field"
+					style="width: 200px; flex-grow: 0;">
+		    用来存放文件信息
+		    <div id="thelist" class="uploader-list"></div>
+		    <div class="btns">
+		        <button id="pick_file" type="button"
+					class="mho_btn mho_btn_primary mho_btn_file"
+					style="margin-left: 20px;">浏览</button>
+		        <button id="ctlBtn" class="btn btn-default mho_btn mho_btn_primary" style="margin-left: 20px;">开始上传</button>
+		    </div> -->
+</div>
 		</div>
 	</div>
 	<div class="mho_row">
@@ -307,13 +326,13 @@
 				<dl class="mho_accordion_item" style="border: 0;">
 					<dt class="mho_accordion_title mho_pink mho_dep_pink_color">文件信息</dt>
 					<dd class="mho_accordion_body" style="padding: 0;">
-						<ul class="mho_list mho_list_strip">
-							<li><a href="javascript:void(0)">后勤保障处举办“五小”创新成果评选活动.jpg</a>
+						<ul class="mho_list mho_list_strip" id="list_ul">
+							<!-- <li><a href="javascript:void(0)">后勤保障处举办“五小”创新成果评选活动.jpg</a>
 								<a href="javascript:void(0)"
 								class="mho_float_right mho_red_color" style="margin: 0 10px;">删除</a>
 								<a href="javascript:void(0)"
 								class="mho_float_right mho_green_color" style="margin: 0 10px;">下载</a>
-							</li>
+							</li> -->
 						</ul>
 					</dd>
 				</dl>
