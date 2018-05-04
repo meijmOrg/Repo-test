@@ -8,7 +8,6 @@ $(function() {
 		size: null
 	};
 	var Dialog = function(setting) {
-		debugger
 		this.setting = $.extend({}, defaults, setting);
 		this.$el = $(
 			'<div class="mho_modal">'+
