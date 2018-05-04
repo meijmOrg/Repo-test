@@ -9,11 +9,7 @@
 	href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
 <script src="component/front_transform/lib/jquery-3.2.1.min.js"></script>
 <script src="component/front_transform/component/dialog/dialog.js"></script>
-<<<<<<< HEAD
-<script src="hrcomponent/flow/js/yhflow_button.js"></script>
-=======
 <script src="hrcomponent/flow/js/yhflow_start.js"></script>
->>>>>>> 7b4967f06d58ecc96532de12b86fe2e45a3eecb7
 <script type="text/javascript">
 $(document).ready(function() {
 	var params={};
@@ -30,16 +26,50 @@ $(document).ready(function() {
 	        title: '流程下一步'
 	    });
 	});
+	$('#tempSave').click(function() {
+		$.ajax({ 
+			  url: $('#flowComponentForm').attr("action"), 
+			  data: $('#flowComponentForm').serializeArray(),  
+			  dataType:'json', 
+			  async : false,
+			  success:function(data){      
+				  if (data.success) {
+		              MessageBox.alert('消息',data.message);
+		          }
+		          else
+		          {
+		              MessageBox.alert('消息',data.message);
+		          }
+			  }
+		  })
+	});
+	$('#historyData').click(function() {
+		$.ajax({ 
+			  url: $('#flowComponentForm').attr("action"), 
+			  data: $('#flowComponentForm').serializeArray(),  
+			  dataType:'json', 
+			  async : false,
+			  success:function(data){      
+				  if (data.success) {
+		              MessageBox.alert('消息',data.message);
+		          }
+		          else
+		          {
+		              MessageBox.alert('消息',data.message);
+		          }
+			  }
+		  })
+	});
 	$('#sign').click(function() {
 	    var dialog = new Dialog({
-	        url: 'goSignFlow.do',
+	        url: 'goSelectPersons.do?method=goSelectPersons',
 	        width: '80%',
 	        title: '加签用户选择'
 	    });
 	});
 	$('#duplicate').click(function() {
 	    var dialog = new Dialog({
-	        url: 'goDuplicateFlow.do',
+	        url: 'goSelectPersons.do?method=goSelectPersons',
 	        width: '80%',
 	        title: '抄送用户选择'
 	    });

@@ -8,7 +8,6 @@ $(function() {
 		size: null
 	};
 	var Dialog = function(setting) {
-		debugger
 		this.setting = $.extend({}, defaults, setting);
 		this.$el = $(
 			'<div class="mho_modal">'+
@@ -20,9 +19,9 @@ $(function() {
 						'</div>'+
 						'<div class="mho_modal_body"></div>'+
 						'<div class="mho_modal_footer">' +
-							'<button class="mho_btn mho_btn_empty mho_btn_circle">确认</button>'+
-							'<button class="mho_btn mho_btn_empty mho_btn_circle">取消</button>'+
-							'<button class="mho_btn mho_btn_empty mho_btn_circle">重置</button>'+
+							'<button id="confirm" class="mho_btn mho_btn_empty mho_btn_circle">确认</button>'+
+							'<button id="cancel" class="mho_btn mho_btn_empty mho_btn_circle">取消</button>'+
+							'<button id="reset" class="mho_btn mho_btn_empty mho_btn_circle">重置</button>'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -34,6 +33,7 @@ $(function() {
 			$header: this.$el.find('.mho_modal_header'),
 			$title: this.$el.find('.mho_modal_title'),
 			$close: this.$el.find('.mho_modal_close'),
+			$cancel: this.$el.find('#cancel'),
 			$body: this.$el.find('.mho_modal_body'),
 			$footer: this.$el.find('.mho_modal_footer')
 		});
@@ -49,6 +49,10 @@ $(function() {
 			this.$dialog.width(this.setting.width);
 			this.$title.html(this.setting.title);
 			this.$close.click(function() {
+				that.$el.remove();
+				that = null;
+			});
+			this.$cancel.click(function() {
 				that.$el.remove();
 				that = null;
 			});

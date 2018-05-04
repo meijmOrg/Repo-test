@@ -46,7 +46,7 @@
 			</div>
 			<div class="mho_col mho_col_3">
 				<div class="mho_form_group mho_form_group_block">
-					<input class="mho_form_field">
+					<input class="mho_form_field" style="width: 100%;">
 				</div>
 			</div>
 		</div>
@@ -59,8 +59,8 @@
 				<tr>
 					<td>单位名称</td>
 					<td>部门名称</td>
-					<td>职务</td>
-					<td>人员</td>
+					<td>职务名称</td>
+					<td>姓名</td>
 				</tr>
 			</thead>
 			<tbody>

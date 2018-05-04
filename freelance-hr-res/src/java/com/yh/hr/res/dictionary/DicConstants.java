@@ -1052,4 +1052,21 @@ public class DicConstants {
 	/** 地区*/
 	public static final String YHRS0143_3 = "3";
 	
+	/** 文档流程状态*/
+	public static final String YHRS4008 = "YHRS4008";
+	/** 未启动*/
+	public static final String YHRS4008_0 = "0";
+	/** 审批中*/
+	public static final String YHRS4008_1 = "1";
+	/** 已终止*/
+	public static final String YHRS4008_2 = "2";
+	/** 已结束*/
+	public static final String YHRS4008_3 = "3";
+	/** 协同中*/
+	public static final String YHRS4008_4 = "4";
+	/** 加签中*/
+	public static final String YHRS4008_5 = "5";
+	/** 历史数据*/
+	public static final String YHRS4008_6 = "6";
+	
 }

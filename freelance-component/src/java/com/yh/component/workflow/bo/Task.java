@@ -20,7 +20,7 @@ public class Task extends BaseBo{
 	private java.lang.Long		deptId;	//所属部门ID
 	private java.lang.String	taskCurrentActId;	//当前活动单元ID
 	private java.lang.String	taskPreActId;	//上一步活动单元
-	private java.lang.String	taskNextActId;	//下一步活动单元
+	//private java.lang.String	taskNextActId;	//下一步活动单元
 	private java.lang.String	taskUser;	//当前活动处理人ID
 	private java.lang.String	taskName;	//任务名称
 	private java.util.Date    	taskSendTime;// 任务发送时间
@@ -70,12 +70,12 @@ public class Task extends BaseBo{
 	public void setTaskPreActId(java.lang.String taskPreActId) {
 		this.taskPreActId = taskPreActId;
 	}
-	public java.lang.String getTaskNextActId() {
-		return taskNextActId;
-	}
-	public void setTaskNextActId(java.lang.String taskNextActId) {
-		this.taskNextActId = taskNextActId;
-	}
+//	public java.lang.String getTaskNextActId() {
+//		return taskNextActId;
+//	}
+//	public void setTaskNextActId(java.lang.String taskNextActId) {
+//		this.taskNextActId = taskNextActId;
+//	}
 	public java.lang.String getTaskUser() {
 		return taskUser;
 	}

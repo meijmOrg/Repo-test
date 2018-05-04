@@ -262,6 +262,19 @@ public final class UserContext implements Serializable {
 	}
 	
 	/**
+	 *  当前线程变量 - 当前登录人部门ID
+	 * @return
+	 */
+	public static Long getLoginUserDeptOid() {
+		UserContext userCtx = getUserContext();
+
+        if (userCtx != null)
+            return NumberUtils.createLong(userCtx.getAttribute("dept_oid"));
+
+        return null;
+	}
+	
+	/**
 	 * 当前线程变量 - 当前登录人的用户信息OID
 	 * @return
 	 */

@@ -72,13 +72,23 @@ public class YhFlowComponentFacade {
 	}
 	
 	/**
+	 * 加签(确定)
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public void submitSighUsers(YhFlowComponentDTO dto) throws ServiceException{
+		yhFlowComponentService.submitSighUsers(dto);
+	}
+	
+	/**
 	 * 抄送用户(确定)
 	 * @param 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void submitCcUsers(YhFlowComponentDTO dto) throws ServiceException{
-		yhFlowComponentService.submitCcUsers(dto);
+	public void submitCsUsers(YhFlowComponentDTO dto) throws ServiceException{
+		yhFlowComponentService.submitCsUsers(dto);
 	}
 	
 	/**
