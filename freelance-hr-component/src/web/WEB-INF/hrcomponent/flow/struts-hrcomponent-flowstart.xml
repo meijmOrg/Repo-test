@@ -9,6 +9,13 @@
 		<form-bean name="yhFlowComponentForm" type="com.yh.hr.component.flow.web.form.YhFlowComponentForm" />
     </form-beans>
 	<action-mappings>
+		<action path="/goFlowProcedureMainPage"
+				scope="request"
+				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
+				parameter="method">
+			<description>跳转到流程过程主页面</description>
+			<forward name="success" path="/hrcomponent/flow/procedure/yhflow_procedure_main.jsp"/>
+		</action>
 		<action path="/goUserListPartial"
 				scope="request"
 				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"

@@ -9,7 +9,6 @@
 <script src="component/front_transform/lib/jquery-3.2.1.min.js"></script>
 <script src="component/front_transform/webuploader-0.1.5/webuploader.js"></script>
 <script src="hrcomponent/flow/js/yhflow_start.js"></script>
-<script src="component/front_transform/projectForm/projectForm.js"></script>
 </head>
 <body>
 	<div
@@ -118,8 +117,13 @@
 				</div>
 			</div>
 		</div>
+		<jsp:include page="yhflow_suggestion.jsp">
+			<jsp:param value="mho_col_8" name="widthFlag"/>
+		</jsp:include>
 		<jsp:include page="yhflow_button.jsp"></jsp:include>
-		<jsp:include page="yhflow_attachment.jsp"></jsp:include>
+		<jsp:include page="yhflow_attachment.jsp">
+			<jsp:param value="mho_col_8" name="widthFlag"/>
+		</jsp:include>
 	</div>
 </body>
 </html>
