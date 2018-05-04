@@ -9,6 +9,7 @@
 	href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
 <script src="component/front_transform/lib/jquery-3.2.1.min.js"></script>
 <script src="component/front_transform/component/dialog/dialog.js"></script>
+<script src="hrcomponent/flow/js/yhflow_button.js"></script>
 <script src="hrcomponent/flow/js/yhflow_start.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
