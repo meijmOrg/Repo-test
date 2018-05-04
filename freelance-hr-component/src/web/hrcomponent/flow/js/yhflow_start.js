@@ -1,6 +1,5 @@
 /**流程按钮控制**/
 function buttonControl(params){
-	debugger
 	if(params.submitFlow){//提交流程
 		$('#submitFlow').hide();
 	}

@@ -6,7 +6,7 @@
 
 <struts-config>
 	<form-beans>
-		
+		<form-bean name="yhFlowComponentForm" type="com.yh.hr.component.flow.web.form.YhFlowComponentForm" />
     </form-beans>
 	<action-mappings>
 		<action path="/goUserListPartial"
@@ -18,9 +18,31 @@
 		</action>
 		<action path="/submitFlowStart"
 				scope="request"
+				name="yhFlowComponentForm"
 				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
 				parameter="method">
 			<description>提交流程(确定)</description>
+		</action>
+		<action path="/saveTemporaryStorage"
+				scope="request"
+				name="yhFlowComponentForm"
+				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
+				parameter="method">
+			<description>表单数据暂存</description>
+		</action>
+		<action path="/saveHistoryData"
+				scope="request"
+				name="yhFlowComponentForm"
+				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
+				parameter="method">
+			<description>保存历史数据</description>
+		</action>
+		<action path="/goSelectPersons"
+				scope="request"
+				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
+				parameter="method">
+			<description>跳转到加签、抄送、协同选择人员页面</description>
+			<forward name="success" path="/hrcomponent/flow/yhflow_sign.jsp"/>
 		</action>
 		<action path="/queryDepGroRole"
 				scope="request"
