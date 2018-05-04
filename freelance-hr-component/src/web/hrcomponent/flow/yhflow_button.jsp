@@ -27,16 +27,50 @@ $(document).ready(function() {
 	        title: '流程下一步'
 	    });
 	});
+	$('#tempSave').click(function() {
+		$.ajax({ 
+			  url: $('#flowComponentForm').attr("action"), 
+			  data: $('#flowComponentForm').serializeArray(),  
+			  dataType:'json', 
+			  async : false,
+			  success:function(data){      
+				  if (data.success) {
+		              MessageBox.alert('消息',data.message);
+		          }
+		          else
+		          {
+		              MessageBox.alert('消息',data.message);
+		          }
+			  }
+		  })
+	});
+	$('#historyData').click(function() {
+		$.ajax({ 
+			  url: $('#flowComponentForm').attr("action"), 
+			  data: $('#flowComponentForm').serializeArray(),  
+			  dataType:'json', 
+			  async : false,
+			  success:function(data){      
+				  if (data.success) {
+		              MessageBox.alert('消息',data.message);
+		          }
+		          else
+		          {
+		              MessageBox.alert('消息',data.message);
+		          }
+			  }
+		  })
+	});
 	$('#sign').click(function() {
 	    var dialog = new Dialog({
-	        url: 'goSignFlow.do',
+	        url: 'goSelectPersons.do?method=goSelectPersons',
 	        width: '80%',
 	        title: '加签用户选择'
 	    });
 	});
 	$('#duplicate').click(function() {
 	    var dialog = new Dialog({
-	        url: 'goDuplicateFlow.do',
+	        url: 'goSelectPersons.do?method=goSelectPersons',
 	        width: '80%',
 	        title: '抄送用户选择'
 	    });

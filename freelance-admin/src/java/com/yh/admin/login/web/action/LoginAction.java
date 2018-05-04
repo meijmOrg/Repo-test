@@ -243,6 +243,7 @@ public class LoginAction extends BaseAction
 				log.debug("用户所在单位:" + userDto.getUnitId());
 			uc.setAttribute("ipAddr", ipAddr);
 			uc.setAttribute("unit_oid", userDto.getUnitId());
+			uc.setAttribute("dept_oid", userDto.getDeptId());
 			
 			UserRelationDTO userRelationDTO = usersFacade.getUserRelationDTOByUserId(userCode);
 			if(userRelationDTO!=null) {

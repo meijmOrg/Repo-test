@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.collections.CollectionUtils;
 
+import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.bo.FlowActivityNotice;
 import com.yh.component.workflow.bo.FlowActivityPerCombination;
 import com.yh.component.workflow.bo.FlowActivityPermission;
+import com.yh.component.workflow.bo.Task;
 import com.yh.component.workflow.dto.FlowActivityNoticeDTO;
 import com.yh.component.workflow.dto.FlowActivityPermissionDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
@@ -17,6 +21,7 @@ import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
 import com.yh.component.workflow.utils.WorkFlowConfigurationUtil;
 import com.yh.platform.core.dao.DaoUtil;
+import com.yh.platform.core.exception.DataAccessFailureException;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.BeanHelper;
 import com.yh.platform.core.web.UserContext;
@@ -39,8 +44,9 @@ public class YhFlowComponentQueryHelper {
 
 		Map<String, Object> params1 = new HashMap<String, Object>();
 		Map<String, Object> params2 = new HashMap<String, Object>();
-		Object[] objUser = getUserInfoByUserCode(UserContext.getLoginUserID());
-		Long deptOid = objUser[5] == null ? null:Long.valueOf(objUser[5].toString());//用户所在部门id
+//		Object[] objUser = getUserInfoByUserCode(UserContext.getLoginUserID());
+//		Long deptOid = objUser[5] == null ? null:Long.valueOf(objUser[5].toString());//用户所在部门id
+		Long deptOid = UserContext.getLoginUserDeptOid();//用户所在部门id
 		params1.put("templateId", templateId);
 		params2.put("templateId", templateId);
 		params2.put("deptOid", deptOid);
@@ -125,7 +131,8 @@ public class YhFlowComponentQueryHelper {
 			dto.setActId(task[0] == null ? null:task[0].toString());
 			dto.setFlowId(task[1] == null ? null:task[1].toString());
 			dto.setActName(task[2] == null ? null:task[2].toString());
-			dto.setActOrder(task[3] == null ? null:Double.valueOf(task[3].toString()));
+			dto.setActOrder(task[3] == null ? null:Integer.valueOf(task[3].toString()));
+			dto.setActOrderStr(task[3] == null ? null:task[3].toString()+".");
 			dto.setActResult(task[4] == null ? null:task[4].toString());
 			dto.setActBeginRuleId(task[5] == null ? null:task[5].toString());
 			dto.setActEndRuleId(task[6] == null ? null:task[6].toString());
@@ -178,23 +185,23 @@ public class YhFlowComponentQueryHelper {
      * @return List<Object[]>
      * @throws ServiceException
      */
-	public static Object[] getUserInfoByUserCode(String userCode) throws ServiceException {
-		StringBuilder sql = new StringBuilder();
-		sql.append("select yu.USER_OID,");
-		sql.append("       yu.USER_ID,");
-		sql.append("       yu.PASSWORD,");
-		sql.append("       yu.USER_NAME,");
-		sql.append("       yu.UNIT_ID,");
-		sql.append("       yu.DEPT_ID");
-		sql.append("       from yhb_users yu");
-		sql.append("       where 1=1");
-		sql.append("       and yu.user_id='"+userCode+"'");
-		List<Object[]> list = DaoUtil.findWithSQL(sql.toString());
-		if(CollectionUtils.isEmpty(list)){
-			return null;
-		}
-		return list.get(0);
-	}
+//	public static Object[] getUserInfoByUserCode(String userCode) throws ServiceException {
+//		StringBuilder sql = new StringBuilder();
+//		sql.append("select yu.USER_OID,");
+//		sql.append("       yu.USER_ID,");
+//		sql.append("       yu.PASSWORD,");
+//		sql.append("       yu.USER_NAME,");
+//		sql.append("       yu.UNIT_ID,");
+//		sql.append("       yu.DEPT_ID");
+//		sql.append("       from yhb_users yu");
+//		sql.append("       where 1=1");
+//		sql.append("       and yu.user_id='"+userCode+"'");
+//		List<Object[]> list = DaoUtil.findWithSQL(sql.toString());
+//		if(CollectionUtils.isEmpty(list)){
+//			return null;
+//		}
+//		return list.get(0);
+//	}
 	
 	/**
      * 根据权限控制ID获取权限组合信息(查询视图)
@@ -206,8 +213,8 @@ public class YhFlowComponentQueryHelper {
 		StringBuilder sql = new StringBuilder();
 		sql.append("select ycv.ap_id,");
 		sql.append("       ycv.pc_type,");
-		sql.append("       ycv.NS,");
-		sql.append("       ycv.NSValue");
+		sql.append("       CONVERT(varchar(1000), isnull(ycv.NS, '')),");
+		sql.append("       CONVERT(varchar(1000), isnull(ycv.NSValue, ''))");
 		sql.append("       from YHF_Combination_View ycv");
 		sql.append("       where 1=1");
 		sql.append("       and ycv.ap_id='"+apId+"'");
@@ -234,13 +241,79 @@ public class YhFlowComponentQueryHelper {
 			Object[] o = list.get(i);
 			PermissionUsersDTO dto = new PermissionUsersDTO();
 			dto.setUserId(o[0] == null? "":o[0].toString());
-			dto.setUnitName(o[1] == null? "":o[1].toString());
+			dto.setUserName(o[1] == null? "":o[1].toString());
 			dto.setPassword(o[2] == null? "":o[2].toString());
 			dto.setPersonOid(o[3] == null? null:Long.valueOf(o[3].toString()));
 			dto.setDeptId(o[6] == null? null:Long.valueOf(o[6].toString()));
 			permissionUsersDTOList.add(dto);
 		}
 		return permissionUsersDTOList;
+	}
+	
+	/**
+     * 根据上一步活动单元id查询上一步任务信息
+     * @param taskPreActId
+     * @return List<Task>
+     * @throws ServiceException
+     */
+	public static Task getTaskInfoByTaskPreActId(String taskPreActId) throws ServiceException {
+		List<Task> taskList = DaoUtil.find(" from Task t where t.taskCurrentActId=?",taskPreActId);
+		if(CollectionUtils.isEmpty(taskList)){
+			return null;
+		}
+		return taskList.get(0);
+	}
+	
+	/**
+	 * 获取人员信息列表
+	 * @param ttb
+	 * @return
+	 * @throws ServiceException 
+	 */
+	public static List<JSONObject> listPersonInfo(TableTagBean ttb) throws ServiceException{
+		Map<String,Object> params = new HashMap<String,Object>();
+		StringBuilder sql = new StringBuilder();
+		sql.append("select p.PERSON_OID,");
+		sql.append("p.name,");
+		sql.append("p.UNIT_OID,");
+		sql.append("p.DEPT_OID,");
+		sql.append("(select yuu.unit_name from yhc_ut_unit yuu where yuu.UNIT_OID=p.UNIT_OID) as unitName,");
+		sql.append("(select yuo.org_name from yhc_ut_org yuo where yuo.ORG_OID=p.DEPT_OID) as deptName,");
+		sql.append("pa.DUTY_NAME,");
+		sql.append("yu.USER_ID ");
+		sql.append(" from yhc_pb_person_info p,yhc_pb_person_attach pa,yhb_users yu ");
+		sql.append(" where p.PERSON_OID=pa.PERSON_OID and p.PERSON_OID=yu.Person_OID ");
+		if (ttb.getPageSize() != 0) {
+			ttb.setTotal(DaoUtil.countWithSQLByCondition((new StringBuilder().append("select count(*) from (").append(sql).append(") as total").toString()), params));
+		}
+		List<Object[]> list = DaoUtil.listWithSQLByCondition(sql.toString(), params, ttb.getPage(), ttb.getPageSize());
+		return buildJSON(list);
+	}  
+	/**
+	 * object to JSONObject
+	 * @param list
+	 * @return
+	 * @throws DataAccessFailureException
+	 * @throws ServiceException
+	 */
+	private static List<JSONObject> buildJSON(List<Object[]> list) throws DataAccessFailureException,ServiceException
+	{
+		List<JSONObject> jsonList = new ArrayList<JSONObject>();
+		for(Object[] obj:list){
+			JSONObject json = new JSONObject();
+			json.put("personOid", obj[0]==null?"":obj[0].toString());
+			json.put("name", obj[1]==null?"":obj[1].toString());	//姓名
+			json.put("unitOid", obj[2]==null?"":obj[2].toString());
+			json.put("deptOid", obj[3]==null?"":obj[3].toString());
+			json.put("unitName", obj[4]==null?"":obj[3].toString());//单位名称
+			json.put("deptName", obj[5]==null?"":obj[5].toString());//部门名称
+			json.put("dutyName", obj[6]==null?"":obj[6].toString());//现任职务
+			json.put("userId", obj[7]==null?"":obj[7].toString());//用户ID
+			
+			jsonList.add(json);
+		}
+		
+		return jsonList;
 	}
 	
 }

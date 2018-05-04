@@ -14,7 +14,7 @@ public class FlowActivity extends BaseBo{
 	private java.lang.String  	actId;	//主键
 	private java.lang.String	flowId;	//流程基本信息ID
 	private java.lang.String  	actName;	//活动名称
-	private java.lang.Double	actOrder;	//活动序号
+	private java.lang.Integer	actOrder;	//活动序号
 	private java.lang.String	actResult;	// 活动结果
 	private java.lang.String	actBeginRuleId;	//前置规则
 	private java.lang.String  	actEndRuleId;	//后置规则
@@ -40,10 +40,10 @@ public class FlowActivity extends BaseBo{
 	public void setActName(java.lang.String actName) {
 		this.actName = actName;
 	}
-	public java.lang.Double getActOrder() {
+	public java.lang.Integer getActOrder() {
 		return actOrder;
 	}
-	public void setActOrder(java.lang.Double actOrder) {
+	public void setActOrder(java.lang.Integer actOrder) {
 		this.actOrder = actOrder;
 	}
 	public java.lang.String getActResult() {

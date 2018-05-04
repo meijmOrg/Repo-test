@@ -20,7 +20,6 @@ import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.facade.YhFlowComponentFacade;
 import com.yh.hr.component.flow.web.form.YhFlowComponentForm;
-import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.BeanHelper;
 import com.yh.platform.core.util.JSONHelper;
 import com.yh.platform.core.util.SpringBeanUtil;
@@ -55,8 +54,9 @@ public class YhFlowComponentAction extends BaseAction {
 	        		 request.setAttribute(me.getKey(), me.getValue());
 	        	 }
 			   }
+			request.setAttribute("templateId", templateId);
 			return mapping.findForward(FORWARD_SUCCESS);
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			this.handleException(request, e, null);
 			return mapping.findForward(FORWARD_FAIL);
 		}
@@ -78,11 +78,12 @@ public class YhFlowComponentAction extends BaseAction {
 			YhFlowComponentDTO dto = new YhFlowComponentDTO();
 			BeanHelper.copyProperties(yhFlowComponentForm, dto);
 			yhFlowComponentFacade.submitFlowStart(dto);
-			return mapping.findForward(FORWARD_SUCCESS);
-		} catch (ServiceException e) {
+			response.getWriter().print(JSONHelper.fromObject(true, "提交成功！"));
+		} catch (Exception e) {
 			this.handleException(request, e, null);
-			return mapping.findForward(FORWARD_FAIL);
+			response.getWriter().print(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(e.getMessage(), "提交失败！")));
 		}
+		return null;
 	}
 	
 	/**
@@ -101,11 +102,12 @@ public class YhFlowComponentAction extends BaseAction {
 			YhFlowComponentDTO dto = new YhFlowComponentDTO();
 			BeanHelper.copyProperties(yhFlowComponentForm, dto);
 			yhFlowComponentFacade.saveTemporaryStorage(dto);
-			return mapping.findForward(FORWARD_SUCCESS);
-		} catch (ServiceException e) {
+			response.getWriter().print(JSONHelper.fromObject(true, "保存成功！"));
+		} catch (Exception e) {
 			this.handleException(request, e, null);
-			return mapping.findForward(FORWARD_FAIL);
+			response.getWriter().print(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(e.getMessage(), "保存失败！")));
 		}
+		return null;
 	}
 	
 	/**
@@ -124,11 +126,12 @@ public class YhFlowComponentAction extends BaseAction {
 			YhFlowComponentDTO dto = new YhFlowComponentDTO();
 			BeanHelper.copyProperties(yhFlowComponentForm, dto);
 			yhFlowComponentFacade.saveHistoryData(dto);
-			return mapping.findForward(FORWARD_SUCCESS);
-		} catch (ServiceException e) {
+			response.getWriter().print(JSONHelper.fromObject(true, "保存成功！"));
+		} catch (Exception e) {
 			this.handleException(request, e, null);
-			return mapping.findForward(FORWARD_FAIL);
+			response.getWriter().print(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(e.getMessage(), "保存失败！")));
 		}
+		return null;
 	}
 	
 	/**
@@ -174,6 +177,29 @@ public class YhFlowComponentAction extends BaseAction {
 	}
 	
 	/**
+	 * 加签(确定)
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward submitSighUsers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception{
+		try {
+			YhFlowComponentForm yhFlowComponentForm = (YhFlowComponentForm) form;
+			YhFlowComponentDTO dto = new YhFlowComponentDTO();
+			BeanHelper.copyProperties(yhFlowComponentForm, dto);
+			yhFlowComponentFacade.submitSighUsers(dto);
+			return mapping.findForward(FORWARD_SUCCESS);
+		} catch (Exception e) {
+			this.handleException(request, e, null);
+			return mapping.findForward(FORWARD_FAIL);
+		}
+	}
+	
+	/**
 	 * 抄送用户(确定)
 	 * @param mapping
 	 * @param form
@@ -182,15 +208,15 @@ public class YhFlowComponentAction extends BaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public ActionForward submitCcUsers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	public ActionForward submitCsUsers(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
 		try {
 			YhFlowComponentForm yhFlowComponentForm = (YhFlowComponentForm) form;
 			YhFlowComponentDTO dto = new YhFlowComponentDTO();
 			BeanHelper.copyProperties(yhFlowComponentForm, dto);
-			yhFlowComponentFacade.submitCcUsers(dto);
+			yhFlowComponentFacade.submitCsUsers(dto);
 			return mapping.findForward(FORWARD_SUCCESS);
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			this.handleException(request, e, null);
 			return mapping.findForward(FORWARD_FAIL);
 		}

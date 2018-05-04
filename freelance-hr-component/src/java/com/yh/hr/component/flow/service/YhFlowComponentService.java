@@ -53,12 +53,20 @@ public interface YhFlowComponentService {
 	public List<JSONObject> listPersonInfo(TableTagBean ttb) throws ServiceException;
 	
 	/**
+	 * 加签(确定)
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public void submitSighUsers(YhFlowComponentDTO dto) throws ServiceException;
+	
+	/**
 	 * 抄送用户(确定)
 	 * @param 
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void submitCcUsers(YhFlowComponentDTO dto) throws ServiceException;
+	public void submitCsUsers(YhFlowComponentDTO dto) throws ServiceException;
 	
 
 	/**

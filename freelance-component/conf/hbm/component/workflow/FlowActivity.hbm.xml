@@ -21,7 +21,7 @@
                 <comment>活动名称</comment>
             </column>
         </property>      
-        <property name="actOrder" type="java.lang.Double">
+        <property name="actOrder" type="java.lang.Integer">
             <column name="act_order">
                 <comment>活动序号</comment>
             </column>

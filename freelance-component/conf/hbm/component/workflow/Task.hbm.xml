@@ -41,11 +41,11 @@
                 <comment>上一步活动单元</comment>
             </column>
         </property>  
-        <property name="taskNextActId" type="java.lang.String">
+        <!--<property name="taskNextActId" type="java.lang.String">
             <column name="task_nextActID">
                 <comment>下一步活动单元</comment>
             </column>
-        </property>  
+        </property>-->  
         <property name="taskUser" type="java.lang.String">
             <column name="task_currentuser">
                 <comment>当前活动处理人ID</comment>
