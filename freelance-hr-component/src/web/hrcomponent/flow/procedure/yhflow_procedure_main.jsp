@@ -15,6 +15,8 @@
 <script src="component/front_transform/webuploader-0.1.5/webuploader.js"></script>
 <script src="component/front_transform/component/accordion/accordion.js"></script>
 <script type="text/javascript">
+var serverUrl = '${pageContext.request.contextPath}';
+alert(serverUrl);
 </script>
 </head>
 <body>

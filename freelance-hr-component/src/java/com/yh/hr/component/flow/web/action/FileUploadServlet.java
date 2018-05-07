@@ -14,13 +14,15 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
+import com.yh.platform.core.util.ConfigUtil;
+
 /**
  * Servlet user to accept file upload
  */
 public class FileUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private String serverPath = "e:/";
+	//private String serverPath = "e:/";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -70,13 +72,13 @@ public class FileUploadServlet extends HttpServlet {
 					FileUtils.copyInputStreamToFile(is, new File(serverPath + "/" + name));*/
 
 					// 如果文件夹没有创建文件夹
-					File file = new File(serverPath + "/" + fileMd5);
+					File file = new File(ConfigUtil.getProperty("file.path.annex") + "/" + fileMd5);
 					if (!file.exists()) {
 						file.mkdirs();
 					}
 					// 保存文件
-					File chunkFile = new File(serverPath + "/" + fileMd5 + "/" + chunk);
-					//FileUtils.copyInputStreamToFile(fileItem.getInputStream(), chunkFile);
+					File chunkFile = new File(ConfigUtil.getProperty("file.path.annex") + "/" + fileMd5 + "/" + chunk);
+					FileUtils.copyInputStreamToFile(fileItem.getInputStream(), chunkFile);
 
 				}
 

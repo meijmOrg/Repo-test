@@ -18,13 +18,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yh.platform.core.util.ConfigUtil;
+
 /**
  * 合并上传文件
  */
 public class UploadActionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private String serverPath = "e:/";
+	//private String serverPath = "e:/";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -35,7 +37,7 @@ public class UploadActionServlet extends HttpServlet {
 			String fileMd5 = request.getParameter("fileMd5");
 
 			// 读取目录所有文件
-			File f = new File(serverPath + "/" + fileMd5);
+			File f = new File(ConfigUtil.getProperty("file.path.annex") + "/" + fileMd5);
 			File[] fileArray = f.listFiles(new FileFilter() {
 
 				// 排除目录，只要文件
@@ -64,7 +66,7 @@ public class UploadActionServlet extends HttpServlet {
 			});
 
 			// 新建保存文件
-			File outputFile = new File(serverPath + "/" + UUID.randomUUID().toString() + ".zip");
+			File outputFile = new File(ConfigUtil.getProperty("file.path.annex") + "/" + UUID.randomUUID().toString() + ".zip");
 
 			// 创建文件
 			outputFile.createNewFile();
@@ -89,7 +91,7 @@ public class UploadActionServlet extends HttpServlet {
 			outChannel.close();
 
 			// 清除文件加
-			File tempFile = new File(serverPath + "/" + fileMd5);
+			File tempFile = new File(ConfigUtil.getProperty("file.path.annex") + "/" + fileMd5);
 			if (tempFile.isDirectory() && tempFile.exists()) {
 				tempFile.delete();
 			}
@@ -107,7 +109,7 @@ public class UploadActionServlet extends HttpServlet {
 			String chunkSize = request.getParameter("chunkSize");
 
 			// 找到分块文件
-			File checkFile = new File(serverPath + "/" + fileMd5 + "/" + chunk);
+			File checkFile = new File(ConfigUtil.getProperty("file.path.annex") + "/" + fileMd5 + "/" + chunk);
 
 			// 检查文件是否存在，且大小一致
 			response.setContentType("text/html;charset=utf-8");

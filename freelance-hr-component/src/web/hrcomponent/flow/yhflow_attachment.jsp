@@ -6,12 +6,7 @@
 <meta charset="UTF-8">
 <title>附件</title>
 <style type="text/css">
-	/* #dndArea {
-		width: 200px;
-		height: 100px;
-		border-color: red;
-		border-style: dashed;
-	} */
+	
 </style>
 <script type="text/javascript">
 	/*  (function($, window, document){
@@ -293,7 +288,7 @@
 	</script>
 </head>
 <body>
-	<div class="mho_row mho_row_no_margin">
+	<div class="mho_row mho_row_no_margin" id="dndArea">
 		<div class="mho_col mho_col_2"></div>
 		<div class="mho_col mho_col_8">
 			<div class="mho_form_group">
@@ -315,8 +310,8 @@
 					class="mho_btn mho_btn_primary mho_btn_file"
 					style="margin-left: 20px;">浏览</button>
 		        <button id="ctlBtn" class="btn btn-default mho_btn mho_btn_primary" style="margin-left: 20px;">开始上传</button>
-		    </div> -->
-</div>
+		    </div> 
+</div>-->
 		</div>
 	</div>
 	<div class="mho_row">

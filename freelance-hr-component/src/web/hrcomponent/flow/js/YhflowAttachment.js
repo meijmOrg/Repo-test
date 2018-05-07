@@ -24,7 +24,7 @@ WebUploader.Uploader.register({
 				.then(function(val) {
 					fileMd5 = val;
 					$("#" + file.id).find("span.state").text("成功获取文件信息");
-					// 放行
+					// 放行	
 					deferred.resolve();
 				});
 			// 通知完成操作
@@ -36,8 +36,8 @@ WebUploader.Uploader.register({
 			// 支持断点续传，发送到后台判断是否已经上传过
 			$.ajax(
 				{
-					type:"POST",
-					url:"${pageContext.request.contextPath}/uploadActionServlet?action=checkChunk",
+					type:'POST',
+					url:serverUrl+'/uploadActionServlet?action=checkChunk',
 					data:{
 						// 文件唯一表示								
 						fileMd5:fileMd5,
@@ -46,7 +46,7 @@ WebUploader.Uploader.register({
 						// 当前分块大小
 						chunkSize:block.end-block.start
 					},
-					dataType:"json",
+					dataType:'json',
 					success:function(response) {
 						if(response.ifExist) {
 							// 分块存在，跳过该分块
@@ -68,13 +68,13 @@ WebUploader.Uploader.register({
 			// 通知合并分块
 			$.ajax(
 				{
-					type:"POST",
-					url:"${pageContext.request.contextPath}/uploadActionServlet?action=mergeChunks",
+					type:'POST',
+					url:serverUrl+'/uploadActionServlet?action=mergeChunks',
 					data:{
 						fileMd5:fileMd5
 					},
 					success:function(response){
-						
+						alert("1");
 					}
 				}
 			);
@@ -84,23 +84,29 @@ WebUploader.Uploader.register({
 // 上传基本配置
 var uploader = WebUploader.create(
 	{
-		swf:"component/front_transform/webuploader-0.1.5/Uploader.swf",
-		server:"${pageContext.request.contextPath }/fileUploadServlet",
-		pick:"#pick_file",
+		swf:'component/front_transform/webuploader-0.1.5/Uploader.swf',
+		server:serverUrl+'/fileUploadServlet',
+		pick:{
+			id:pick_file,
+			multiple: true
+		},
 		auto:false,
-		//dnd:"#dndArea",
+		dnd:"#dndArea",
 		disableGlobalDnd:true,
-		paste:"document.body",
+		paste:'document.body',
 		
 		// 分块上传设置
 		// 是否分块
 		chunked:true,
 		// 每块文件大小（默认5M）
 		chunkSize:5*1024*1024,
+		chunkRetry: 3,
 		// 开启几个并非线程（默认3个）
-		threads:3,
+		threads:1,
 		// 在上传当前文件时，准备好下一个文件
 		prepareNextFile:true
+		//formData:function(){return {uniqueFileName: '333'};}
+		//formData: {uniqueFileName: uniqueFileName}
 	}		
 );
 
@@ -112,9 +118,9 @@ uploader.on("fileQueued", function(file) {
 		//$("#fileList").append("<div id='" + file.id + "'><img/><span>" + file.name + "</span><div><span class='state'></span></div><div><span class='percentage'></span></div></div>");
 		$("#list_ul").append("<li id='" + file.id + "'><a href='javascript:void(0)'>" + file.name + "</a>"+"<span class='state'></span>"+"<span class='percentage'></span>"+
 				"<a href='javascript:void(0)'"+
-				"class='mho_float_right mho_red_color' style='margin: 0 10px;'>删除</a>"+
+				"id='btn1' class='mho_float_right mho_red_color' style='margin: 0 10px;' onclick='stop()'>取消上传</a>"+
 				"<a href='javascript:void(0)'"+
-				"class='mho_float_right mho_green_color' style='margin: 0 10px;'>下载</a>"+
+				"id='btn2' class='mho_float_right mho_green_color' style='margin: 0 10px;'  onclick='remove()'>移除</a>"+
 				"</li>");
 		// 制作缩略图
 		// error：不是图片，则有error
@@ -135,34 +141,50 @@ uploader.on("fileQueued", function(file) {
 	debugger
 	$("#" + file.id).find("span.percentage").text(Math.round(percentage * 100) + "%");
 });*/
-uploader.on( 'uploadProgress', function( file, percentage ) {
-    var $li = $( '#'+file.id ),
-        $percent = $li.find('.progress .progress-bar');
+uploader.on( 'uploadProgress', function(file,percentage) {
+	debugger
+    var $li = $( '#'+file.id );
+        //$percent = $li.find('.progress .progress-bar');
 
     // 避免重复创建
-    if ( !$percent.length ) {
+   /* if ( !$percent.length ) {
         $percent = $('<div class="progress progress-striped active">' +
           '<div class="progress-bar" role="progressbar" style="width: 0%">' +
           '</div>' +
         '</div>').appendTo( $li ).find('.progress-bar');
-    }
+    }*/
 
-    $li.find('p.state').text('上传中');
-
-    $percent.css( 'width', percentage * 100 + '%' );
+    $li.find('span.state').text('上传中');
+    $("#" + file.id).find("span.percentage").text(Math.round(percentage * 100) + "%");
+    //$percent.css( 'width', percentage * 100 + '%' );
 });
 uploader.on( 'uploadSuccess', function( file ) {
-    $( '#'+file.id ).find('p.state').text('已上传');
+    $( '#'+file.id ).find('span.state').text('已上传');
 });
 
 uploader.on( 'uploadError', function( file ) {
-    $( '#'+file.id ).find('p.state').text('上传出错');
+    $( '#'+file.id ).find('span.state').text('上传出错');
 });
 
 uploader.on( 'uploadComplete', function( file ) {
-    $( '#'+file.id ).find('.progress').fadeOut();
+    $( '#'+file.id ).find('.percentage').fadeOut();
 });
 $(document).on('click','#upload_file', function() {
 	debugger
-	uploader.upload();
-	});
+	if (uploader.state === 'uploading') {  
+		uploader.stop();  
+		} else {  
+			uploader.upload();  
+		}  
+});
+function start(){  
+	uploader.upload();  
+	$('#btn1').attr("onclick","stop()");  
+	$('#btn1').text("取消上传");  
+}  
+          
+function stop(){  
+	uploader.stop(true);  
+	$('#btn1').attr("onclick","start()");  
+	$('#btn1').text("继续上传");  
+} 
