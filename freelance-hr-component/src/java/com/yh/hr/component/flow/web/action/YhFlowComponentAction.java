@@ -1,6 +1,5 @@
 package com.yh.hr.component.flow.web.action;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,10 +15,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import com.yh.component.taglib.TableTagBean;
+import com.yh.component.workflow.dto.PermissionUsersDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.facade.YhFlowComponentFacade;
 import com.yh.hr.component.flow.web.form.YhFlowComponentForm;
+import com.yh.hr.res.dictionary.DicConstants;
 import com.yh.platform.core.util.BeanHelper;
 import com.yh.platform.core.util.JSONHelper;
 import com.yh.platform.core.util.SpringBeanUtil;
@@ -48,6 +49,7 @@ public class YhFlowComponentAction extends BaseAction {
 		try {
 			//String templateId = request.getParameter("templateId");
 			String templateId = "68785b4b-e1cd-43dc-877a-79ef103d1c95";
+			String flag = request.getParameter("flag");
 			Map<String,List<WorkflowActivityDTO>> ActInfo = yhFlowComponentFacade.goUserListPartial(templateId);
 			if(!MapUtils.isEmpty(ActInfo)){
 	        	 for(Map.Entry<String, List<WorkflowActivityDTO>> me:ActInfo.entrySet()){
@@ -55,6 +57,12 @@ public class YhFlowComponentAction extends BaseAction {
 	        	 }
 			   }
 			request.setAttribute("templateId", templateId);
+			if("jq".equals(flag)){
+				return mapping.findForward("jq");
+			}
+			if("cc".equals(flag)){
+				return mapping.findForward("cc");
+			}
 			return mapping.findForward(FORWARD_SUCCESS);
 		} catch (Exception e) {
 			this.handleException(request, e, null);
@@ -77,6 +85,7 @@ public class YhFlowComponentAction extends BaseAction {
 			YhFlowComponentForm yhFlowComponentForm = (YhFlowComponentForm) form;
 			YhFlowComponentDTO dto = new YhFlowComponentDTO();
 			BeanHelper.copyProperties(yhFlowComponentForm, dto);
+			dto.setFileFlowStatus(DicConstants.YHRS4008_1);//审批中
 			yhFlowComponentFacade.submitFlowStart(dto);
 			response.getWriter().print(JSONHelper.fromObject(true, "提交成功！"));
 		} catch (Exception e) {
@@ -101,6 +110,7 @@ public class YhFlowComponentAction extends BaseAction {
 			YhFlowComponentForm yhFlowComponentForm = (YhFlowComponentForm) form;
 			YhFlowComponentDTO dto = new YhFlowComponentDTO();
 			BeanHelper.copyProperties(yhFlowComponentForm, dto);
+			dto.setFileFlowStatus(DicConstants.YHRS4008_0);//未启动
 			yhFlowComponentFacade.saveTemporaryStorage(dto);
 			response.getWriter().print(JSONHelper.fromObject(true, "保存成功！"));
 		} catch (Exception e) {
@@ -125,6 +135,7 @@ public class YhFlowComponentAction extends BaseAction {
 			YhFlowComponentForm yhFlowComponentForm = (YhFlowComponentForm) form;
 			YhFlowComponentDTO dto = new YhFlowComponentDTO();
 			BeanHelper.copyProperties(yhFlowComponentForm, dto);
+			dto.setFileFlowStatus(DicConstants.YHRS4008_6);//历史数据
 			yhFlowComponentFacade.saveHistoryData(dto);
 			response.getWriter().print(JSONHelper.fromObject(true, "保存成功！"));
 		} catch (Exception e) {
@@ -162,18 +173,21 @@ public class YhFlowComponentAction extends BaseAction {
 
 		TableTagBean ttb = new TableTagBean(request);
 		try {
-			List<JSONObject> list = yhFlowComponentFacade.listPersonInfo(ttb);
-			JSONObject obj = new JSONObject();
-			obj.put("total", ttb.getTotal());
-			obj.put("rows", null != list ? list : new ArrayList<Object>());
-			response.getWriter().print(obj.toString());
+			List<PermissionUsersDTO> list = yhFlowComponentFacade.listPersonInfo(ttb);
+//			JSONObject obj = new JSONObject();
+//			obj.put("total", ttb.getTotal());
+//			obj.put("rows", null != list ? list : new ArrayList<Object>());
+//			response.getWriter().print(obj.toString());
+			ttb.setList(list);
+			request.setAttribute("ttb", ttb);
 		} catch (Exception e) {
 			this.handleException(request, e, "查询人员选择列表失败!");
 			response.getWriter().print(
 					JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(
 							e.getMessage(), "查询人员信息失败")));
 		}
-		return null;
+		//return null;
+		return mapping.findForward(FORWARD_SUCCESS);
 	}
 	
 	/**
@@ -191,12 +205,15 @@ public class YhFlowComponentAction extends BaseAction {
 			YhFlowComponentForm yhFlowComponentForm = (YhFlowComponentForm) form;
 			YhFlowComponentDTO dto = new YhFlowComponentDTO();
 			BeanHelper.copyProperties(yhFlowComponentForm, dto);
+			dto.setFileFlowStatus(DicConstants.YHRS4008_5);//加签中
+			dto.setTaskSign("Y");//加签标识
 			yhFlowComponentFacade.submitSighUsers(dto);
-			return mapping.findForward(FORWARD_SUCCESS);
+			response.getWriter().print(JSONHelper.fromObject(true, "提交成功！"));
 		} catch (Exception e) {
 			this.handleException(request, e, null);
-			return mapping.findForward(FORWARD_FAIL);
+			response.getWriter().print(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(e.getMessage(), "提交失败！")));
 		}
+		return null;
 	}
 	
 	/**
@@ -214,12 +231,14 @@ public class YhFlowComponentAction extends BaseAction {
 			YhFlowComponentForm yhFlowComponentForm = (YhFlowComponentForm) form;
 			YhFlowComponentDTO dto = new YhFlowComponentDTO();
 			BeanHelper.copyProperties(yhFlowComponentForm, dto);
+			dto.setFileFlowStatus(DicConstants.YHRS4008_1);//审批中
 			yhFlowComponentFacade.submitCsUsers(dto);
-			return mapping.findForward(FORWARD_SUCCESS);
+			response.getWriter().print(JSONHelper.fromObject(true, "提交成功！"));
 		} catch (Exception e) {
 			this.handleException(request, e, null);
-			return mapping.findForward(FORWARD_FAIL);
+			response.getWriter().print(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(e.getMessage(), "提交失败！")));
 		}
+		return null;
 	}
 	
 	/**

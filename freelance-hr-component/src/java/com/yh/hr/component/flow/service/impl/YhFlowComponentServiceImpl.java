@@ -30,7 +30,6 @@ import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.queryhelper.YhFlowComponentQueryHelper;
 import com.yh.hr.component.flow.service.YhFlowComponentService;
 import com.yh.hr.component.orgtree.queryhelper.JhcOrgTreeQueryHelper;
-import com.yh.hr.res.dictionary.DicConstants;
 import com.yh.hr.res.unit.dto.UtOrgDTO;
 import com.yh.hr.res.unit.dto.WorkGroupDTO;
 import com.yh.hr.res.unit.queryhelper.WorkGroupQueryHelper;
@@ -95,7 +94,7 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 		map.put("allActivityDTOList", allActivityDTOList);
 		map.put("nextActivityDTOList", nextActivityDTOList);
 		map.put("actOrder", nextActivityDTOList.get(0).getActOrder());
-//		map.put("actId", nextActivityDTOList.get(0).getActId());
+		map.put("nextActId", nextActivityDTOList.get(0).getActId());
 		map.put("preActId", allActivityDTOList.get(0).getActId());
 		return map;
 	}
@@ -149,15 +148,6 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 		//下一步选择的办理人及活动单元Id
 		String[] nextUsers = dto.getNextUserList().split(",");//注意每个用户id前面带了36位的所属actId
 		String nextActId = nextUsers[0].toString().substring(0, 36);
-		String nextUserId = "";
-		for(int i = 0;i<nextUsers.length;i++){
-			nextUserId += nextUsers[i].toString().substring(36, nextUsers[i].toString().length())+",";
-		}
-		nextUserId = nextUserId.substring(0, nextUserId.length()-1);//去掉最后一个逗号
-		//其他步骤选择的办理人及活动单元Id
-		String[] otherUsers = dto.getOtherUserList().split(",");//注意每个用户id前面带了36位的所属actId
-		//获取模板信息
-		FileTemplate tbo =DaoUtil.get(FileTemplate.class, dto.getTemplateId());
 		//获取上一步活动单元信息
 		FlowActivity probo = DaoUtil.get(FlowActivity.class, dto.getTaskPreActId());
 		//获取当前（下一步审批）活动单元信息
@@ -165,39 +155,10 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 		
 		
 		//1.保存文档信息 YHFile(文件基础表状态1-审批中)
-		File f = new File();
-		f.setFileId(UuidUtils.getUUID36());
-		f.setTemplateId(tbo.getTemplateId());
-		f.setTemplateCode(tbo.getTemplateCode());
-		f.setFileCode(dto.getFileCode());
-		f.setFileTitle(dto.getFileTitle());
-		f.setFileKeyWord(dto.getFileKeyWord());
-		f.setFileFlowStatus(DicConstants.YHRS4008_1);//审批中
-		f.setCreateDate(DateUtil.now());
-		f.setCreateUserID(UserContext.getLoginUserID());
-		f.setCreateUserName(UserContext.getLoginUserName());
-		f.setCreateDepartID(UserContext.getLoginUserDeptOid());
-		f.setFileEmergencyLevel(dto.getFileEmergencyLevel());
-		f.setFileSecurityRate(dto.getFileSecurityRate());
-		f.save();
+		String fileId = saveFileInfo(dto);
 		
 		//2.保存任务表信息 YHTask
-		Task t = new Task();
-		t.setTaskId(UuidUtils.getUUID36());
-		t.setFlowId(probo.getFlowId());
-		t.setRuleId(probo.getActEndRuleId());
-		t.setFileId(f.getFileId());
-		t.setDeptId(UserContext.getLoginUserDeptOid());
-		t.setTaskCurrentActId(currentbo.getActId());
-		t.setTaskPreActId(dto.getTaskPreActId());
-		t.setTaskUser(UserContext.getLoginUserID());
-		t.setTaskName(dto.getTaskName());
-		t.setTaskSendTime(DateUtil.now());
-		t.setTaskSendUser(UserContext.getLoginUserID());
-		t.setTaskSign(dto.getTaskSign());
-		t.setTaskCoordination(dto.getTaskCoordination());
-		t.setTaskConunterSign(dto.getTaskConunterSign());
-		t.save();
+		saveTaskInfo(dto, probo, currentbo, fileId);
 		
 		//3.保存任务进程表信息 YHTaskProcess(发起不保存)
 //		Task task = YhFlowComponentQueryHelper.getTaskInfoByTaskPreActId(dto.getTaskPreActId());
@@ -226,11 +187,66 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 //			tp.save();
 //		}
 		//4.保存设置的下一步用户办理人信息
+		saveSelUserInfo(dto, fileId, nextUsers);
+		//5.保存其他业务信息
+	}
+	
+	public String saveFileInfo(YhFlowComponentDTO dto) throws ServiceException{
+		//获取模板信息
+		FileTemplate tbo =DaoUtil.get(FileTemplate.class, dto.getTemplateId());
+		File f = new File();
+		f.setFileId(UuidUtils.getUUID36());
+		f.setTemplateId(tbo.getTemplateId());
+		f.setTemplateCode(tbo.getTemplateCode());
+		f.setFileCode(dto.getFileCode());
+		f.setFileTitle(dto.getFileTitle());
+		f.setFileKeyWord(dto.getFileKeyWord());
+		f.setFileFlowStatus(dto.getFileFlowStatus());
+		f.setCreateDate(DateUtil.now());
+		f.setCreateUserID(UserContext.getLoginUserID());
+		f.setCreateUserName(UserContext.getLoginUserName());
+		f.setCreateDepartID(UserContext.getLoginUserDeptOid());
+		f.setFileEmergencyLevel(dto.getFileEmergencyLevel());
+		f.setFileSecurityRate(dto.getFileSecurityRate());
+		f.save();
+		return f.getFileId();
+	}
+	
+	public void saveTaskInfo(YhFlowComponentDTO dto, FlowActivity probo, FlowActivity currentbo, String fileId) throws ServiceException{
+		Task t = new Task();
+		t.setTaskId(UuidUtils.getUUID36());
+		t.setFlowId(probo.getFlowId());
+		t.setRuleId(probo.getActEndRuleId());
+		t.setFileId(fileId);
+		t.setDeptId(UserContext.getLoginUserDeptOid());
+		t.setTaskCurrentActId(currentbo.getActId());
+		t.setTaskPreActId(dto.getTaskPreActId());
+		t.setTaskUser(UserContext.getLoginUserID());
+		t.setTaskName(dto.getTaskName());
+		t.setTaskSendTime(DateUtil.now());
+		t.setTaskSendUser(UserContext.getLoginUserID());
+		t.setTaskSign(dto.getTaskSign());
+		t.setTaskCoordination(dto.getTaskCoordination());
+		t.setTaskConunterSign(dto.getTaskConunterSign());
+		t.save();
+	}
+	
+	public void saveSelUserInfo(YhFlowComponentDTO dto, String fileId, String[] nextUsers) throws ServiceException{
+		//下一步选择的办理人及活动单元Id
+		String nextActId = nextUsers[0].toString().substring(0, 36);
+		String nextUserId = "";
+		for(int i = 0;i<nextUsers.length;i++){
+			nextUserId += nextUsers[i].toString().substring(36, nextUsers[i].toString().length())+",";
+		}
+		nextUserId = nextUserId.substring(0, nextUserId.length()-1);//去掉最后一个逗号
+		//其他步骤选择的办理人及活动单元Id
+		String[] otherUsers = dto.getOtherUserList().split(",");//注意每个用户id前面带了36位的所属actId
 		SelUser su = new SelUser();
 		su.setSelUserId(UuidUtils.getUUID36());
-		su.setFileId(f.getFileId());
+		su.setFileId(fileId);
 		su.setActId(nextActId);
 		su.setUserId(nextUserId);
+		su.setSelType("0");//提交流程所选择的用户
 		su.save();
 		//如果其他步骤也有设置则保存
 		if(otherUsers.length > 0){
@@ -260,13 +276,13 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 			for(int y = 0;y<otherUsersList.size();y++){
 				SelUser bo = new SelUser();
 				bo.setSelUserId(UuidUtils.getUUID36());
-				bo.setFileId(f.getFileId());
+				bo.setFileId(fileId);
 				bo.setActId(otherUsersList.get(y).substring(0, 36));
 				bo.setUserId(otherUsersList.get(y).substring(36, otherUsersList.get(y).length()));
+				su.setSelType("0");//提交流程所选择的用户
 				bo.save();
 			}
 		}
-		//5.保存其他业务信息
 	}
 	
 	
@@ -276,25 +292,10 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 	 * @return
 	 * @throws ServiceException
 	 */
+	@SuppressWarnings("unused")
 	public void saveTemporaryStorage(YhFlowComponentDTO dto) throws ServiceException{
-		//获取模板信息
-		FileTemplate tbo =DaoUtil.get(FileTemplate.class, dto.getTemplateId());
 		//保存文档信息 YHFile(文件基础表状态0-未启动)
-		File f = new File();
-		f.setFileId(UuidUtils.getUUID36());
-		f.setTemplateId(tbo.getTemplateId());
-		f.setTemplateCode(tbo.getTemplateCode());
-		f.setFileCode(dto.getFileCode());
-		f.setFileTitle(dto.getFileTitle());
-		f.setFileKeyWord(dto.getFileKeyWord());
-		f.setFileFlowStatus(DicConstants.YHRS4008_0);//未启动
-		f.setCreateDate(DateUtil.now());
-		f.setCreateUserID(UserContext.getLoginUserID());
-		f.setCreateUserName(UserContext.getLoginUserName());
-		f.setCreateDepartID(UserContext.getLoginUserDeptOid());
-		f.setFileEmergencyLevel(dto.getFileEmergencyLevel());
-		f.setFileSecurityRate(dto.getFileSecurityRate());
-		f.save();
+		String fileId = saveFileInfo(dto);
 	}
 	
 	/**
@@ -303,25 +304,10 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 	 * @return
 	 * @throws ServiceException
 	 */
+	@SuppressWarnings("unused")
 	public void saveHistoryData(YhFlowComponentDTO dto) throws ServiceException{
-		//获取模板信息
-		FileTemplate tbo =DaoUtil.get(FileTemplate.class, dto.getTemplateId());
 		//保存文档信息 YHFile(文件基础表状态6-历史数据)
-		File f = new File();
-		f.setFileId(UuidUtils.getUUID36());
-		f.setTemplateId(tbo.getTemplateId());
-		f.setTemplateCode(tbo.getTemplateCode());
-		f.setFileCode(dto.getFileCode());
-		f.setFileTitle(dto.getFileTitle());
-		f.setFileKeyWord(dto.getFileKeyWord());
-		f.setFileFlowStatus(DicConstants.YHRS4008_6);//历史数据
-		f.setCreateDate(DateUtil.now());
-		f.setCreateUserID(UserContext.getLoginUserID());
-		f.setCreateUserName(UserContext.getLoginUserName());
-		f.setCreateDepartID(UserContext.getLoginUserDeptOid());
-		f.setFileEmergencyLevel(dto.getFileEmergencyLevel());
-		f.setFileSecurityRate(dto.getFileSecurityRate());
-		f.save();
+		String fileId = saveFileInfo(dto);
 	}
 	
 	/**
@@ -330,7 +316,7 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<JSONObject> listPersonInfo(TableTagBean ttb) throws ServiceException{
+	public List<PermissionUsersDTO> listPersonInfo(TableTagBean ttb) throws ServiceException{
 		return YhFlowComponentQueryHelper.listPersonInfo(ttb);
 	}
 	
@@ -341,7 +327,32 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 	 * @throws ServiceException
 	 */
 	public void submitSighUsers(YhFlowComponentDTO dto) throws ServiceException{
+		//加签选择的办理人
+		String nextUsersId = dto.getNextUserList();
+		String nextActId = dto.getTaskCurrentActId();
+		//获取上一步活动单元信息
+		FlowActivity probo = DaoUtil.get(FlowActivity.class, dto.getTaskPreActId());
+		//获取当前（下一步审批）活动单元信息
+		FlowActivity currentbo = DaoUtil.get(FlowActivity.class, nextActId);
 		
+		
+		//1.保存文档信息 YHFile(文件基础表状态5-加签中)
+		String fileId = saveFileInfo(dto);
+		
+		//2.保存任务表信息 YHTask
+		saveTaskInfo(dto, probo, currentbo, fileId);
+		
+		//3.保存任务进程表信息 YHTaskProcess(发起不保存)
+		
+		//4.保存加签办理人信息
+		SelUser su = new SelUser();
+		su.setSelUserId(UuidUtils.getUUID36());
+		su.setFileId(fileId);
+		su.setActId(nextActId);
+		su.setUserId(nextUsersId);
+		su.setSelType("1");//加签所选择的用户
+		su.save();
+		//5.保存其他业务信息
 	}
 	
 	/**
@@ -351,7 +362,32 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 	 * @throws ServiceException
 	 */
 	public void submitCsUsers(YhFlowComponentDTO dto) throws ServiceException{
+		//抄送选择的用户
+		String nextUsersId = dto.getNextUserList();
+		String nextActId = dto.getTaskCurrentActId();
+		//获取上一步活动单元信息
+		FlowActivity probo = DaoUtil.get(FlowActivity.class, dto.getTaskPreActId());
+		//获取当前（下一步审批）活动单元信息
+		FlowActivity currentbo = DaoUtil.get(FlowActivity.class, nextActId);
 		
+		
+		//1.保存文档信息 YHFile(文件基础表状态1-审批中)
+		String fileId = saveFileInfo(dto);
+		
+		//2.保存任务表信息 YHTask
+		saveTaskInfo(dto, probo, currentbo, fileId);
+		
+		//3.保存任务进程表信息 YHTaskProcess(发起不保存)
+		
+		//4.保存加签办理人信息
+		SelUser su = new SelUser();
+		su.setSelUserId(UuidUtils.getUUID36());
+		su.setFileId(fileId);
+		su.setActId(nextActId);
+		su.setUserId(nextUsersId);
+		su.setSelType("2");//抄送所选择的用户
+		su.save();
+		//5.保存其他业务信息
 	}
 
 	@Override

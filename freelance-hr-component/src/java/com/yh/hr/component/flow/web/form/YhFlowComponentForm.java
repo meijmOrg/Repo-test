@@ -18,6 +18,7 @@ public class YhFlowComponentForm extends ValidatorForm{
 	private java.lang.String	templateCode;	//模板Code
 	private java.lang.String	fileCode;	//文档Code
 	private java.lang.String	fileTitle;	//文件标题
+	private java.lang.String	fileFlowStatus;	//审批状态
 	private java.lang.String	fileKeyWord;	//文档描述
 	private java.lang.String	fileEmergencyLevel;	//紧急程度
 	private java.lang.String	fileSecurityRate;	//文档密级
@@ -84,6 +85,12 @@ public class YhFlowComponentForm extends ValidatorForm{
 	}
 	public void setFileTitle(java.lang.String fileTitle) {
 		this.fileTitle = fileTitle;
+	}
+	public java.lang.String getFileFlowStatus() {
+		return fileFlowStatus;
+	}
+	public void setFileFlowStatus(java.lang.String fileFlowStatus) {
+		this.fileFlowStatus = fileFlowStatus;
 	}
 	public java.lang.String getFileKeyWord() {
 		return fileKeyWord;

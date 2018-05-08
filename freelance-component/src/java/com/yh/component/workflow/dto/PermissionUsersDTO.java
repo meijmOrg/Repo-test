@@ -29,6 +29,8 @@ public class PermissionUsersDTO {
 	private Long systemPositionOid;                 //用户岗位信息
 	
 	private Long personOid;							//基础人员OID
+	private java.lang.String	name;			// 姓名
+	private java.lang.String	dutyName;			// 现任职务名称
 
 	public PermissionUsersDTO() {
 		
@@ -209,5 +211,21 @@ public class PermissionUsersDTO {
 
 	public void setPersonOid(Long personOid) {
 		this.personOid = personOid;
+	}
+
+	public java.lang.String getName() {
+		return name;
+	}
+
+	public void setName(java.lang.String name) {
+		this.name = name;
+	}
+
+	public java.lang.String getDutyName() {
+		return dutyName;
+	}
+
+	public void setDutyName(java.lang.String dutyName) {
+		this.dutyName = dutyName;
 	}
 }

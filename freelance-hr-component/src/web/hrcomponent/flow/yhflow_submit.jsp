@@ -37,7 +37,9 @@ $(document).ready(function() {
 				  async : false,
 				  success:function(data){      
 					  if (data.success) {
-			              MessageBox.alert('消息',data.message);
+			              MessageBox.alert('消息',data.message,function(){
+			            	  $('#cancel').trigger("click");
+			              });
 			          }
 			          else
 			          {
