@@ -7,6 +7,7 @@
 <title>流程操作</title>
 <link rel="stylesheet"
 	href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="component/front_transform/mho.css">
 <script src="component/front_transform/lib/jquery-3.2.1.min.js"></script>
 <script src="component/front_transform/component/dialog/dialog.js"></script>
 <script src="hrcomponent/flow/js/yhflow_button.js"></script>
@@ -63,14 +64,14 @@ $(document).ready(function() {
 	});
 	$('#sign').click(function() {
 	    var dialog = new Dialog({
-	        url: 'goSelectPersons.do?method=goSelectPersons',
+	        url: 'goUserListPartial.do?method=goUserListPartial&flag=jq',
 	        width: '80%',
 	        title: '加签用户选择'
 	    });
 	});
 	$('#duplicate').click(function() {
 	    var dialog = new Dialog({
-	        url: 'goSelectPersons.do?method=goSelectPersons',
+	        url: 'goUserListPartial.do?method=goUserListPartial&flag=cc',
 	        width: '80%',
 	        title: '抄送用户选择'
 	    });

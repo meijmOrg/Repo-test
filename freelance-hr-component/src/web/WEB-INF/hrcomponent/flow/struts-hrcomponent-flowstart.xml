@@ -22,6 +22,8 @@
 				parameter="method">
 			<description>跳转到提交流程(用户弹框)页面</description>
 			<forward name="success" path="/hrcomponent/flow/yhflow_submit.jsp"/>
+			<forward name="jq" path="/hrcomponent/flow/yhflow_sigh.jsp"/>
+			<forward name="cc" path="/hrcomponent/flow/yhflow_duplicate.jsp"/>
 		</action>
 		<action path="/submitFlowStart"
 				scope="request"
@@ -49,7 +51,28 @@
 				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
 				parameter="method">
 			<description>跳转到加签、抄送、协同选择人员页面</description>
-			<forward name="success" path="/hrcomponent/flow/yhflow_sign.jsp"/>
+			<forward name="success" path="/hrcomponent/flow/yhflow_common.jsp"/>
+		</action>
+		<action path="/listPersonInfo"
+				scope="request"
+				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
+				parameter="method">
+			<description>查询人员信息</description>
+			<forward name="success" path="/hrcomponent/flow/yhflow_sel_userinfo.jsp"/>
+		</action>
+		<action path="/submitSighUsers"
+				scope="request"
+				name="yhFlowComponentForm"
+				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
+				parameter="method">
+			<description>加签(确定)</description>
+		</action>
+		<action path="/submitCsUsers"
+				scope="request"
+				name="yhFlowComponentForm"
+				type="com.yh.hr.component.flow.web.action.YhFlowComponentAction"
+				parameter="method">
+			<description>抄送(确定)</description>
 		</action>
 		<action path="/queryDepGroRole"
 				scope="request"

@@ -6,6 +6,7 @@ import java.util.Map;
 import net.sf.json.JSONObject;
 
 import com.yh.component.taglib.TableTagBean;
+import com.yh.component.workflow.dto.PermissionUsersDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.service.YhFlowComponentService;
@@ -67,7 +68,7 @@ public class YhFlowComponentFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<JSONObject> listPersonInfo(TableTagBean ttb) throws ServiceException{
+	public List<PermissionUsersDTO> listPersonInfo(TableTagBean ttb) throws ServiceException{
 		return yhFlowComponentService.listPersonInfo(ttb);
 	}
 	

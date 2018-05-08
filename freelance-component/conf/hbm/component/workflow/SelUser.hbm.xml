@@ -25,6 +25,11 @@
             <column name="user_id">
                 <comment>用户ID</comment>
             </column>
-        </property>  
+        </property> 
+        <property name="selType" type="java.lang.String">
+            <column name="sel_type">
+                <comment>选择用户类型（提交流程、加签、抄送或协同）</comment>
+            </column>
+        </property> 
     </class>
 </hibernate-mapping>

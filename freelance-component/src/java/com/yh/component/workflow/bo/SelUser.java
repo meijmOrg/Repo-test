@@ -18,6 +18,7 @@ public class SelUser extends BaseBo{
 	private java.lang.String  	fileId;	//文档ID
 	private java.lang.String	actId;	//活动单元ID
 	private java.lang.String	userId;	//用户ID，以，分割
+	private java.lang.String	selType;//选择用户类型（提交流程、加签、抄送或协同）
 	
 	public java.lang.String getSelUserId() {
 		return selUserId;
@@ -42,6 +43,12 @@ public class SelUser extends BaseBo{
 	}
 	public void setUserId(java.lang.String userId) {
 		this.userId = userId;
+	}
+	public java.lang.String getSelType() {
+		return selType;
+	}
+	public void setSelType(java.lang.String selType) {
+		this.selType = selType;
 	}
 	
 }

@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.bo.FlowActivityNotice;
@@ -270,9 +269,14 @@ public class YhFlowComponentQueryHelper {
 	 * @return
 	 * @throws ServiceException 
 	 */
-	public static List<JSONObject> listPersonInfo(TableTagBean ttb) throws ServiceException{
+	public static List<PermissionUsersDTO> listPersonInfo(TableTagBean ttb) throws ServiceException{
+		String unitName = ttb.getCondition().get("unitName");
+		String deptName = ttb.getCondition().get("deptName");
+		String name = ttb.getCondition().get("name");
 		Map<String,Object> params = new HashMap<String,Object>();
 		StringBuilder sql = new StringBuilder();
+		sql.append("select t.PERSON_OID,t.name,t.UNIT_OID,t.DEPT_OID,t.unitName,t.deptName,t.DUTY_NAME,t.USER_ID ");
+		sql.append("from (");
 		sql.append("select p.PERSON_OID,");
 		sql.append("p.name,");
 		sql.append("p.UNIT_OID,");
@@ -282,7 +286,16 @@ public class YhFlowComponentQueryHelper {
 		sql.append("pa.DUTY_NAME,");
 		sql.append("yu.USER_ID ");
 		sql.append(" from yhc_pb_person_info p,yhc_pb_person_attach pa,yhb_users yu ");
-		sql.append(" where p.PERSON_OID=pa.PERSON_OID and p.PERSON_OID=yu.Person_OID ");
+		sql.append(" where p.PERSON_OID=pa.PERSON_OID and p.PERSON_OID=yu.Person_OID) t where 1=1 ");
+		if(StringUtils.isNotEmpty(unitName)){
+			sql.append(" and t.unitName like '%"+unitName+"%'");
+		}
+		if(StringUtils.isNotEmpty(deptName)){
+			sql.append(" and t.deptName like '%"+deptName+"%'");
+		}
+		if(StringUtils.isNotEmpty(name)){
+			sql.append(" and t.name like '%"+name+"%'");
+		}
 		if (ttb.getPageSize() != 0) {
 			ttb.setTotal(DaoUtil.countWithSQLByCondition((new StringBuilder().append("select count(*) from (").append(sql).append(") as total").toString()), params));
 		}
@@ -290,30 +303,30 @@ public class YhFlowComponentQueryHelper {
 		return buildJSON(list);
 	}  
 	/**
-	 * object to JSONObject
+	 * object to PermissionUsersDTO
 	 * @param list
 	 * @return
 	 * @throws DataAccessFailureException
 	 * @throws ServiceException
 	 */
-	private static List<JSONObject> buildJSON(List<Object[]> list) throws DataAccessFailureException,ServiceException
+	private static List<PermissionUsersDTO> buildJSON(List<Object[]> list) throws DataAccessFailureException,ServiceException
 	{
-		List<JSONObject> jsonList = new ArrayList<JSONObject>();
+		List<PermissionUsersDTO> dtoList = new ArrayList<PermissionUsersDTO>();
 		for(Object[] obj:list){
-			JSONObject json = new JSONObject();
-			json.put("personOid", obj[0]==null?"":obj[0].toString());
-			json.put("name", obj[1]==null?"":obj[1].toString());	//姓名
-			json.put("unitOid", obj[2]==null?"":obj[2].toString());
-			json.put("deptOid", obj[3]==null?"":obj[3].toString());
-			json.put("unitName", obj[4]==null?"":obj[3].toString());//单位名称
-			json.put("deptName", obj[5]==null?"":obj[5].toString());//部门名称
-			json.put("dutyName", obj[6]==null?"":obj[6].toString());//现任职务
-			json.put("userId", obj[7]==null?"":obj[7].toString());//用户ID
+			PermissionUsersDTO dto = new PermissionUsersDTO();
+			dto.setPersonOid(obj[0]==null?null:Long.valueOf(obj[0].toString()));
+			dto.setName(obj[1]==null?"":obj[1].toString());	//姓名
+			dto.setUnitId(obj[2]==null?null:Long.valueOf(obj[2].toString()));
+			dto.setDeptId(obj[3]==null?null:Long.valueOf(obj[3].toString()));
+			dto.setUnitName(obj[4]==null?"":obj[4].toString());//单位名称
+			dto.setDeptName(obj[5]==null?"":obj[5].toString());//部门名称
+			dto.setDutyName(obj[6]==null?"":obj[6].toString());//现任职务
+			dto.setUserId(obj[7]==null?"":obj[7].toString());//用户ID
 			
-			jsonList.add(json);
+			dtoList.add(dto);
 		}
 		
-		return jsonList;
+		return dtoList;
 	}
 	
 }
