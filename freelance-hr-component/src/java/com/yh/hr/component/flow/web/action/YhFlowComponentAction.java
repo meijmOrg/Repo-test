@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import com.yh.component.config.queryhelper.YhSysprmQueryHelper;
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
@@ -291,6 +292,12 @@ public class YhFlowComponentAction extends BaseAction {
 	 */
 	public ActionForward goFlowProcedureMainPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
+		String maxFileSize = YhSysprmQueryHelper.getSysConfValue("annex.max.file.size");
+		String maxFileCounts = YhSysprmQueryHelper.getSysConfValue("annex.max.file.counts");
+		String acceptFileTypes = YhSysprmQueryHelper.getSysConfValue("annex.accept.file.types");
+		request.setAttribute("maxFileSize", maxFileSize);
+		request.setAttribute("maxFileCounts", maxFileCounts);
+		request.setAttribute("acceptFileTypes", acceptFileTypes);
 		return mapping.findForward(FORWARD_SUCCESS);
 	}
 }

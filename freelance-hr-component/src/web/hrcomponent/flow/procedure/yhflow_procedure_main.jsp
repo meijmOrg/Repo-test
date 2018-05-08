@@ -16,7 +16,10 @@
 <script src="component/front_transform/component/accordion/accordion.js"></script>
 <script type="text/javascript">
 var serverUrl = '${pageContext.request.contextPath}';
-alert(serverUrl);
+var maxFileSize = parseInt('${maxFileSize}')*1024*1024;
+var acceptFileTypes = '${acceptFileTypes}'.toLowerCase();
+acceptFileTypes = acceptFileTypes ? acceptFileTypes.split('、') : [];
+var maxFileCounts = parseInt('${maxFileCounts}');
 </script>
 </head>
 <body>

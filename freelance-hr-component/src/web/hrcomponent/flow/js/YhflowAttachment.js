@@ -102,7 +102,7 @@ var uploader = WebUploader.create(
 		chunkSize:5*1024*1024,
 		chunkRetry: 3,
 		// 开启几个并非线程（默认3个）
-		threads:1,
+		threads:3,
 		// 在上传当前文件时，准备好下一个文件
 		prepareNextFile:true
 		//formData:function(){return {uniqueFileName: '333'};}
@@ -114,6 +114,24 @@ var uploader = WebUploader.create(
 uploader.on("fileQueued", function(file) {
 	$('#file_name').val(file.name);
 	debugger
+	var start = file.name.lastIndexOf('.');
+	var fileType = (start == -1 ? '' : file.name.substring(start+1)).toLowerCase();
+	var errorMessage = [];
+	if (acceptFileTypes.length > 0 && $.inArray(fileType, acceptFileTypes) == -1) {
+		errorMessage.push('该文件类型不允许上传');
+	}
+	
+	if (maxFileSize > 0 && file.size > maxFileSize) {
+		
+		errorMessage.push('该文件大小已超过 '+$.formatNumber(maxFileSize/(1024*1024),2,'.','')+'MB');
+	}
+
+	/*if(maxFileCounts>0) {
+		var files = uploader.getFiles().length;
+		if(files > maxFileCounts) {
+			errorMessage.push('最多只能上传'+maxFileCounts+'个文件');
+		}
+	}*/
 		// 把文件信息追加到fileList的div中
 		//$("#fileList").append("<div id='" + file.id + "'><img/><span>" + file.name + "</span><div><span class='state'></span></div><div><span class='percentage'></span></div></div>");
 		$("#list_ul").append("<li id='" + file.id + "'><a href='javascript:void(0)'>" + file.name + "</a>"+"<span class='state'></span>"+"<span class='percentage'></span>"+
@@ -168,7 +186,9 @@ uploader.on( 'uploadError', function( file ) {
 
 uploader.on( 'uploadComplete', function( file ) {
     $( '#'+file.id ).find('.percentage').fadeOut();
+    //uploader.destroy();
 });
+//全部开始上传或停止上传
 $(document).on('click','#upload_file', function() {
 	debugger
 	if (uploader.state === 'uploading') {  
@@ -177,6 +197,10 @@ $(document).on('click','#upload_file', function() {
 			uploader.upload();  
 		}  
 });
+//移除（从队列）
+//单个开始上传或停止上传
+//删除（从服务器）
+//下载
 function start(){  
 	uploader.upload();  
 	$('#btn1').attr("onclick","stop()");  
