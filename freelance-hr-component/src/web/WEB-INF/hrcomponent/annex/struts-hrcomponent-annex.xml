@@ -32,5 +32,11 @@
 			parameter="method">
 			<description>下载文件</description>
 		</action>
+		<action path="/checkAnnexFileName"
+			type="com.yh.hr.component.annex.web.action.UploadAnnexComponentAction" 
+			scope="request"
+			parameter="method">
+			<description>检查是否存在同名附件</description>
+		</action>
 	</action-mappings>
 </struts-config>

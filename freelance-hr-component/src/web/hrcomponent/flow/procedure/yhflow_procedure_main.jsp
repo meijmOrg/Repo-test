@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/include/jsp_headers.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +17,10 @@
 var serverUrl = '${pageContext.request.contextPath}';
 var maxFileSize = parseInt('${maxFileSize}')*1024*1024;
 var acceptFileTypes = '${acceptFileTypes}'.toLowerCase();
-acceptFileTypes = acceptFileTypes ? acceptFileTypes.split('、') : [];
-var maxFileCounts = parseInt('${maxFileCounts}');
+var fileId = '343sdfdf';
+var faUserName = '自定义的';
+//acceptFileTypes = acceptFileTypes ? acceptFileTypes.split(',') : [];
+//var maxFileCounts = parseInt('${maxFileCounts}');
 </script>
 </head>
 <body>

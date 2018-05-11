@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,38 +10,9 @@
 	
 </style>
 <script type="text/javascript">
-  (function($, window, document){
-	  debugger
-
-					
-						//从服务器上删除
-				/* 		context.find('[button-click=delete]').click(function(){
-							deleteFile.call(this, file.fileOid, context);
-						});
-					
-					context.find('[button-click=download]').click(function(){
-						downloadFile.call(this, file.fileOid, context);
-					});
-		 */
-		function deleteFile(fileOid, context) {
-			MessageBox.yes('提示','请确认是否删除?', function(){
-				$.get('deleteUploadFile.do?method=deleteUploadFile&fileOid='+fileOid, function(data) {
-					var message = data.message || '删除成功';
-					MessageBox.alert('提示', message, function(){
-						if (data.success !== false) {
-							context.fadeOut(function(){
-								context.remove();
-							});
-						}
-					});
-				}, 'json');
-			});
-		};
+  /* (function($, window, document){
 		
-		function downloadFile(fileOid) {
-			MessageBox.openWindow('downloadUploadFile.do?method=downloadUploadFile&fileOid='+fileOid);
-		};
-	})(jQuery, window, document); 
+	})(jQuery, window, document);  */
 	</script>
 </head>
 <body>
@@ -66,12 +38,12 @@
 					<dt class="mho_accordion_title mho_pink mho_dep_pink_color">文件信息</dt>
 					<dd class="mho_accordion_body" style="padding: 0;">
 						<ul class="mho_list mho_list_strip" id="list_ul">
-							<!-- <li><a href="javascript:void(0)">后勤保障处举办“五小”创新成果评选活动.jpg</a>
-								<a href="javascript:void(0)"
-								class="mho_float_right mho_red_color" style="margin: 0 10px;">删除</a>
-								<a href="javascript:void(0)"
-								class="mho_float_right mho_green_color" style="margin: 0 10px;">下载</a>
-							</li> -->
+							<c:forEach items="${annexFileList}" var="dto" varStatus="status">
+								<li id="${dto.faId }"><a href='javascript:void(0)'  onclick="downloadFile('${dto.faId}')">${dto.faName }</a><span class='state'>已上传</span>
+								<a href='javascript:void(0)' class='mho_float_right mho_red_color' style='margin: 0 10px;' onclick="downloadFile('${dto.faId}')">下载</a>
+								<a href='javascript:void(0)' class='mho_float_right mho_green_color' style='margin: 0 10px;' onclick="deleteFile('${dto.faId}')">删除</a>
+								</li>
+							</c:forEach>
 						</ul>
 					</dd>
 				</dl>
