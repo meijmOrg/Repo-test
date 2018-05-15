@@ -6,6 +6,7 @@ package com.yh.component.workflow.web.action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import com.alibaba.fastjson.JSON;
 import com.yh.component.dynamicproperty.dto.DynamicPropertyDTO;
 import com.yh.component.dynamicproperty.facade.DynamicPropertyConfigFacade;
 import com.yh.component.dynamicproperty.util.DynamicPropertyUtil;
@@ -29,6 +31,9 @@ import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
 import com.yh.component.workflow.dto.WorkflowConfigurationDTO;
 import com.yh.component.workflow.dto.WorkflowRuleDTO;
 import com.yh.component.workflow.facade.WorkflowConfigurationFacade;
+import com.yh.component.workflow.vo.DrawingBaseInfo;
+import com.yh.component.workflow.vo.DrawingFlow;
+import com.yh.component.workflow.vo.DrawingFlowRule;
 import com.yh.component.workflow.web.form.WorkflowActivityForm;
 import com.yh.component.workflow.web.form.WorkflowConfigurationForm;
 import com.yh.component.workflow.web.form.WorkflowRuleForm;
@@ -486,7 +491,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 			
 		} catch (Exception ex) {
 			handleException(request, ex, null);
-			response.getWriter().write("查询供应商信息失败");
+			response.getWriter().write("查询部门信息失败");
 			return null;
 		}
 		return null;
@@ -787,4 +792,52 @@ public class WorkflowConfigurationAction extends BaseAction {
 		}
 		return null;
 	}*/
+	/**
+	 * 保存流程信息
+	 */
+	public ActionForward saveRuleFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception
+	{
+		String ruleFlowContent = request.getParameter("ruleFlowContent");
+		String id = request.getParameter("id"); //ruleId
+		String ruleFlowId = request.getParameter("ruleFlowId");
+		
+		try
+		{
+			//json to 对象
+			if(StringUtils.isNotEmpty(ruleFlowContent)){
+				DrawingFlow df = new DrawingFlow();
+				List<DrawingBaseInfo> dbiList = new ArrayList<DrawingBaseInfo>();
+				List<DrawingFlowRule> dfrList = new ArrayList<DrawingFlowRule>();
+				JSONObject ja = JSONObject.fromObject(ruleFlowContent);
+				JSONObject states = ja.getJSONObject("states");
+				Map<String,Object> statesMaps = JSON.parseObject(states.toString()); 
+				for(Map.Entry<String, Object> map:statesMaps.entrySet()){
+					DrawingBaseInfo dbi= JSON.parseObject(map.getValue().toString(), DrawingBaseInfo.class);
+					dbiList.add(dbi);
+				}
+				JSONObject paths = ja.getJSONObject("paths");
+				Map<String,Object> pathsMaps = JSON.parseObject(paths.toString()); 
+				for(Map.Entry<String, Object> map:pathsMaps.entrySet()){
+					DrawingFlowRule dfr= JSON.parseObject(map.getValue().toString(), DrawingFlowRule.class);
+					dfrList.add(dfr);
+				}
+				df.setDbiList(dbiList);
+				df.setDfrList(dfrList);
+				workflowConfigurationFacade.saveRuleFlow(df);
+				/*JSONObject json = (JSONObject) JSON.toJSON(drawingBaseInfo);  
+				JSONObject jsonView = new JSONObject();
+				jsonView.put("states", json);
+				System.out.println(json);*/
+			}
+			//states paths
+			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
+		}
+		catch(Exception se)
+		{
+			this.handleException(request, se, null);
+			response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(se.getMessage(), "修改失败")).toString());
+		}
+		return null;
+	}
 }

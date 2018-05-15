@@ -114,5 +114,13 @@
 			validate="false">
 			<description>删除流程记录</description>
 		</action>
+		<action path="/saveRuleFlow"
+			type="com.yh.component.workflow.web.action.WorkflowConfigurationAction"
+			parameter="method"
+			scope="request"
+			name="WorkflowRuleForm"
+			validate="true">
+			<description>保存流程信息</description>
+		</action>
 	</action-mappings>
 </struts-config>

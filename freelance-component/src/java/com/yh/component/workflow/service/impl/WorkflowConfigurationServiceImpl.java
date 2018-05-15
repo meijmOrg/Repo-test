@@ -29,6 +29,8 @@ import com.yh.component.workflow.dto.WorkflowRuleDTO;
 import com.yh.component.workflow.queryhelper.WorkflowConfigurationQueryHelper;
 import com.yh.component.workflow.service.WorkflowConfigurationService;
 import com.yh.component.workflow.utils.WorkFlowConfigurationUtil;
+import com.yh.component.workflow.vo.DrawingBaseInfo;
+import com.yh.component.workflow.vo.DrawingFlow;
 import com.yh.platform.core.dao.DaoUtil;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.JSONHelper;
@@ -356,4 +358,16 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 		//获取任务通知信息
 		return dto;
 	}*/
+	@Override
+	public void saveRuleFlow(DrawingFlow df) throws ServiceException {
+		if(df != null){
+			//活动信息
+			List<DrawingBaseInfo> dbiList = df.getDbiList();
+			
+			//规则信息
+			
+		}
+		
+		
+	}
 }
