@@ -64,17 +64,11 @@ public interface WorkflowConfigurationService {
 	 */
 	void deleteTemplet(String templetId)throws ServiceException;
 	/**
-	 * 修改流程信息
-	 * @param workflowConfigurationDto
-	 * @throws ServiceException
-	 */
-	void updateFlow(WorkflowConfigurationDTO workflowConfigurationDto)throws ServiceException;
-	/**
 	 * 删除流程记录
 	 * @param baseInfoId
 	 * @throws ServiceException
 	 */
-	void deleteFlow(Long baseInfoId)throws ServiceException;
+	void deleteFlow(String baseInfoId)throws ServiceException;
 	/**
 	 * 保存流程信息
 	 * @param df

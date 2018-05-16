@@ -10,6 +10,7 @@ import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
 import com.yh.component.workflow.dto.WorkflowConfigurationDTO;
 import com.yh.component.workflow.dto.WorkflowRuleDTO;
 import com.yh.component.workflow.service.WorkflowConfigurationService;
+import com.yh.component.workflow.vo.DrawingFlow;
 import com.yh.platform.core.exception.ServiceException;
 /**
  * @desc 流程-模板管理Facade
@@ -95,94 +96,12 @@ public class WorkflowConfigurationFacade {
 	 * @param baseInfoId
 	 * @throws ServiceException
 	 */
-	public void deleteFlow(Long baseInfoId) throws ServiceException{
+	public void deleteFlow(String baseInfoId) throws ServiceException{
 		// TODO Auto-generated method stub
 		workflowConfigurationService.deleteFlow(baseInfoId);
 		
 	}
-	/**
-	 * 修改流程信息
-	 * @param workflowConfigurationDto
-	 * @throws ServiceException
-	 */
-	public void updateFlow(WorkflowConfigurationDTO workflowConfigurationDto) throws ServiceException{
-		// TODO Auto-generated method stub
-		workflowConfigurationService.updateFlow(workflowConfigurationDto);
+	public void saveRuleFlow(DrawingFlow df)  throws ServiceException{
+		workflowConfigurationService.saveRuleFlow(df);
 	}
-	/**
-	 * 获取活动信息、权限控制信息、任务通知信息
-	 * @param activityId
-	 * @return
-	 * @throws ServiceException
-	 *//*
-	public WorkflowActivityDTO getActivityInfo(Long activityId) throws ServiceException{
-		// TODO Auto-generated method stub
-		return workflowConfigurationService.getActivityInfo(activityId);
-	}
-	*//**
-	 * 删除活动记录
-	 * @param activityId
-	 * @throws ServiceException
-	 *//*
-	public void deleteActivity(Long activityId) throws ServiceException{
-		// TODO Auto-generated method stub
-		workflowConfigurationService.deleteActivity(activityId);
-		
-	}
-	*//**
-	 * 修改活动信息
-	 * @param workflowActivityDto
-	 * @throws ServiceException
-	 *//*
-	public void updateActivity(WorkflowActivityDTO workflowActivityDto) throws ServiceException{
-		// TODO Auto-generated method stub
-		workflowConfigurationService.updateActivity(workflowActivityDto);
-	}
-	*//**
-	 * 新增活动信息
-	 * @param workflowActivityDto
-	 * @throws ServiceException
-	 *//*
-	public void insertActivity(WorkflowActivityDTO workflowActivityDto) throws ServiceException{
-		// TODO Auto-generated method stub
-		workflowConfigurationService.insertActivity(workflowActivityDto);
-	}
-	*//**
-	 * 获取规则信息、构置转移条件信息
-	 * @param ruleId
-	 * @return
-	 * @throws ServiceException
-	 *//*
-	public WorkflowRuleDTO getRuleInfo(Long ruleId) throws ServiceException{
-		// TODO Auto-generated method stub
-		return workflowConfigurationService.getRuleInfo(ruleId);
-	}
-	*//**
-	 * 删除规则记录
-	 * @param ruleId
-	 * @throws ServiceException
-	 *//*
-	public void deleteRule(Long ruleId) throws ServiceException{
-		// TODO Auto-generated method stub
-		workflowConfigurationService.deleteRule(ruleId);
-		
-	}
-	*//**
-	 * 修改规则信息
-	 * @param workflowRuleDto
-	 * @throws ServiceException
-	 *//*
-	public void updateRule(WorkflowRuleDTO workflowRuleDto) throws ServiceException{
-		// TODO Auto-generated method stub
-		workflowConfigurationService.updateRule(workflowRuleDto);
-	}
-	*//**
-	 * 新增规则信息
-	 * @param workflowRuleDto
-	 * @throws ServiceException
-	 *//*
-	public void insertRule(WorkflowRuleDTO workflowRuleDto) throws ServiceException{
-		// TODO Auto-generated method stub
-		workflowConfigurationService.insertRule(workflowRuleDto);
-	}*/
 }
