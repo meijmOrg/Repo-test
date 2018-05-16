@@ -2,6 +2,7 @@ package com.yh.component.workflow.service.impl;
 
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 
+import com.alibaba.fastjson.JSONArray;
 import com.yh.component.dictionary.utils.DicHelper;
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.bo.FileTemplate;
@@ -35,6 +37,7 @@ import com.yh.component.workflow.vo.DrawingBaseInfoRuleProps;
 import com.yh.component.workflow.vo.DrawingBaseInfoText;
 import com.yh.component.workflow.vo.DrawingFlow;
 import com.yh.component.workflow.vo.DrawingFlowRule;
+import com.yh.component.workflow.vo.DrawingFlowRuleText;
 import com.yh.platform.core.dao.DaoUtil;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.DateUtil;
@@ -134,74 +137,13 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 			bo.delete();
 		}
 	}
-/*	public void updateFlow(WorkflowConfigurationDTO workflowConfigurationDto)
-			throws ServiceException {
-		// TODO Auto-generated method stub
-		TableTagBean ttb = new TableTagBean();
-		String str = "{states:{rect1514343249391:{type:'state',ID:'',text:{text:'活动名称'}, attr:{ x:551, y:96, width:100, height:50}, props:{text:{value:'活动名称'},temp1:{value:'活动序号'},temp2:{value:'1'},temp3:{value:'1'},temp4:{value:'1'},temp5:{value:'活动名称'}}},rect1514343253157:{type:'state',ID:'',text:{text:'活动名称2'}, attr:{ x:824, y:119, width:100, height:50}, props:{text:{value:'活动名称2'},temp1:{value:'活动序号2'},temp2:{value:'2'},temp3:{value:'2'},temp4:{value:'2'},temp5:{value:'活动名称2'}}}},paths:{path1514343258269:{lineID:'',from:'rect1514343249391',to:'rect1514343253157', dots:[],text:{text:'线',textPos:{x:0,y:-10}}, props:{text:{value:'线'}}}}}";
-		ttb.getCondition().put("json", str);
-		//解析json  解析过程中验证所画流程是否符合要求？？？？？？
-		1、为空验证
-		 * 2、连接验证（除开始和结束外的活动需有前置规则和后置规则，规则线必须有前置活动与后置活动信息）
-		
-		JSONObject json = JSONHelper.fromObject(ttb.getCondition().get("json"));
-		Iterator<String> flowIt = json.keys();  
-        while(flowIt.hasNext()){  
-        	//流程信息：活动和规则
-            String flowKey = flowIt.next();
-            if(StringUtils.isNotEmpty(flowKey)&&flowKey.equals("states")){
-        		//1、解析活动信息
-            	JSONObject actJson = JSONHelper.fromObject(json.getString(flowKey));
-            	Iterator<String> actIt = actJson.keys();
-            	while(actIt.hasNext()){
-            		//活动属性
-            		String actKey = actIt.next();
-            		//基本属性 yhf_flow_activity
-            		FlowActivity actBo = new FlowActivity();
-            		//权限控制信息 yhf_flow_activity_permission  yhf_per_combination
-            		FlowActivityPermission apBo = new FlowActivityPermission();
-            		FlowActivityPerCombination pcBo = new FlowActivityPerCombination();
-            		//任务通知信息 yhf_flow_activity_notice
-            		FlowActivityNotice anBo = new FlowActivityNotice();
-            	}
-        	}else if(StringUtils.isNotEmpty(flowKey)&&flowKey.equals("paths")){
-        		//1、解析规则信息
-        		JSONObject ruleJson = JSONHelper.fromObject(json.getString(flowKey));
-				Iterator<String> ruleIt = ruleJson.keys();
-            	while(ruleIt.hasNext()){
-            		//规则属性
-            		String ruleKey = ruleIt.next();
-            		//基本属性 yhf_flow_rule (yhf_flow_key_word???)
-            		FlowRule ruleBo = new FlowRule();
-            		FlowKeyWord kwBo = new FlowKeyWord();
-            		//构置转移条件信息
-            		
-            	}
-        	}
-            //流程基本信息？？？yhf_flow
-            Flow flowBo = new Flow();
-        }  
-        String templateId = ttb.getCondition().get("templateId");
-        String flowId = ttb.getCondition().get("flowId");
-        if(StringUtils.isNotEmpty(templateId)){
-        	WorkflowBaseInfoDTO workflowBaseInfoDTO = new WorkflowBaseInfoDTO();
-        	if(StringUtils.isNotEmpty(flowId)){
-        		//1、验证（该流程已经开始使用---提示不可修改）
-        		//2、删除流程 再新增流程
-        		this.deleteFlow(Long.valueOf(flowId));
-        		this.insertFlow(workflowBaseInfoDTO);
-        	}else{
-        		//1、新增流程
-        		this.insertFlow(workflowBaseInfoDTO);
-        	}
-        }
-        //新增
-		Flow bo=new Flow();
-		BeanUtils.copyProperties(workflowConfigurationDto, bo);
-		bo.update();
-
-	}*/
-	private static void insertFlow(DrawingFlow df,Flow originalFlow) throws ServiceException {
+	/**
+	 * 新增流程信息
+	 * @param df
+	 * @param originalFlow
+	 * @throws ServiceException
+	 */
+	private void insertFlow(DrawingFlow df,Flow originalFlow) throws ServiceException {
 		
 		//1、流程信息
 		Flow flowBo = new Flow();
@@ -212,26 +154,122 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 		toBO(df,tfBo,flowBo.getFlowId());
 		tfBo.save();
 		//3、活动信息
-		FlowActivity actBo = new FlowActivity();
-		actBo.setActId(StringUtil.getUUID());
-		actBo.setFlowId(flowBo.getFlowId());
-			//其他信息
-		//actBo.setActAuditContent(actAuditContent);
-		actBo.save();
-		//4、规则信息
-		FlowRule ruleBo = new FlowRule();
-		ruleBo.setRuleId(StringUtil.getUUID());
-		ruleBo.setFlowId(flowBo.getFlowId());
-			//其他信息
-		//ruleBo.setActAuditContent(actAuditContent);
-		ruleBo.save();
-		//1、权限控制信息
-		FlowActivityPermission apBo = new FlowActivityPermission();
-		FlowActivityPerCombination pcBo = new FlowActivityPerCombination();
-		//2、任务通知
-		FlowActivityNotice anBo = new FlowActivityNotice();
-		
-		
+		List<DrawingBaseInfo> dbiList = df.getDbiList();
+		if(CollectionUtils.isNotEmpty(dbiList)){
+			for(DrawingBaseInfo dbi:dbiList){
+				DrawingBaseInfoText dbit = dbi.getText();
+				DrawingBaseInfoRuleProps dbirp = dbi.getRuleProps();
+				//创建主活动
+				FlowActivity fa = new FlowActivity();
+				fa.setActId(dbi.getId());
+				fa.setFlowId(flowBo.getFlowId());
+				fa.setActName(dbit.getText());
+				fa.setActType(dbi.getType());
+				if(dbirp != null){
+					fa.setActOrder(Integer.parseInt(dbirp.getActivityNo())); //活动序号
+					//fa.setActResult(actResult); // 活动结果
+					//fa.setActBeginRuleId(actBeginRuleId); // 前置规则
+					//fa.setActEndRuleId(actEndRuleId); // 后置规则
+					fa.setActBackType(dbirp.getBackWay()); //退回方式
+					//fa.setActFinishType(actFinishType); // 结束方式
+					fa.setActAuditContent(dbirp.getContent());
+				}
+				fa.save();
+				//活动附属表
+				if(dbirp != null){
+					//权限控制
+					FlowActivityPermission apBo = new FlowActivityPermission();
+					apBo.setActId(dbi.getId());
+					apBo.setApCanCarbanCopy(dbirp.getAllowCopy());
+					apBo.setApCanCoordination(dbirp.getAllowSynergy());
+					apBo.setApCanFinish(dbirp.getAllowEnd());
+					apBo.setApCanRetroactive(dbirp.getAllowRetroactive());
+					apBo.setApCanSkip(dbirp.getAllowCountersign());
+					apBo.setApId(StringUtil.getUUID());
+					apBo.setApUserType(dbirp.getHandlers());
+					apBo.save();
+					//权限控制-权限组合
+					JSONArray orgInfo = dbirp.getOrgInfo(); // 部门
+					JSONArray groupInfo = dbirp.getGroupInfo(); // 小组
+					JSONArray roleInfo = dbirp.getRoleInfo(); // 角色
+					if(orgInfo.size() != 0){
+						FlowActivityPerCombination pcBo = new FlowActivityPerCombination();
+						pcBo.setApId(apBo.getApId());
+						pcBo.setPcFieldId("ORG_OID"); // 组合值ID（表字段名）
+						pcBo.setPcFieldValue(orgInfo.toString()); // 组合字段值（字段值）
+						pcBo.setPcId(StringUtil.getUUID());
+						pcBo.setPcType(WorkFlowConfigurationUtil.PC_TYPE_ORG); // 组合类别-部门、小组、角色、岗位、职务、职务等级（表名）
+					}
+					if(groupInfo.size() != 0){
+						FlowActivityPerCombination pcBo = new FlowActivityPerCombination();
+						pcBo.setApId(apBo.getApId());
+						pcBo.setPcFieldId("ROLE_ID"); // 组合值ID（表字段名）
+						pcBo.setPcFieldValue(groupInfo.toString()); // 组合字段值（字段值）
+						pcBo.setPcId(StringUtil.getUUID());
+						pcBo.setPcType(WorkFlowConfigurationUtil.PC_TYPE_GROUP); // 组合类别-部门、小组、角色、岗位、职务、职务等级（表名）
+					}
+					if(roleInfo.size() != 0){
+						FlowActivityPerCombination pcBo = new FlowActivityPerCombination();
+						pcBo.setApId(apBo.getApId());
+						pcBo.setPcFieldId("USER_OID"); // 组合值ID（表字段名）
+						pcBo.setPcFieldValue(roleInfo.toString()); // 组合字段值（字段值）
+						pcBo.setPcId(StringUtil.getUUID());
+						pcBo.setPcType(WorkFlowConfigurationUtil.PC_TYPE_ROLE); // 组合类别-部门、小组、角色、岗位、职务、职务等级（表名）
+					}
+					//任务通知
+					if(dbirp.getIsMessage()){//任务创建人通知
+						FlowActivityNotice anBo = new FlowActivityNotice();
+						anBo.setActId(dbi.getId());
+						anBo.setAnContent(dbirp.getIsMessageTemp());
+						anBo.setAnId(StringUtil.getUUID());
+						anBo.setAnMode(dbirp.getNotification()?"Tel":null); //如果为true 则是开启短信通知
+						anBo.setAnState(dbirp.getIsMessage()?1d:0d); 
+						anBo.setAnType(WorkFlowConfigurationUtil.IsMessage);
+						anBo.save();
+					}
+					if(dbirp.getIsMessageNext()){//下一处理人通知
+						FlowActivityNotice anBo = new FlowActivityNotice();
+						anBo.setActId(dbi.getId());
+						anBo.setAnContent(dbirp.getIsMessageTempNext());
+						anBo.setAnId(StringUtil.getUUID());
+						anBo.setAnMode(dbirp.getNotification()?"Tel":null); //如果为true 则是开启短信通知
+						anBo.setAnState(dbirp.getIsMessageNext()?1d:0d);
+						anBo.setAnType(WorkFlowConfigurationUtil.IsMessageNext);
+						anBo.save();
+					}
+					if(dbirp.getIsMessageHistory()){//历史处理人通知
+						FlowActivityNotice anBo = new FlowActivityNotice();
+						anBo.setActId(dbi.getId());
+						anBo.setAnContent(dbirp.getIsMessageTempHistory());
+						anBo.setAnId(StringUtil.getUUID());
+						anBo.setAnMode(dbirp.getNotification()?"Tel":null); //如果为true 则是开启短信通知
+						anBo.setAnState(dbirp.getIsMessageHistory()?1d:0d);
+						anBo.setAnType(WorkFlowConfigurationUtil.IsMessageHistory);
+						anBo.save();
+					}
+				}
+				
+			}
+		}
+		//规则信息
+		List<DrawingFlowRule> dfrList = df.getDfrList();
+		if(CollectionUtils.isNotEmpty(dfrList)){
+			for(DrawingFlowRule dfr:dfrList){
+				DrawingFlowRuleText dfrt = dfr.getText();
+				//规则主信息
+				FlowRule ruleBo = new FlowRule();
+				ruleBo.setFlowId(df.getFlowId());
+				ruleBo.setRuleBeginActId(dfr.getFrom());
+				//ruleBo.setRuleCondition(); // 规则构造流转条件
+				ruleBo.setRuleEndActId(dfr.getTo());
+				ruleBo.setRuleId(dfr.getId());
+				ruleBo.setRuleName(dfrt.getText());
+				//ruleBo.setRuleOrder(); // 规则序号
+				//ruleBo.setRuleSysType(); // 规则系统类型
+				//ruleBo.setRuleType(); // 规则类型
+				ruleBo.save();
+			}
+		}
 	}
 	/**
 	 * 对象————对象
@@ -242,32 +280,6 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 	 */
 	private static <T> void toBO(DrawingFlow df,T t,T params) throws ServiceException {
 		if(t != null){
-			//活动信息
-			List<DrawingBaseInfo> dbiList = df.getDbiList();
-			if(CollectionUtils.isNotEmpty(dbiList)){
-				for(DrawingBaseInfo dbi:dbiList){
-					dbi.getAttr();
-					DrawingBaseInfoText dbit = dbi.getText();
-					DrawingBaseInfoRuleProps dbirp = dbi.getRuleProps();
-					//创建主活动
-					FlowActivity fa = new FlowActivity();
-					fa.setActId(StringUtil.getUUID());
-					fa.setFlowId(dbi.getId());
-					fa.setActName(dbit.getText());
-					fa.setActType(dbi.getType());
-					if(dbirp != null){
-						fa.setActOrder(Integer.parseInt(dbirp.getActivityNo())); //活动序号
-						//fa.setActResult(actResult); // 活动序号
-						//fa.setActBeginRuleId(actBeginRuleId); // 前置规则
-						//fa.setActEndRuleId(actEndRuleId); // 后置规则
-						fa.setActBackType(dbirp.getBackWay()); //退回方式
-						//fa.setActFinishType(actFinishType); // 结束方式
-						fa.setActAuditContent(dbirp.getContent());
-					}
-				}
-			}
-			//规则信息
-			List<DrawingFlowRule> dfrList = df.getDfrList();
 			if(t instanceof Flow){//1、流程信息
 				Flow flowBo=(Flow)t;
 				Flow originalFlow=(Flow)params;
@@ -288,25 +300,13 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 				flowBo.setFlowType(df.getFlowType());
 				flowBo.setFlowOrgOid(df.getFlowOrgOid());
 				flowBo.setFlowOrgName(df.getFlowOrgName());
+				flowBo.setFlowData(df.getFlowData());
 				//return flowBo;
 			}else if(t instanceof TemplateFlow){//2、模板-流程关联信息
 				TemplateFlow tfBo=(TemplateFlow)t;
 				tfBo.setTfId(StringUtil.getUUID());
 				tfBo.setTemplateId(df.getTemplateId());
 				tfBo.setFlowId((String)params);
-			}else if(t instanceof FlowActivity){//3、活动信息
-				FlowActivity actBo = new FlowActivity();
-				actBo.setActId(StringUtil.getUUID());
-				actBo.setFlowId((String)params);
-				//其他信息
-				//actBo.setActAuditContent(actAuditContent);
-			}else if(t instanceof FlowRule){//4、规则信息
-				FlowRule ruleBo = new FlowRule();
-				ruleBo.setRuleId(StringUtil.getUUID());
-				ruleBo.setFlowId((String)params);
-					//其他信息
-				//ruleBo.setActAuditContent(actAuditContent);
-				ruleBo.save();
 			}else if(t instanceof FlowActivityPermission){//1、权限控制信息
 				
 			}else if(t instanceof FlowActivityPerCombination){
@@ -318,7 +318,7 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 	}
 	/*
 	 * (non-Javadoc)
-	 * @see com.yh.component.workflow.service.WorkflowConfigurationService#deleteFlow(java.lang.Long)
+	 * @see com.yh.component.workflow.service.WorkflowConfigurationService#deleteFlow(java.lang.String)
 	 */
 	public void deleteFlow(String flowId) throws ServiceException {
 		// TODO Auto-generated method stub

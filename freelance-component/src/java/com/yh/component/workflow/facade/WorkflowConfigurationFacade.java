@@ -101,6 +101,11 @@ public class WorkflowConfigurationFacade {
 		workflowConfigurationService.deleteFlow(baseInfoId);
 		
 	}
+	/**
+	 * 保存流程信息
+	 * @param df
+	 * @throws ServiceException
+	 */
 	public void saveRuleFlow(DrawingFlow df)  throws ServiceException{
 		workflowConfigurationService.saveRuleFlow(df);
 	}

@@ -13,6 +13,7 @@ public class DrawingFlow{
 	private String flowType; // 流程类型
 	private Long flowOrgOid;
 	private String flowOrgName;
+	private String flowData;
 	public List<DrawingBaseInfo> getDbiList() {
 		return dbiList;
 	}
@@ -60,6 +61,12 @@ public class DrawingFlow{
 	}
 	public void setFlowOrgName(String flowOrgName) {
 		this.flowOrgName = flowOrgName;
+	}
+	public String getFlowData() {
+		return flowData;
+	}
+	public void setFlowData(String flowData) {
+		this.flowData = flowData;
 	}
 	
 }

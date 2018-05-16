@@ -422,6 +422,12 @@ public class WorkflowConfigurationAction extends BaseAction {
 	}
 	/**
 	 * 保存流程信息
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
 	 */
 	public ActionForward saveRuleFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
@@ -442,6 +448,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 				DrawingFlow df = new DrawingFlow();
 				df.setTemplateId(templateId);
 				df.setFlowId(flowId);
+				df.setFlowData(ruleFlowContent);
 				List<DrawingBaseInfo> dbiList = new ArrayList<DrawingBaseInfo>();
 				List<DrawingFlowRule> dfrList = new ArrayList<DrawingFlowRule>();
 				JSONObject ja = JSONObject.fromObject(ruleFlowContent);
@@ -460,10 +467,6 @@ public class WorkflowConfigurationAction extends BaseAction {
 				df.setDbiList(dbiList);
 				df.setDfrList(dfrList);
 				workflowConfigurationFacade.saveRuleFlow(df);
-				/*JSONObject json = (JSONObject) JSON.toJSON(drawingBaseInfo);  
-				JSONObject jsonView = new JSONObject();
-				jsonView.put("states", json);
-				System.out.println(json);*/
 			}
 			//states paths
 			response.getWriter().write(JSONHelper.fromObject(true, null).toString());

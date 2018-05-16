@@ -14,7 +14,7 @@ public class FlowActivityNotice extends BaseBo{
 	private java.lang.String anId;//任务通知设置唯一ID
 	private java.lang.String actId;//活动单元唯一ID
 	private java.lang.String anType;//任务通知类别
-	private java.lang.Double anState;//启动状态
+	private java.lang.Double anState;//启动状态 启动1 未启动0
 	private java.lang.String anContent;//通知内容
 	private java.lang.String anMode;//通知方式
 	public java.lang.String getAnId() {

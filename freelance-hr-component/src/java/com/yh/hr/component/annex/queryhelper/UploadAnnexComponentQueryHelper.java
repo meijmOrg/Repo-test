@@ -10,13 +10,9 @@ import org.apache.commons.lang.StringUtils;
 
 import com.yh.component.taglib.TableTagBean;
 import com.yh.hr.component.annex.dto.FileAnnexDTO;
-import com.yh.hr.res.cf.dto.JhcCfShowResultSetDTO;
 import com.yh.platform.core.dao.DaoUtil;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.BeanHelper;
-
-
-import net.sf.json.JSONObject;
 
 /**
  * 

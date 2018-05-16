@@ -2,20 +2,12 @@ package com.yh.hr.component.annex.facade;
 
 
 import java.io.File;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-import net.sf.json.JSONObject;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.bo.FileAnnex;
 import com.yh.hr.component.annex.dto.FileAnnexDTO;
 import com.yh.hr.component.annex.service.UploadAnnexComponentService;
-import com.yh.hr.component.flow.service.YhFlowComponentService;
 import com.yh.platform.core.dao.DaoUtil;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.BeanHelper;
@@ -34,19 +26,38 @@ public class UploadAnnexComponentFacade {
 			UploadAnnexComponentService uploadAnnexComponentService) {
 		this.uploadAnnexComponentService = uploadAnnexComponentService;
 	}
-
+	/**
+	 * 新增附件
+	 * @param dto
+	 * @return
+	 * @throws ServiceException
+	 */
 	public String createAnnexFile(FileAnnexDTO dto) throws ServiceException{
 		return uploadAnnexComponentService.createAnnexFile(dto);
 	}
-
+	/**
+	 * 根据条件获取附件列表
+	 * @param ttb
+	 * @return
+	 * @throws ServiceException
+	 */
 	public List<FileAnnexDTO> listAnnexFile(TableTagBean ttb)  throws ServiceException{
 		return uploadAnnexComponentService.listAnnexFile(ttb);
 	}
-
+	/**
+	 * 根据id获取附件信息
+	 * @param faId
+	 * @return
+	 * @throws ServiceException
+	 */
 	public FileAnnexDTO get(String faId) throws ServiceException{
 		return BeanHelper.copyProperties(DaoUtil.get(FileAnnex.class, faId), FileAnnexDTO.class);
 	}
-
+	/**
+	 * 删除附件
+	 * @param faId
+	 * @throws ServiceException
+	 */
 	public void delete(String faId) throws ServiceException{
 		FileAnnex fileAnnex = DaoUtil.get(FileAnnex.class, faId);
 		

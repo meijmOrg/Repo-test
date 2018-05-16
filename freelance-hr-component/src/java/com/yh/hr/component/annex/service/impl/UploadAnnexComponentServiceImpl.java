@@ -2,13 +2,8 @@ package com.yh.hr.component.annex.service.impl;
 
 
 import java.util.List;
-import java.util.Map;
 
-import net.sf.json.JSONObject;
-
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.dao.DataAccessException;
 
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.bo.FileAnnex;
@@ -21,10 +16,11 @@ import com.yh.platform.core.util.UuidUtils;
 
 public class UploadAnnexComponentServiceImpl implements UploadAnnexComponentService
 {
-
-	@Override
+	/*
+	 * (non-Javadoc)
+	 * @see com.yh.hr.component.annex.service.UploadAnnexComponentService#createAnnexFile(com.yh.hr.component.annex.dto.FileAnnexDTO)
+	 */
 	public String createAnnexFile(FileAnnexDTO dto) throws ServiceException {
-		// TODO Auto-generated method stub
 		FileAnnex bo = new FileAnnex();
 		BeanUtils.copyProperties(dto, bo);
 		bo.setFaId(UuidUtils.getUUID36());
@@ -33,14 +29,19 @@ public class UploadAnnexComponentServiceImpl implements UploadAnnexComponentServ
 		return bo.getFaId();
 	}
 
-	@Override
+	/*
+	 * (non-Javadoc)
+	 * @see com.yh.hr.component.annex.service.UploadAnnexComponentService#listAnnexFile(com.yh.component.taglib.TableTagBean)
+	 */
 	public List<FileAnnexDTO> listAnnexFile(TableTagBean ttb)
 			throws ServiceException {
-		// TODO Auto-generated method stub
 		return UploadAnnexComponentQueryHelper.listAnnexFile(ttb);
 	}
 
-	@Override
+	/*
+	 * (non-Javadoc)
+	 * @see com.yh.hr.component.annex.service.UploadAnnexComponentService#checkFileName(java.lang.String)
+	 */
 	public Boolean checkFileName(String path)
 			throws ServiceException {
 		return UploadAnnexComponentQueryHelper.checkFileName(path);
