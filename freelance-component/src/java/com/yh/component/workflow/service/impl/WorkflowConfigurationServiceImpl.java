@@ -82,7 +82,7 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 	public WorkflowConfigurationDTO getBaseFlowInfo(String baseInfoId) throws ServiceException {
 		// TODO Auto-generated method stub
 		WorkflowConfigurationDTO dto = new WorkflowConfigurationDTO();
-		//根据流程Id获取流程信息yhf_flow_base_info
+		//根据流程Id获取流程信息yhf_flow
 		Flow bo= DaoUtil.get(Flow.class, baseInfoId);
 		BeanUtils.copyProperties(bo, dto);
 		//根据流程Id获取活动列表yhf_flow_activity
@@ -193,28 +193,35 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 					JSONArray groupInfo = dbirp.getGroupInfo(); // 小组
 					JSONArray roleInfo = dbirp.getRoleInfo(); // 角色
 					if(orgInfo.size() != 0){
-						FlowActivityPerCombination pcBo = new FlowActivityPerCombination();
-						pcBo.setApId(apBo.getApId());
-						pcBo.setPcFieldId("ORG_OID"); // 组合值ID（表字段名）
-						pcBo.setPcFieldValue(orgInfo.toString()); // 组合字段值（字段值）
-						pcBo.setPcId(StringUtil.getUUID());
-						pcBo.setPcType(WorkFlowConfigurationUtil.PC_TYPE_ORG); // 组合类别-部门、小组、角色、岗位、职务、职务等级（表名）
+						for(int i=0; i<orgInfo.size();i++){
+							FlowActivityPerCombination pcBo = new FlowActivityPerCombination();
+							pcBo.setApId(apBo.getApId());
+							pcBo.setPcFieldId(orgInfo.getString(i)); // 组合值ID
+							pcBo.setPcFieldValue(orgInfo.toString()); // 组合字段值
+							pcBo.setPcId(StringUtil.getUUID());
+							pcBo.setPcType(WorkFlowConfigurationUtil.PC_TYPE_ORG); // 组合类别-部门、小组、角色、岗位、职务、职务等级
+						}
+						
 					}
 					if(groupInfo.size() != 0){
-						FlowActivityPerCombination pcBo = new FlowActivityPerCombination();
-						pcBo.setApId(apBo.getApId());
-						pcBo.setPcFieldId("ROLE_ID"); // 组合值ID（表字段名）
-						pcBo.setPcFieldValue(groupInfo.toString()); // 组合字段值（字段值）
-						pcBo.setPcId(StringUtil.getUUID());
-						pcBo.setPcType(WorkFlowConfigurationUtil.PC_TYPE_GROUP); // 组合类别-部门、小组、角色、岗位、职务、职务等级（表名）
+						for(int i=0; i<orgInfo.size();i++){
+							FlowActivityPerCombination pcBo = new FlowActivityPerCombination();
+							pcBo.setApId(apBo.getApId());
+							pcBo.setPcFieldId(orgInfo.getString(i)); // 组合值ID
+							pcBo.setPcFieldValue(groupInfo.toString()); // 组合字段值
+							pcBo.setPcId(StringUtil.getUUID());
+							pcBo.setPcType(WorkFlowConfigurationUtil.PC_TYPE_GROUP); // 组合类别-部门、小组、角色、岗位、职务、职务等级
+						}
 					}
 					if(roleInfo.size() != 0){
+						for(int i=0; i<roleInfo.size();i++){
 						FlowActivityPerCombination pcBo = new FlowActivityPerCombination();
 						pcBo.setApId(apBo.getApId());
-						pcBo.setPcFieldId("USER_OID"); // 组合值ID（表字段名）
-						pcBo.setPcFieldValue(roleInfo.toString()); // 组合字段值（字段值）
+						pcBo.setPcFieldId(orgInfo.getString(i)); // 组合值ID
+						pcBo.setPcFieldValue(roleInfo.toString()); // 组合字段值
 						pcBo.setPcId(StringUtil.getUUID());
-						pcBo.setPcType(WorkFlowConfigurationUtil.PC_TYPE_ROLE); // 组合类别-部门、小组、角色、岗位、职务、职务等级（表名）
+						pcBo.setPcType(WorkFlowConfigurationUtil.PC_TYPE_ROLE); // 组合类别-部门、小组、角色、岗位、职务、职务等级
+						}
 					}
 					//任务通知
 					if(dbirp.getIsMessage()){//任务创建人通知
@@ -358,5 +365,16 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 				this.insertFlow(df,null);
 			}
 		}
+	}
+	/*
+	 * (non-Javadoc)
+	 * @see com.yh.component.workflow.service.WorkflowConfigurationService#getFlow(java.lang.String)
+	 */
+	public WorkflowBaseInfoDTO getFlow(String flowId) throws ServiceException {
+		WorkflowBaseInfoDTO dto = new WorkflowBaseInfoDTO();
+		//根据流程Id获取流程信息yhf_flow
+		Flow bo= DaoUtil.get(Flow.class, flowId);
+		BeanUtils.copyProperties(bo, dto);
+		return dto;
 	}
 }

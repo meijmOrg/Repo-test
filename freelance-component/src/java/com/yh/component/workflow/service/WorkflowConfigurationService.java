@@ -5,6 +5,7 @@ import java.util.List;
 import net.sf.json.JSONObject;
 
 import com.yh.component.taglib.TableTagBean;
+import com.yh.component.workflow.bo.Flow;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
 import com.yh.component.workflow.dto.WorkflowConfigurationDTO;
@@ -75,6 +76,12 @@ public interface WorkflowConfigurationService {
 	 * @throws ServiceException
 	 */
 	void saveRuleFlow(DrawingFlow df) throws ServiceException;
+	/**
+	 * 根据流程id获取流程信息
+	 * @param flowId
+	 * @throws ServiceException
+	 */
+	WorkflowBaseInfoDTO getFlow(String flowId) throws ServiceException;
 
 
 }

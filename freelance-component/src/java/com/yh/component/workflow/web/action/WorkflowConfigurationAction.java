@@ -26,6 +26,7 @@ import com.yh.component.dynamicproperty.dto.DynamicPropertyDTO;
 import com.yh.component.dynamicproperty.facade.DynamicPropertyConfigFacade;
 import com.yh.component.dynamicproperty.util.DynamicPropertyUtil;
 import com.yh.component.taglib.TableTagBean;
+import com.yh.component.workflow.bo.Flow;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
 import com.yh.component.workflow.dto.WorkflowConfigurationDTO;
@@ -419,6 +420,35 @@ public class WorkflowConfigurationAction extends BaseAction {
 			return null;
 		}
 		return null;
+	}
+	/**
+	 * 跳转至流程画图界面
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward goViewWorkFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+		//获取操作类型 view insert update
+		String operateFlag = request.getParameter("operateFlag");
+		if(StringUtils.isEmpty(operateFlag)){
+			throw new ServiceException(null,"operateFlag is null");
+		}else if(operateFlag.equals("view")||operateFlag.equals("update")){
+			//查询flowData
+			String flowId = request.getParameter("flowId");
+			if(StringUtils.isEmpty(flowId)){
+				throw new ServiceException(null,"flowId is null");
+			}
+			WorkflowBaseInfoDTO flowInfo = workflowConfigurationFacade.getFlow(flowId);
+			
+		}else{
+			
+		}
+		request.setAttribute("operateFlag", operateFlag);
+		return mapping.findForward("success");
 	}
 	/**
 	 * 保存流程信息

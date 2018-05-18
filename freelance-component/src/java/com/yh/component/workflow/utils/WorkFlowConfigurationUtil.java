@@ -62,9 +62,9 @@ public class WorkFlowConfigurationUtil {
 	/**
 	 * 组合类别
 	 */
-	public static final String PC_TYPE_ORG = "yhe_ub_org"; // 部门
-	public static final String PC_TYPE_GROUP = "yhb_roles"; // 小组
-	public static final String PC_TYPE_ROLE = "yhb_users"; // 角色
+	public static final String PC_TYPE_ORG = "ORG_OID"; // 部门
+	public static final String PC_TYPE_GROUP = "WP_ID"; // 小组
+	public static final String PC_TYPE_ROLE = "ROLE_OID"; // 角色
 	
 	/**
 	 * 任务通知类别

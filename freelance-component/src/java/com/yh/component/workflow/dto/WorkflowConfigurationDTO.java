@@ -38,6 +38,7 @@ public class WorkflowConfigurationDTO {
 	private java.lang.String    flowModifyUserName;// 流程最近修改人姓名
 	private java.lang.String    flowModifyUserID;// 流程最近修改人 ID
 	private java.util.Date    	flowModifyDate;// 流程最近修改时间
+	private java.lang.String	flowData;
 	
 	private java.lang.Long 		tfForbidden;//停用Or启用，默认启用，用于后期扩展
 	private List<WorkflowBaseInfoDTO> baseInfoList = new ArrayList<WorkflowBaseInfoDTO>();
@@ -228,6 +229,12 @@ public class WorkflowConfigurationDTO {
 	}
 	public void setBak1(java.lang.String bak1) {
 		this.bak1 = bak1;
+	}
+	public java.lang.String getFlowData() {
+		return flowData;
+	}
+	public void setFlowData(java.lang.String flowData) {
+		this.flowData = flowData;
 	}
 
 }
