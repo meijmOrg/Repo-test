@@ -6,6 +6,7 @@ import java.util.Map;
 import net.sf.json.JSONObject;
 
 import com.yh.component.taglib.TableTagBean;
+import com.yh.component.workflow.dto.CarbonCopyDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
@@ -111,5 +112,13 @@ public class YhFlowComponentFacade {
 	 */
 	public JSONObject queryKeyWord() throws ServiceException {
 		return yhFlowComponentService.queryKeyWords();
+	}
+	/**
+	 * 根据条件获取抄送记录
+	 * @param ttb
+	 * @return
+	 */
+	public List<CarbonCopyDTO> listCarbonCopy(TableTagBean ttb) throws ServiceException{
+		return yhFlowComponentService.listCarbonCopy(ttb);
 	}
 }

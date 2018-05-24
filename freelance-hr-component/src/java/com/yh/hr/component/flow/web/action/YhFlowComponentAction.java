@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 
 import com.yh.component.config.queryhelper.YhSysprmQueryHelper;
 import com.yh.component.taglib.TableTagBean;
+import com.yh.component.workflow.dto.CarbonCopyDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.hr.component.annex.dto.FileAnnexDTO;
@@ -311,6 +312,10 @@ public class YhFlowComponentAction extends BaseAction {
 		ttb.getCondition().put("faUserName", faUserName);
 		List<FileAnnexDTO> annexFileList = uploadAnnexComponentFacade.listAnnexFile(ttb);
 		request.setAttribute("annexFileList", annexFileList);
+		//获取抄送信息
+		List<CarbonCopyDTO> ccList = yhFlowComponentFacade.listCarbonCopy(ttb);
+		request.setAttribute("ccList", ccList);
+		//获取流程处理记录 处理意见
 		return mapping.findForward(FORWARD_SUCCESS);
 	}
 }

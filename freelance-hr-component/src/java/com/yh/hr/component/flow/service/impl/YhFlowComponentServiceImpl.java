@@ -20,11 +20,13 @@ import com.yh.component.workflow.bo.FlowActivity;
 import com.yh.component.workflow.bo.FlowRule;
 import com.yh.component.workflow.bo.SelUser;
 import com.yh.component.workflow.bo.Task;
+import com.yh.component.workflow.dto.CarbonCopyDTO;
 import com.yh.component.workflow.dto.FlowActivityPermissionDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
 import com.yh.component.workflow.dto.WorkFlowKeyWordDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
+import com.yh.component.workflow.queryhelper.WorkFlowCarbonCopyQueryHelper;
 import com.yh.component.workflow.queryhelper.WorkFlowKeyWordQueryHelper;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.queryhelper.YhFlowComponentQueryHelper;
@@ -416,5 +418,13 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("keyWord", CollectionUtils.isEmpty(keyWordList) ? JSON.toJSON("{}") : JSON.toJSON(keyWordList).toString());
 		return jsonObject;
+	}
+	/*
+	 * (non-Javadoc)
+	 * @see com.yh.hr.component.flow.service.YhFlowComponentService#listCarbonCopy(com.yh.component.taglib.TableTagBean)
+	 */
+	public List<CarbonCopyDTO> listCarbonCopy(TableTagBean ttb) throws ServiceException {
+		List<CarbonCopyDTO> ccList = WorkFlowCarbonCopyQueryHelper.listCarbonCopy(ttb);
+		return ccList;
 	}
 }
