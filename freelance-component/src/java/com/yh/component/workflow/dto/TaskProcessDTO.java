@@ -31,6 +31,8 @@ public class TaskProcessDTO{
 	private java.util.Date		taskEndTime;	//任务结束时间
 	private java.lang.String	taskFromUser;	//任务来自用户
 	private java.lang.String	taskSendNextUser;	//任务下一步用户
+	
+	private java.lang.String actOrder; //活动序号
 	public java.lang.String getTaskProcessId() {
 		return taskProcessId;
 	}
@@ -156,6 +158,12 @@ public class TaskProcessDTO{
 	}
 	public void setTaskSendNextUser(java.lang.String taskSendNextUser) {
 		this.taskSendNextUser = taskSendNextUser;
+	}
+	public java.lang.String getActOrder() {
+		return actOrder;
+	}
+	public void setActOrder(java.lang.String actOrder) {
+		this.actOrder = actOrder;
 	}
 
 }

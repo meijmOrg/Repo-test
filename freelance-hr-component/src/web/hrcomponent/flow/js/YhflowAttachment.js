@@ -1,11 +1,3 @@
-/*var uploader_pick = WebUploader.create({
-	pick: '#pick_file',
-	resize: false
-});
-uploader_pick.on('fileQueued', function(file) {
-	$('#file_name').val(file.name);
-});*/
-
 //监听分块上传的时间点，断点续传
 var fileMd5;
 var fileName;
@@ -87,17 +79,15 @@ WebUploader.Uploader.register({
 						var faId = response.faId;
 						var file_id = response.file_id;
 						$li = $( '#'+file_id );
-						$li.html(//"<li id='" + faId + "'>
+						$li.html(
 								"<a href=downloadFile('"+faId+"')>" + fileName + "</a>"+"<span class='state'></span>"+
 								"<a href='javascript:void(0)'"+
 								" class='mho_float_right mho_red_color' style='margin: 0 10px;' onclick=downloadFile('"+faId+"')>下载</a>"+
 								"<a href='javascript:void(0)'"+
 								" class='mho_float_right mho_green_color' style='margin: 0 10px;' onclick=deleteFile('"+faId+"')>删除</a>"
-								//"</li>
 								);
 						$li.attr('id',faId);
-						$( '#'+faId ).find('span.state').text('已上传');
-						//$( '#'+file.id ).find('.percentage').fadeOut();
+						//$( '#'+faId ).find('span.state').text('已上传');
 					}
 				}
 			);
@@ -120,11 +110,6 @@ var uploader = WebUploader.create(
 		//fileNumLimit: maxFileCounts,  
         //fileSizeLimit: * 1024 * 1024,    // 单次上传文件总大小不超过
         fileSingleSizeLimit: maxFileSize,    // 单个文件大小不超过
-        //accept: {  
-        	//title: 'file',  
-        	//extensions: acceptFileTypes//,  
-            //mimeTypes: 'image/*' 
-        //},  
 
 		// 分块上传设置
 		// 是否分块
@@ -136,14 +121,13 @@ var uploader = WebUploader.create(
 		threads:1,
 		// 在上传当前文件时，准备好下一个文件
 		prepareNextFile:false
-		//formData:function(){return {uniqueFileName: '333'};}
-		//formData: {uniqueFileName: uniqueFileName}
 	}		
 );
 
 // 生成缩略图和上传进度
 uploader.on("fileQueued", function(file) {
-	$('#file_name').val(file.name);
+	debugger
+	$('#file_name').val('已选中'+uploader.getFiles().length+'个文件');
 	var start = file.name.lastIndexOf('.');
 	var fileType = (start == -1 ? '' : file.name.substring(start+1)).toLowerCase();
 	var errorMessage = [];
@@ -170,18 +154,7 @@ uploader.on("fileQueued", function(file) {
 				"<a href='javascript:void(0)'"+
 				"id='" + file.id + "btn2' class='mho_float_right mho_green_color' style='margin: 0 10px;'  onclick=remove('"+file.id+"')>移除</a>"+
 				"</li>");
-		// 制作缩略图
-		// error：不是图片，则有error
-		// src:代表生成缩略图的地址
-		/*uploader.makeThumb(file, function(error, src) {
-			if (error) {
-				$("#" + file.id).find("img").replaceWith("<span>无法预览&nbsp;</span>");
-			} else {
-				$("#" + file.id).find("img").attr("src", src);
-			}
-		});*/
 		$(document).on('click','#'+file.id+'btn1', function() {
-			debugger
 			if (uploader.state === 'uploading') {  
 				uploader.stop(file);  
 				$('#'+file.id+'btn1').text("继续上传");  
@@ -221,11 +194,6 @@ uploader.on("fileQueued", function(file) {
 	}
 );
 
-// 监控上传进度
-// percentage:代表上传文件的百分比
-/*uploader.on("uploadProgress", function(file, percentage) {
-	$("#" + file.id).find("span.percentage").text(Math.round(percentage * 100) + "%");
-});*/
 uploader.on( 'uploadProgress', function(file,percentage) {
     var $li = $( '#'+file.id );
         //$percent = $li.find('.progress .progress-bar');
@@ -240,7 +208,6 @@ uploader.on( 'uploadProgress', function(file,percentage) {
 
     $li.find('span.state').text('上传中');
     $("#" + file.id).find("span.percentage").text(Math.round(percentage * 100) + "%");
-    //$percent.css( 'width', percentage * 100 + '%' );
 });
 uploader.on( 'uploadSuccess', function( file ) {
     $( '#'+file.id ).find('span.state').text('已上传');
@@ -252,9 +219,7 @@ uploader.on( 'uploadError', function( file ) {
 });
 
 uploader.on( 'uploadComplete', function( file ) {
-    //$( '#'+file.id ).find('.percentage').fadeOut();
 	$('#file_name').val("");
-    //uploader.destroy();
 });
 //全部开始上传或停止上传
 $(document).on('click','#upload_file', function() {
@@ -266,11 +231,15 @@ $(document).on('click','#upload_file', function() {
 });
 //移除（从队列）
 function remove(id){  
+	debugger
 	var $li = $( '#'+id );
-	//$("ul").children("li").remove();
 	uploader.removeFile(id,true);  
 	$li.remove();
-	$('#file_name').val("");
+	if(uploader.getFiles().length == '0'){
+		$('#file_name').val("");
+	}else{
+		$('#file_name').val("已选中"+uploader.getFiles().length+"个文件");
+	}
 	//
 } 
 //删除（从服务器）
@@ -291,6 +260,5 @@ function deleteFile(faId) {
 //下载
 function downloadFile(faId) {
 	MessageBox.openWindow('downAnnexFile.do?method=downAnnexFile&faId='+faId);
-	//window.open('downAnnexFile.do?method=downAnnexFile&faId='+faId);
 };
 

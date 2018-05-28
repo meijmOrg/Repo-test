@@ -28,10 +28,8 @@ var faUserName = '自定义的';
 		<jsp:include page="../yhflow_attachment_view.jsp">
 			<jsp:param value="mho_col_10" name="widthFlag"/>
 		</jsp:include>
-		<jsp:include page="yhflow_carboncopy.jsp">
-		</jsp:include>
-		<jsp:include page="yhflow_flowprocessingrecord.jsp">
-		</jsp:include>
+		<jsp:include page="yhflow_carboncopy.jsp"></jsp:include>
+		<jsp:include page="yhflow_flowprocessingrecord.jsp"></jsp:include>
 		<jsp:include page="../yhflow_suggestion.jsp">
 			<jsp:param value="mho_col_10" name="widthFlag"/>
 		</jsp:include>
@@ -40,7 +38,6 @@ var faUserName = '自定义的';
 		</jsp:include>
 		<jsp:include page="../yhflow_button.jsp"></jsp:include>
 	</div>
-	<!-- <script src="component/front_transform/index/flow/flow.js"></script> -->
 	<script src="hrcomponent/flow/js/YhflowAttachment.js"></script>
 </body>
 </html>

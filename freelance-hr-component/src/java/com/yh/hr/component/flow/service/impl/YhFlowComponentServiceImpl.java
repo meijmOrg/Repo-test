@@ -1,13 +1,18 @@
 package com.yh.hr.component.flow.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import net.sf.json.JSONObject;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.yh.admin.dto.RolesDTO;
@@ -23,11 +28,13 @@ import com.yh.component.workflow.bo.Task;
 import com.yh.component.workflow.dto.CarbonCopyDTO;
 import com.yh.component.workflow.dto.FlowActivityPermissionDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
+import com.yh.component.workflow.dto.TaskProcessDTO;
 import com.yh.component.workflow.dto.WorkFlowKeyWordDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
 import com.yh.component.workflow.queryhelper.WorkFlowCarbonCopyQueryHelper;
 import com.yh.component.workflow.queryhelper.WorkFlowKeyWordQueryHelper;
+import com.yh.component.workflow.queryhelper.WorkFlowTaskProcessQueryHelper;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.queryhelper.YhFlowComponentQueryHelper;
 import com.yh.hr.component.flow.service.YhFlowComponentService;
@@ -427,4 +434,48 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 		List<CarbonCopyDTO> ccList = WorkFlowCarbonCopyQueryHelper.listCarbonCopy(ttb);
 		return ccList;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.yh.hr.component.flow.service.YhFlowComponentService#listTaskProcess(com.yh.component.taglib.TableTagBean)
+	 */
+	@Override
+	public Map<String, List<TaskProcessDTO>> listTaskProcess(TableTagBean ttb)
+			throws ServiceException {
+		List<TaskProcessDTO> tpList = WorkFlowTaskProcessQueryHelper.listTaskProcess(ttb);
+		Map<String, List<TaskProcessDTO>> map = new TreeMap<String, List<TaskProcessDTO>>(
+                new Comparator<String>() {
+                    public int compare(String obj1, String obj2) {
+                        // 降序排序
+                        return obj1.compareTo(obj2);
+                    }
+                });
+		int index = 0;
+		if(CollectionUtils.isNotEmpty(tpList)){
+			String order = tpList.get(0).getActOrder();
+			if(StringUtils.isNotEmpty(order)){
+				List<TaskProcessDTO> newList = new ArrayList<TaskProcessDTO>();
+				for(TaskProcessDTO tp:tpList){
+					//判断比较项（order与actOrder）是否一致 如果一致则应该是下一轮 index++，
+					//newList保存在map中 key为上一个index 如果newList为空则不保存，
+					//新建一个新的newLIst 
+					//如果不一致 则直接保存到newList中
+					if(order.equals(tp.getActOrder())){
+						index++;
+						if(CollectionUtils.isNotEmpty(newList)){
+							map.put(String.valueOf(index-1), newList);
+							newList.clear();
+						}
+						newList.add(tp);
+					}else{
+						newList.add(tp);
+					}
+				}
+				if(CollectionUtils.isNotEmpty(newList)){
+					map.put(String.valueOf(index), newList);
+				}
+			}
+		}
+		return map;
+	}
+
 }

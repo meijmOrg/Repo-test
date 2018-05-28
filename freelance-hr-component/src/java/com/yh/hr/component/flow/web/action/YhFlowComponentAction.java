@@ -18,10 +18,10 @@ import com.yh.component.config.queryhelper.YhSysprmQueryHelper;
 import com.yh.component.taglib.TableTagBean;
 import com.yh.component.workflow.dto.CarbonCopyDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
+import com.yh.component.workflow.dto.TaskProcessDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.hr.component.annex.dto.FileAnnexDTO;
 import com.yh.hr.component.annex.facade.UploadAnnexComponentFacade;
-import com.yh.hr.component.annex.web.action.UploadAnnexComponentAction;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.facade.YhFlowComponentFacade;
 import com.yh.hr.component.flow.web.form.YhFlowComponentForm;
@@ -316,6 +316,8 @@ public class YhFlowComponentAction extends BaseAction {
 		List<CarbonCopyDTO> ccList = yhFlowComponentFacade.listCarbonCopy(ttb);
 		request.setAttribute("ccList", ccList);
 		//获取流程处理记录 处理意见
+		Map<String, List<TaskProcessDTO>> tpMap = yhFlowComponentFacade.listTaskProcess(ttb);
+		request.setAttribute("tpMap", tpMap);
 		return mapping.findForward(FORWARD_SUCCESS);
 	}
 }
