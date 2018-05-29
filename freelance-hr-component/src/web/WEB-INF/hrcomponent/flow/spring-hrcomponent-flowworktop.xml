@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--流程启动组件-->
+	<bean id="yhFlowBusinessWorktopFacade" parent="txnProxyParent">
+		<property name="target">
+			<bean class="com.yh.hr.component.flow.facade.YhFlowBusinessWorktopFacade">
+				<property name="yhFlowBusinessWorktopService" ref="yhFlowBusinessWorktopService" />
+			</bean>
+		</property>
+	</bean>
+   <bean id="yhFlowBusinessWorktopService" class="com.yh.hr.component.flow.service.impl.YhFlowBusinessWorktopServiceImpl"/>
+</beans>

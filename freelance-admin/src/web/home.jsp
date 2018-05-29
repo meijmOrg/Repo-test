@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/include/js_css_base_include.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +14,10 @@
 </head>
 <body>
 <div class="mho_row">
-	<div class="mho_col mho_col_3" onclick="goToWorkFlowWorktop(1);">
+	<div class="mho_col mho_col_3" onclick="goFlowWorktop('daiban');">
 		<div class="mho_panel">
 			<div class="mho_task_panel_content mho_dep_blue_color">
-				<h2>8</h2>
+				<h2 id="dbTotal">0</h2>
 				<span>Total</span>
 				<i class="fa fa-paperclip fa-3x"></i>
 			</div>
@@ -26,7 +27,7 @@
 	<div class="mho_col mho_col_3">
 		<div class="mho_panel">
 			<div class="mho_task_panel_content mho_red_color">
-				<h2>8</h2>
+				<h2 id="ybTotal">0</h2>
 				<span>Total</span>
 				<i class="fa fa-paper-plane-o fa-3x"></i>
 			</div>
@@ -36,7 +37,7 @@
 	<div class="mho_col mho_col_3">
 		<div class="mho_panel">
 			<div class="mho_task_panel_content mho_green_color">
-				<h2>8</h2>
+				<h2 id="jqTotal">0</h2>
 				<span>Total</span>
 				<i class="fa fa-unlock-alt fa-3x"></i>
 			</div>
@@ -46,7 +47,7 @@
 	<div class="mho_col mho_col_3">
 		<div class="mho_panel">
 			<div class="mho_task_panel_content mho_dep_yellow_color">
-				<h2>8</h2>
+				<h2 id="csTotal">0</h2>
 				<span>Total</span>
 				<i class="fa fa-file-text-o fa-3x"></i>
 			</div>
@@ -56,7 +57,7 @@
 	<div class="mho_col mho_col_3">
 		<div class="mho_panel">
 			<div class="mho_task_panel_content mho_dep_yellow_color">
-				<h2>8</h2>
+				<h2 id="xtTotal">0</h2>
 				<span>Total</span>
 				<i class="fa fa-file-text-o fa-3x"></i>
 			</div>
