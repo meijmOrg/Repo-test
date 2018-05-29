@@ -125,7 +125,6 @@ $(function() {
 		async : true,
 		success : function(data) {
 			//获取业务记录数并赋值
-			debugger
 			if(data != null){
 				var db = data.daiban;
 				var cs = data.chaosong;

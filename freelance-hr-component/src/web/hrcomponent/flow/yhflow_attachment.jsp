@@ -39,7 +39,7 @@
 					<dd class="mho_accordion_body" style="padding: 0;">
 						<ul class="mho_list mho_list_strip" id="list_ul">
 							<c:forEach items="${annexFileList}" var="dto" varStatus="status">
-								<li id="${dto.faId }"><a href='javascript:void(0)'  onclick="downloadFile('${dto.faId}')">${dto.faName }</a><span class='state'>已上传</span>
+								<li id="${dto.faId }"><a href='javascript:void(0)'  onclick="downloadFile('${dto.faId}')">${dto.faName }</a><span class='state'></span>
 								<a href='javascript:void(0)' class='mho_float_right mho_red_color' style='margin: 0 10px;' onclick="downloadFile('${dto.faId}')">下载</a>
 								<a href='javascript:void(0)' class='mho_float_right mho_green_color' style='margin: 0 10px;' onclick="deleteFile('${dto.faId}')">删除</a>
 								</li>

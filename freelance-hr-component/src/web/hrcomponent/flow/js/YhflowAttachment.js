@@ -123,10 +123,8 @@ var uploader = WebUploader.create(
 		prepareNextFile:false
 	}		
 );
-
 // 生成缩略图和上传进度
 uploader.on("fileQueued", function(file) {
-	debugger
 	$('#file_name').val('已选中'+uploader.getFiles().length+'个文件');
 	var start = file.name.lastIndexOf('.');
 	var fileType = (start == -1 ? '' : file.name.substring(start+1)).toLowerCase();
@@ -148,19 +146,21 @@ uploader.on("fileQueued", function(file) {
 	}*/
 		// 把文件信息追加到fileList的div中
 		//$("#fileList").append("<div id='" + file.id + "'><img/><span>" + file.name + "</span><div><span class='state'></span></div><div><span class='percentage'></span></div></div>");
-		$("#list_ul").append("<li id='" + file.id + "'><a href='javascript:void(0)'>" + file.name + "</a>"+"<span class='state'>待上传</span>"+"<span class='percentage'></span>"+
+		$("#list_ul").append("<li id='" + file.id + "'><a href='javascript:void(0)'>" + file.name + "</a>"+"<span class='state'></span>"+"<span class='percentage'></span>"+//待上传
 				"<a href='javascript:void(0)'"+
-				"id='" + file.id + "btn1' class='mho_float_right mho_red_color' style='margin: 0 10px;'>上传</a>"+
+				"id='" + file.id + "btn1' name='btn1' class='mho_float_right mho_red_color' style='margin: 0 10px;'>上传</a>"+//上传
 				"<a href='javascript:void(0)'"+
-				"id='" + file.id + "btn2' class='mho_float_right mho_green_color' style='margin: 0 10px;'  onclick=remove('"+file.id+"')>移除</a>"+
+				"id='" + file.id + "btn2' name='btn2' class='mho_float_right mho_green_color' style='margin: 0 10px;'  onclick=remove('"+file.id+"')>移除</a>"+//移除
 				"</li>");
 		$(document).on('click','#'+file.id+'btn1', function() {
 			if (uploader.state === 'uploading') {  
 				uploader.stop(file);  
-				$('#'+file.id+'btn1').text("继续上传");  
+				$('#'+file.id+'btn1').text("");  
+				$('#'+file.id+'btn2').text(""); 
 				} else {  
 					uploader.upload(file);  
-					$('#'+file.id+'btn1').text("暂停上传"); 
+					$('#'+file.id+'btn1').text(""); 
+					$('#'+file.id+'btn2').text(""); 
 				}  
 		});
 		//单个开始上传或停止上传
@@ -172,10 +172,12 @@ uploader.on("fileQueued", function(file) {
 						fileName:file.name
 					},
 					dataType:'json',
+					//async:false,
 					success:function(response){
 						if(response.success !== false){
 							errorMessage.push(response.message);
 						}
+						debugger
 						if(errorMessage.length>0){
 							MessageBox.alert('提示', errorMessage, function(){
 								var $li = $( '#'+file.id );
@@ -185,6 +187,11 @@ uploader.on("fileQueued", function(file) {
 								//3秒后清空
 								setTimeout(function(){
 									$li.remove();
+									if(uploader.getFiles().length == '0'){
+										$('#file_name').val("");
+									}else{
+										$('#file_name').val("已选中"+uploader.getFiles().length+"个文件");
+									}
 								}, 3000);
 						});
 						}
@@ -210,8 +217,8 @@ uploader.on( 'uploadProgress', function(file,percentage) {
     $("#" + file.id).find("span.percentage").text(Math.round(percentage * 100) + "%");
 });
 uploader.on( 'uploadSuccess', function( file ) {
-    $( '#'+file.id ).find('span.state').text('已上传');
-    uploader.removeFile(file);
+    $( '#'+file.id ).find('span.state').text('');
+    uploader.removeFile(file,true);
 });
 
 uploader.on( 'uploadError', function( file ) {
@@ -223,10 +230,13 @@ uploader.on( 'uploadComplete', function( file ) {
 });
 //全部开始上传或停止上传
 $(document).on('click','#upload_file', function() {
+	
 	if (uploader.state === 'uploading') {  
 		uploader.stop();  
 		} else {  
 			uploader.upload();  
+			$('.btn1').text("");
+			$('.btn2').text("");
 		}  
 });
 //移除（从队列）
