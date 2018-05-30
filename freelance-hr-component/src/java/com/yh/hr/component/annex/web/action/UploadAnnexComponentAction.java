@@ -141,21 +141,43 @@ public class UploadAnnexComponentAction extends BaseAction
 		}
 		return null;
 	}
+	/**
+	 * 
+	* @Title: checkAnnexFileName 
+	* @Description: 判断是否存在同名文件 
+	* @param mapping
+	* @param form
+	* @param request
+	* @param response
+	* @return
+	* @throws Exception ActionForward
+	 */
 	public ActionForward checkAnnexFileName(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
 			
 			String fileName = request.getParameter("fileName");
+			String fileId = request.getParameter("fileId");
+			String[] fileNames = fileName.split(",");
+			String[] fileIds = fileId.split(",");
 			String path = UploadAnnexComponentUtil.getFilePath(DateUtil.now());
 			
-			Boolean isExist = uploadAnnexComponentFacade.checkFileName(path+"/"+fileName);
-			if(isExist){
-				response.getWriter().print(JSONHelper.fromObject(true, "已存在名为 "+fileName+" 的文件,请重新选择！"));
+			List<String> fileIdList = uploadAnnexComponentFacade.checkFileName(path,fileNames,fileIds);
+			if(CollectionUtils.isNotEmpty(fileIdList)){
+				JSONObject json = new JSONObject();
+				json.put("success", true);
+				json.put("message", "存在同名文件,3秒后将移除同名文件！");
+				json.put("fileIds", fileIdList);
+				response.getWriter().print(json.toString());
 			}else{
 				response.getWriter().print(JSONHelper.fromObject(false, "不存在！"));
 			}
 		} catch (Exception e) { 
 			handleException(request, e, "跳转文件上传页面失败");
-			response.getWriter().print(JSONHelper.fromObject(true, "检查文件失败,请刷新重试！"));
+			JSONObject json = new JSONObject();
+			json.put("success", true);
+			json.put("message", "检查文件失败，请刷新重试！");
+			json.put("fileIds", null);
+			response.getWriter().print(json.toString());
 		}
 		return null;
 	}

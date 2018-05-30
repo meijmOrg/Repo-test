@@ -42,9 +42,9 @@ public class UploadAnnexComponentServiceImpl implements UploadAnnexComponentServ
 	 * (non-Javadoc)
 	 * @see com.yh.hr.component.annex.service.UploadAnnexComponentService#checkFileName(java.lang.String)
 	 */
-	public Boolean checkFileName(String path)
+	public List<String> checkFileName(String path,String[] fileNames,String[] fileIds)
 			throws ServiceException {
-		return UploadAnnexComponentQueryHelper.checkFileName(path);
+		return UploadAnnexComponentQueryHelper.checkFileName(path,fileNames,fileIds);
 	}
 
 

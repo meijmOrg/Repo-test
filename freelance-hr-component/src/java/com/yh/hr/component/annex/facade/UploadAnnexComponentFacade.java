@@ -67,13 +67,17 @@ public class UploadAnnexComponentFacade {
 		}
 	}
 	/**
-	 * 判断是否存在同名文件
-	 * @param path
-	 * @return
-	 * @throws ServiceException
+	 * 
+	* @Title: checkFileName 
+	* @Description: 判断是否存在同名文件 
+	* @param path
+	* @param fileNames
+	* @param fileIds
+	* @return
+	* @throws ServiceException Boolean
 	 */
-	public Boolean checkFileName(String path)  throws ServiceException{
-		return uploadAnnexComponentService.checkFileName(path);
+	public List<String> checkFileName(String path,String[] fileNames,String[] fileIds)  throws ServiceException{
+		return uploadAnnexComponentService.checkFileName(path,fileNames,fileIds);
 	}
 
 }

@@ -24,10 +24,14 @@ public interface UploadAnnexComponentService {
 	 */
 	public List<FileAnnexDTO> listAnnexFile(TableTagBean ttb) throws ServiceException;
 	/**
-	 * 判断是否存在同名文件
-	 * @param path
-	 * @return
-	 * @throws ServiceException
+	 * 
+	* @Title: checkFileName 
+	* @Description: 判断是否存在同名文件 
+	* @param path
+	* @param fileNames
+	* @param fileIds
+	* @return
+	* @throws ServiceException Boolean
 	 */
-	public Boolean checkFileName(String path) throws ServiceException;
+	public List<String> checkFileName(String path,String[] fileNames,String[] fileIds) throws ServiceException;
 }

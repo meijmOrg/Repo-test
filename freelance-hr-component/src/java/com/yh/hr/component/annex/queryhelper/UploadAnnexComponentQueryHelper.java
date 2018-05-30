@@ -3,6 +3,7 @@
  */
 package com.yh.hr.component.annex.queryhelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -54,17 +55,30 @@ public class UploadAnnexComponentQueryHelper {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public static Boolean checkFileName(String path) throws ServiceException{
+	public static List<String> checkFileName(String path,String[] fileNames,String[] fileIds) throws ServiceException{
 		StringBuffer sql = new StringBuffer();
-		sql.append("select 1 from yhf_file_annex yfa where 1=1");
+		String faPath = "";
+		for(String fileName:fileNames){
+			faPath += "'"+path+"/"+fileName+"',";
+		}
+		faPath.subSequence(0, faPath.length()-1);
+		sql.append("select yfa.fa_name from yhf_file_annex yfa where 1=1");
 		if(StringUtils.isNotEmpty(path)){
-			sql.append(" and yfa.fa_path = '"+path+"'");
-			List<Object[]> list = DaoUtil.findWithSQL(sql.toString());
+			sql.append(" and yfa.fa_path in ("+faPath.subSequence(0, faPath.length()-1)+")");
+			List<Object> list = DaoUtil.findWithSQL(sql.toString());
 			if(CollectionUtils.isNotEmpty(list)) {
-				return true;
+				List<String> fileIdList = new ArrayList<String>();
+				for(Object obj:list){
+					for(int i=0;i<fileNames.length;i++){
+						if(fileNames[i].equals(obj.toString())){
+							fileIdList.add(fileIds[i]);
+						}
+					}
+				}
+				return fileIdList;
 			}
 		}
-		return false;
+		return null;
 	}
 
 }
