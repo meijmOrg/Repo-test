@@ -1731,7 +1731,7 @@
                 }
                 if(!($(_r).data('haveEnd'))){
                     MessageBox.alert("warning", '保存失败！没有结束节点！')
-                    MessageBox.alert(f, "warning")
+                    //MessageBox.alert(f, "warning")
                     return;
                 }
                 myflow.config.tools.save(getJson())

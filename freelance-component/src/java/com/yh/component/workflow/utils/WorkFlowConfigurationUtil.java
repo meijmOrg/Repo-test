@@ -57,6 +57,19 @@ public class WorkFlowConfigurationUtil {
 	/**
 	 * 退回方式
 	 */
-	public static final String YHRS4006 = "YHRS4006"; 
+	public static final String YHRS4006 = "YHRS4006";
 	
+	/**
+	 * 组合类别
+	 */
+	public static final String PC_TYPE_ORG = "ORG_OID"; // 部门
+	public static final String PC_TYPE_GROUP = "WP_ID"; // 小组
+	public static final String PC_TYPE_ROLE = "ROLE_OID"; // 角色
+	
+	/**
+	 * 任务通知类别
+	 */
+	public static final String IsMessage = "1"; // 任务创建人通知
+	public static final String IsMessageNext = "2"; // 下一处理人通知
+	public static final String IsMessageHistory = "3"; // 历史处理人通知
 }

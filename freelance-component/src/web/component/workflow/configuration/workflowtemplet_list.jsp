@@ -49,6 +49,7 @@
 		<button class="btn_add" onclick="addTemplet()">新增</button>
 		<button class="btn_add" onclick="updateTemplet()">修改</button>
 		<button class="btn_delete" onclick="deleteTemplet()">删除</button>
+		<button class="btn_add" onclick="goFlowProcedure()">流程过程</button>
 	</div>
 	<div id="right_wfc"></div>
 	</div>
@@ -151,6 +152,9 @@ function addTemplet(){
 			params: {start:0, limit: worktop.grid.page.limit}
 		});
 	});
+}
+function goFlowProcedure(){
+	Widget.openContent("goFlowProcedureMainPage.do?method=goFlowProcedureMainPage");
 }
 </script>
 </html>

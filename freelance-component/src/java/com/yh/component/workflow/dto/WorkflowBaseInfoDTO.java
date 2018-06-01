@@ -19,6 +19,7 @@ public class WorkflowBaseInfoDTO {
 	private java.lang.String    flowModifyUserName;// 流程最近修改人姓名
 	private java.lang.String    flowModifyUserID;// 流程最近修改人 ID
 	private java.util.Date    	flowModifyDate;// 流程最近修改时间
+	private java.lang.String	flowData;
 	
 	private java.lang.String	templateId;	//模板ID	
 	private java.lang.Long 		tfForbidden;//停用Or启用，默认启用，用于后期扩展
@@ -113,6 +114,12 @@ public class WorkflowBaseInfoDTO {
 	public void setOrgName(java.lang.String orgName) {
 		this.orgName = orgName;
 		this.setFlowOrgName(orgName);
+	}
+	public java.lang.String getFlowData() {
+		return flowData;
+	}
+	public void setFlowData(java.lang.String flowData) {
+		this.flowData = flowData;
 	}
 
 }

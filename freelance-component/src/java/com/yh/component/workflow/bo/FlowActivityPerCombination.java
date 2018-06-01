@@ -13,9 +13,9 @@ public class FlowActivityPerCombination extends BaseBo{
 	private static final long serialVersionUID = 5516682228051455311L;
 	private java.lang.String pcId;//权限组合唯一ID
 	private java.lang.String apId;//活动权限唯一ID
-	private java.lang.String pcType;//组合类别-部门、小组、角色、岗位、职务、职务等级（表名）
-	private java.lang.String pcFieldId;//组合值ID（表字段名）
-	private java.lang.String pcFieldValue;//组合字段值（字段值）
+	private java.lang.String pcType;//组合类别-部门、小组、角色、岗位、职务、职务等级
+	private java.lang.String pcFieldId;//组合值ID
+	private java.lang.String pcFieldValue;//组合字段值
 	public java.lang.String getPcId() {
 		return pcId;
 	}

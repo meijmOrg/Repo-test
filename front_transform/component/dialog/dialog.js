@@ -1,11 +1,9 @@
 $(function() {
 	var defaults = {
-		type: null,
+		width: null,
 		title: null,
-		content: null,
-		$context: null,
-		callback: null,
-		size: null
+		url: null,
+		content: null
 	};
 	var Dialog = function(setting) {
 		this.setting = $.extend({}, defaults, setting);
@@ -18,11 +16,6 @@ $(function() {
 							'<span class="mho_modal_close"><i class="fa fa-remove"></i></span>'+
 						'</div>'+
 						'<div class="mho_modal_body"></div>'+
-						'<div class="mho_modal_footer">' +
-							'<button class="mho_btn mho_btn_empty mho_btn_circle">确认</button>'+
-							'<button class="mho_btn mho_btn_empty mho_btn_circle">取消</button>'+
-							'<button class="mho_btn mho_btn_empty mho_btn_circle">重置</button>'+
-						'</div>'+
 					'</div>'+
 				'</div>'+
 		  '</div>'
@@ -33,29 +26,56 @@ $(function() {
 			$header: this.$el.find('.mho_modal_header'),
 			$title: this.$el.find('.mho_modal_title'),
 			$close: this.$el.find('.mho_modal_close'),
-			$body: this.$el.find('.mho_modal_body'),
-			$footer: this.$el.find('.mho_modal_footer')
+			$body: this.$el.find('.mho_modal_body')
 		});
 		this.init();
 	}
 	Dialog.prototype = {
 		init: function() {
 			var that = this;
-			this.$el.appendTo($(window.top.document.body));
-			this.$body.load(this.setting.url, function() {
-				that.rePosition();
-			});
+			this.$el.appendTo($(window.top.document.body)).data('dialog', this);
+			if(this.setting.url) {
+				var content = this.$body.load(this.setting.url, function(html, status, res) {
+					that.rePosition();
+				});
+				this.content = content;
+			}else {
+				this.$body.append(this.setting.content);
+			}
 			this.$dialog.width(this.setting.width);
 			this.$title.html(this.setting.title);
 			this.$close.click(function() {
-				that.$el.remove();
-				that = null;
+				that.close();
 			});
 		},
 		rePosition: function() {
 			var that = this;
-            (that.$body.height()>$(window.top.document.body).height()) && that.$dialog.css({'margin-top': 100});
+            (that.$body.height()>$(window.top.document).height()) && that.$dialog.css({
+				'transform': 'translate(-50%,0)',
+				'top': 0
+			});
+		},
+		close: function() {
+			for(var i=0; i<Dialog.dialogs.length; i++) {
+				if(Dialog.dialogs[i] == this) {
+					Dialog.dialogs.splice(i, 1);
+					break;
+				}
+			}
+			this.$el.remove();
+			that = null;
 		}
 	};
+	$.extend(Dialog, {
+		dialogs: [],
+		page: function(setting) {
+			var dialog = new Dialog(setting);
+			this.dialogs.push(dialog);
+		},
+		close: function() {
+			this.dialogs[this.dialogs.length-1].close();
+		}
+	});
 	window.Dialog = Dialog;
+	window.top.Dialog = Dialog;
 }());

@@ -10,17 +10,18 @@ import com.yh.platform.core.bo.BaseBo;
 public class Flow extends BaseBo{
 
 	private static final long serialVersionUID = -2249192640084706500L;
-	private java.lang.String  	flowId;	//主键
+	private java.lang.String	flowId;	//主键
 	private java.lang.String	flowName;	//流程名称	
 	private java.lang.String	flowType;	//流程类型：专属流程和通用流程
-	private java.lang.Long 		flowOrgOid;//流程所属部门，若是通用流程，则保存0，若是专属流程保存部门ID
-	private java.lang.String    flowOrgName;//所属部门名称
-	private java.lang.String    flowCreateUserName;// 流程创建人
-	private java.lang.String    flowCreateUserID;// 流程创建人ID
-	private java.util.Date    	flowCreateDate;//  流程创建时间
-	private java.lang.String    flowModifyUserName;// 流程最近修改人姓名
-	private java.lang.String    flowModifyUserID;// 流程最近修改人 ID
-	private java.util.Date    	flowModifyDate;// 流程最近修改时间
+	private java.lang.Long	flowOrgOid;//流程所属部门，若是通用流程，则保存0，若是专属流程保存部门ID
+	private java.lang.String	flowOrgName;//所属部门名称
+	private java.lang.String	flowCreateUserName;// 流程创建人
+	private java.lang.String	flowCreateUserID;// 流程创建人ID
+	private java.util.Date	flowCreateDate;//  流程创建时间
+	private java.lang.String	flowModifyUserName;// 流程最近修改人姓名
+	private java.lang.String	flowModifyUserID;// 流程最近修改人 ID
+	private java.util.Date	flowModifyDate;// 流程最近修改时间
+	private java.lang.String	flowData;
 	public java.lang.String getFlowId() {
 		return flowId;
 	}
@@ -86,6 +87,12 @@ public class Flow extends BaseBo{
 	}
 	public void setFlowModifyDate(java.util.Date flowModifyDate) {
 		this.flowModifyDate = flowModifyDate;
+	}
+	public java.lang.String getFlowData() {
+		return flowData;
+	}
+	public void setFlowData(java.lang.String flowData) {
+		this.flowData = flowData;
 	}
 	
 }

@@ -6,6 +6,7 @@ package com.yh.component.workflow.web.action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,15 +21,20 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import com.alibaba.fastjson.JSON;
 import com.yh.component.dynamicproperty.dto.DynamicPropertyDTO;
 import com.yh.component.dynamicproperty.facade.DynamicPropertyConfigFacade;
 import com.yh.component.dynamicproperty.util.DynamicPropertyUtil;
 import com.yh.component.taglib.TableTagBean;
+import com.yh.component.workflow.bo.Flow;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
 import com.yh.component.workflow.dto.WorkflowConfigurationDTO;
 import com.yh.component.workflow.dto.WorkflowRuleDTO;
 import com.yh.component.workflow.facade.WorkflowConfigurationFacade;
+import com.yh.component.workflow.vo.DrawingBaseInfo;
+import com.yh.component.workflow.vo.DrawingFlow;
+import com.yh.component.workflow.vo.DrawingFlowRule;
 import com.yh.component.workflow.web.form.WorkflowActivityForm;
 import com.yh.component.workflow.web.form.WorkflowConfigurationForm;
 import com.yh.component.workflow.web.form.WorkflowRuleForm;
@@ -335,82 +341,6 @@ public class WorkflowConfigurationAction extends BaseAction {
 		request.setAttribute("templetId", templetId);
 		return mapping.findForward("success");
 	}
-	/**
-	 * 跳转到修改流程信息
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-	/*public ActionForward goUpdateFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception
-	{
-		String baseInfoId = request.getParameter("baseInfoId");
-		try
-		{
-			if(StringUtils.isEmpty(baseInfoId))
-			{
-				throw new ServiceException(null, "baseInfoId is null");
-			}
-			WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getBaseFlowInfo(baseInfoId);
-			if(null != workflowConfigurationDto)
-			{
-				//WorkflowConfigurationForm workflowConfigurationForm = BeanHelper.copyProperties(workflowConfigurationDto, WorkflowConfigurationForm.class);
-				request.setAttribute("workflowConfigurationDto", workflowConfigurationDto);
-			}
-			else
-			{
-				throw new ServiceException(null, "查询不到相关信息");
-			}
-		}
-		catch(Exception se)
-		{
-			this.handleException(request, se, null);
-			return mapping.getInputForward();
-		}
-		return mapping.findForward(FORWARD_SUCCESS);
-	}*/
-	
-	/**
-	 * 修改流程信息
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-	public ActionForward updateFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception
-	{
-		String templateId = request.getParameter("templetId");
-		String baseInfoId = request.getParameter("baseInfoId");
-		WorkflowConfigurationForm workflowConfigurationForm = (WorkflowConfigurationForm) form;
-		try
-		{
-			/*if(StringUtils.isEmpty(baseInfoId))
-			{
-				throw new ServiceException(null, "baseInfoId is null");
-			}*/
-			//WorkflowConfigurationDTO workflowConfigurationDto = workflowConfigurationFacade.getBaseFlowInfo(baseInfoId);
-			/*if(null == workflowConfigurationDto)
-			{
-				throw new ServiceException(null, "查询不到相关信息");
-			}*/
-			//BeanHelper.copyProperties(workflowConfigurationForm, workflowConfigurationDto);
-			WorkflowConfigurationDTO workflowConfigurationDto = new WorkflowConfigurationDTO();
-			workflowConfigurationFacade.updateFlow(workflowConfigurationDto);
-			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
-		}
-		catch(Exception se)
-		{
-			this.handleException(request, se, null);
-			response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(se.getMessage(), "修改失败")).toString());
-		}
-		return null;
-	}
 	
 	/**
 	 * 删除流程记录
@@ -431,7 +361,7 @@ public class WorkflowConfigurationAction extends BaseAction {
 			{
 				throw new ServiceException(null, "baseInfoId is null");
 			}
-			workflowConfigurationFacade.deleteFlow(NumberUtils.longValue(baseInfoId));
+			workflowConfigurationFacade.deleteFlow(baseInfoId);
 			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
 		}
 		catch(Exception se)
@@ -486,280 +416,13 @@ public class WorkflowConfigurationAction extends BaseAction {
 			
 		} catch (Exception ex) {
 			handleException(request, ex, null);
-			response.getWriter().write("查询供应商信息失败");
+			response.getWriter().write("查询部门信息失败");
 			return null;
 		}
 		return null;
 	}
 	/**
-	 * 跳转到新增活动信息
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 *//*
-	public ActionForward goInsertActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception
-	{
-		//获取流程ID
-		String baseInfoId = request.getParameter("baseInfoId");
-		return mapping.findForward(FORWARD_SUCCESS);
-	}
-	
-	*//**
-	 * 新增活动信息
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 *//*
-	public ActionForward insertActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception
-	{
-		WorkflowActivityForm workflowActivityForm = (WorkflowActivityForm) form;
-		try
-		{
-			WorkflowActivityDTO workflowActivityDto = BeanHelper.copyProperties(workflowActivityForm, WorkflowActivityDTO.class);
-			workflowConfigurationFacade.insertActivity(workflowActivityDto);
-			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
-		}
-		catch(Exception se)
-		{
-			this.handleException(request, se, null);
-			response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(se.getMessage(), "新增失败")).toString());
-		}
-		return null;
-	}*/
-	
-	/**
-	 * 跳转到修改活动信息
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 *//*
-	public ActionForward goUpdateActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception
-	{
-		String activityId = request.getParameter("activityId");
-		try
-		{
-			if(StringUtils.isEmpty(activityId))
-			{
-				throw new ServiceException(null, "baseInfoId is null");
-			}
-			WorkflowActivityDTO workflowActivityDto = workflowConfigurationFacade.getActivityInfo(NumberUtils.longValue(activityId));
-			if(null != workflowActivityDto)
-			{
-				WorkflowActivityForm workflowActivityForm = BeanHelper.copyProperties(workflowActivityDto, WorkflowActivityForm.class);
-				request.setAttribute("workflowActivityForm", workflowActivityForm);
-			}
-			else
-			{
-				throw new ServiceException(null, "查询不到相关信息");
-			}
-		}
-		catch(Exception se)
-		{
-			this.handleException(request, se, null);
-			return mapping.getInputForward();
-		}
-		return mapping.findForward(FORWARD_SUCCESS);
-	}
-	
-	*//**
-	 * 修改活动信息
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 *//*
-	public ActionForward updateActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception
-	{
-		String activityId = request.getParameter("activityId");
-		WorkflowActivityForm workflowActivityForm = (WorkflowActivityForm) form;
-		try
-		{
-			if(StringUtils.isEmpty(activityId))
-			{
-				throw new ServiceException(null, "activityId is null");
-			}
-			WorkflowActivityDTO workflowActivityDto = workflowConfigurationFacade.getActivityInfo(NumberUtils.longValue(activityId));
-			if(null == workflowActivityDto)
-			{
-				throw new ServiceException(null, "查询不到相关信息");
-			}
-			BeanHelper.copyProperties(workflowActivityForm, workflowActivityDto);
-			workflowConfigurationFacade.updateActivity(workflowActivityDto);
-			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
-		}
-		catch(Exception se)
-		{
-			this.handleException(request, se, null);
-			response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(se.getMessage(), "修改失败")).toString());
-		}
-		return null;
-	}
-	
-	*//**
-	 * 删除活动记录
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 *//*
-	public ActionForward deleteActivity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception
-	{
-		String activityId = request.getParameter("activityId");
-		try
-		{
-			if(StringUtils.isEmpty(activityId))
-			{
-				throw new ServiceException(null, "activityId is null");
-			}
-			workflowConfigurationFacade.deleteActivity(NumberUtils.longValue(activityId));
-			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
-		}
-		catch(Exception se)
-		{
-			this.handleException(request, se, null);
-			response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(se.getMessage(), "删除失败")).toString());
-		}
-		return null;
-	}
-	*//**
-	 * 跳转到新增规则信息
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 *//*
-	public ActionForward goInsertRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception
-	{
-		String baseInfoId = request.getParameter("baseInfoId");
-		return mapping.findForward(FORWARD_SUCCESS);
-	}
-	
-	*//**
-	 * 新增规则信息
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 *//*
-	public ActionForward insertRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception
-	{
-		WorkflowRuleForm workflowRuleForm = (WorkflowRuleForm) form;
-		try
-		{
-			WorkflowRuleDTO workflowRuleDto = BeanHelper.copyProperties(workflowRuleForm, WorkflowRuleDTO.class);
-			workflowConfigurationFacade.insertRule(workflowRuleDto);
-			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
-		}
-		catch(Exception se)
-		{
-			this.handleException(request, se, null);
-			response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(se.getMessage(), "新增失败")).toString());
-		}
-		return null;
-	}
-	
-	*//**
-	 * 跳转到修改规则信息
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 *//*
-	public ActionForward goUpdateRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception
-	{
-		String ruleId = request.getParameter("ruleId");
-		try
-		{
-			if(StringUtils.isEmpty(ruleId))
-			{
-				throw new ServiceException(null, "ruleId is null");
-			}
-			WorkflowRuleDTO workflowRuleDto = workflowConfigurationFacade.getRuleInfo(NumberUtils.longValue(ruleId));
-			if(null != workflowRuleDto)
-			{
-				WorkflowRuleForm workflowRuleForm = BeanHelper.copyProperties(workflowRuleDto, WorkflowRuleForm.class);
-				request.setAttribute("workflowRuleForm", workflowRuleForm);
-			}
-			else
-			{
-				throw new ServiceException(null, "查询不到相关信息");
-			}
-		}
-		catch(Exception se)
-		{
-			this.handleException(request, se, null);
-			return mapping.getInputForward();
-		}
-		return mapping.findForward(FORWARD_SUCCESS);
-	}
-	
-	*//**
-	 * 修改规则信息
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 *//*
-	public ActionForward updateRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception
-	{
-		String ruleId = request.getParameter("ruleId");
-		WorkflowRuleForm workflowRuleForm = (WorkflowRuleForm) form;
-		try
-		{
-			if(StringUtils.isEmpty(ruleId))
-			{
-				throw new ServiceException(null, "ruleId is null");
-			}
-			WorkflowRuleDTO workflowRuleDto = workflowConfigurationFacade.getRuleInfo(NumberUtils.longValue(ruleId));
-			if(null == workflowRuleDto)
-			{
-				throw new ServiceException(null, "查询不到相关信息");
-			}
-			BeanHelper.copyProperties(workflowRuleForm, workflowRuleDto);
-			workflowConfigurationFacade.updateRule(workflowRuleDto);
-			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
-		}
-		catch(Exception se)
-		{
-			this.handleException(request, se, null);
-			response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(se.getMessage(), "修改失败")).toString());
-		}
-		return null;
-	}
-	
-	*/
-	/**
-	 * 删除规则记录
+	 * 跳转至流程画图界面
 	 * @param mapping
 	 * @param form
 	 * @param request
@@ -767,24 +430,82 @@ public class WorkflowConfigurationAction extends BaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	/*public ActionForward deleteRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	public ActionForward goViewWorkFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+		//获取操作类型 view insert update
+		String operateFlag = request.getParameter("operateFlag");
+		if(StringUtils.isEmpty(operateFlag)){
+			throw new ServiceException(null,"operateFlag is null");
+		}else if(operateFlag.equals("view")||operateFlag.equals("update")){
+			//查询flowData
+			String flowId = request.getParameter("flowId");
+			if(StringUtils.isEmpty(flowId)){
+				throw new ServiceException(null,"flowId is null");
+			}
+			WorkflowBaseInfoDTO flowInfo = workflowConfigurationFacade.getFlow(flowId);
+			
+		}else{
+			
+		}
+		request.setAttribute("operateFlag", operateFlag);
+		return mapping.findForward("success");
+	}
+	/**
+	 * 保存流程信息
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward saveRuleFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception
 	{
-		String ruleId = request.getParameter("ruleId");
+		String ruleFlowContent = request.getParameter("ruleFlowContent");
+		String id = request.getParameter("id"); //ruleId
+		String ruleFlowId = request.getParameter("ruleFlowId");
+		String templateId = request.getParameter("templateId");//模板id
+		String flowId = request.getParameter("flowId"); //流程ID
 		try
 		{
-			if(StringUtils.isEmpty(ruleId))
+			if(StringUtils.isEmpty(templateId))
 			{
-				throw new ServiceException(null, "ruleId is null");
+				throw new ServiceException(null, "templateId is null");
 			}
-			workflowConfigurationFacade.deleteRule(NumberUtils.longValue(ruleId));
+			//json to 对象
+			if(StringUtils.isNotEmpty(ruleFlowContent)){
+				DrawingFlow df = new DrawingFlow();
+				df.setTemplateId(templateId);
+				df.setFlowId(flowId);
+				df.setFlowData(ruleFlowContent);
+				List<DrawingBaseInfo> dbiList = new ArrayList<DrawingBaseInfo>();
+				List<DrawingFlowRule> dfrList = new ArrayList<DrawingFlowRule>();
+				JSONObject ja = JSONObject.fromObject(ruleFlowContent);
+				JSONObject states = ja.getJSONObject("states");
+				Map<String,Object> statesMaps = JSON.parseObject(states.toString()); 
+				for(Map.Entry<String, Object> map:statesMaps.entrySet()){
+					DrawingBaseInfo dbi= JSON.parseObject(map.getValue().toString(), DrawingBaseInfo.class);
+					dbiList.add(dbi);
+				}
+				JSONObject paths = ja.getJSONObject("paths");
+				Map<String,Object> pathsMaps = JSON.parseObject(paths.toString()); 
+				for(Map.Entry<String, Object> map:pathsMaps.entrySet()){
+					DrawingFlowRule dfr= JSON.parseObject(map.getValue().toString(), DrawingFlowRule.class);
+					dfrList.add(dfr);
+				}
+				df.setDbiList(dbiList);
+				df.setDfrList(dfrList);
+				workflowConfigurationFacade.saveRuleFlow(df);
+			}
+			//states paths
 			response.getWriter().write(JSONHelper.fromObject(true, null).toString());
 		}
 		catch(Exception se)
 		{
 			this.handleException(request, se, null);
-			response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(se.getMessage(), "删除失败")).toString());
+			response.getWriter().write(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(se.getMessage(), "保存流程信息失败")).toString());
 		}
 		return null;
-	}*/
+	}
 }

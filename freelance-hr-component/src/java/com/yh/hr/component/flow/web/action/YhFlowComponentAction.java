@@ -14,9 +14,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import com.yh.component.config.queryhelper.YhSysprmQueryHelper;
 import com.yh.component.taglib.TableTagBean;
+import com.yh.component.workflow.dto.CarbonCopyDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
+import com.yh.component.workflow.dto.TaskProcessDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
+import com.yh.hr.component.annex.dto.FileAnnexDTO;
+import com.yh.hr.component.annex.facade.UploadAnnexComponentFacade;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.facade.YhFlowComponentFacade;
 import com.yh.hr.component.flow.web.form.YhFlowComponentForm;
@@ -34,7 +39,7 @@ import com.yh.platform.core.web.action.BaseAction;
  */
 public class YhFlowComponentAction extends BaseAction {
 	private YhFlowComponentFacade yhFlowComponentFacade = (YhFlowComponentFacade) SpringBeanUtil.getBean("yhFlowComponentFacade");
-
+	private UploadAnnexComponentFacade uploadAnnexComponentFacade = (UploadAnnexComponentFacade) SpringBeanUtil.getBean("uploadAnnexComponentFacade");
 	/**
 	 * 跳转到提交流程(用户弹框)页面
 	 * @param mapping
@@ -290,6 +295,28 @@ public class YhFlowComponentAction extends BaseAction {
 	 */
 	public ActionForward goFlowProcedureMainPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
+		String maxFileSize = YhSysprmQueryHelper.getSysConfValue("annex.max.file.size");
+		String maxFileCounts = YhSysprmQueryHelper.getSysConfValue("annex.max.file.counts");
+		String acceptFileTypes = YhSysprmQueryHelper.getSysConfValue("annex.accept.file.types");
+		request.setAttribute("maxFileSize", maxFileSize);
+		request.setAttribute("maxFileCounts", maxFileCounts);
+		request.setAttribute("acceptFileTypes", acceptFileTypes);
+		//获取附件列表
+		String fileId = request.getParameter("fileId");
+		String faUserName = request.getParameter("faUserName");
+		request.setAttribute("fileId", fileId);
+		request.setAttribute("faUserName", faUserName);
+		TableTagBean ttb = new TableTagBean();
+		ttb.getCondition().put("fileId", fileId);
+		ttb.getCondition().put("faUserName", faUserName);
+		List<FileAnnexDTO> annexFileList = uploadAnnexComponentFacade.listAnnexFile(ttb);
+		request.setAttribute("annexFileList", annexFileList);
+		//获取抄送信息
+		List<CarbonCopyDTO> ccList = yhFlowComponentFacade.listCarbonCopy(ttb);
+		request.setAttribute("ccList", ccList);
+		//获取流程处理记录 处理意见
+		Map<String, List<TaskProcessDTO>> tpMap = yhFlowComponentFacade.listTaskProcess(ttb);
+		request.setAttribute("tpMap", tpMap);
 		return mapping.findForward(FORWARD_SUCCESS);
 	}
 }

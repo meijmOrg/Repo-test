@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +14,12 @@
 			<label class="mho_col mho_col_2 mho_text_right line_height_35">附件信息</label>
 			<div class="mho_col <%=request.getParameter("widthFlag")%>">
 				<ul class="mho_list mho_list_strip">
-					<li><a href="javascript:void(0)">后勤保障处举办“五小”创新成果评选活动.jpg</a></li>
-					<li><a href="javascript:void(0)">我院召开2017年感控知识培训会.jpg</a></li>
-					<li><a href="javascript:void(0)">协和肿瘤放疗论坛在我院召开.jpg</a></li>
-					<li><a href="javascript:void(0)">干燥综合症专著助力临床治疗.jpg</a></li>
+					<c:forEach items="${annexFileList}" var="dto" varStatus="status">
+								<li id="${dto.faId }"><a href='javascript:void(0)' onclick="downloadFile('${dto.faId}')">${dto.faName }</a>
+								<%-- <a href='javascript:void(0)' class='mho_float_right mho_red_color' style='margin: 0 10px;' onclick="downloadFile('${dto.faId}')">下载</a>
+								<a href='javascript:void(0)' class='mho_float_right mho_green_color' style='margin: 0 10px;' onclick="deleteFile('${dto.faId}')">删除</a> --%>
+								</li>
+							</c:forEach>
 				</ul>
 			</div>
 		</div>

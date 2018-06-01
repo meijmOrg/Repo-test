@@ -303,26 +303,71 @@ a:hover {
   right: 0;
   background: #edf0f5;
 }
+.mho_center_left_tools a,
+.mho_center_right_tools a {
+  float: left;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  color: #818181;
+  cursor: pointer;
+  border-bottom: 1px solid #2d3b99;
+}
+.mho_center_left_tools,
+.mho_center_right_tools {
+  display: inline-block;
+}
+.mho_center_right_tools {
+  position: absolute;
+  right: 0;
+}
+.mho_center_left_tools a i,
+.mho_center_right_tools a i {
+  height: 40px;
+  line-height: 40px;
+}
 .mho_center_tabs {
   top: 0;
-  left: 0;
-  right: 0;
+  left: 50px;
+  right: 100px;
   height: 40px;
   background: #ffffff;
   border-bottom: 1px solid #2d3b99;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .mho_center_tabs li {
+  position: relative;
   height: 100%;
-  float: left;
+  display: inline-block;
   line-height: 40px;
-  padding: 0 10px;
+  padding: 0 20px;
   color: #818181;
   cursor: pointer;
+
 }
-.mho_center_tabs li:hover,
+/* .mho_center_tabs li:hover, */
 .mho_center_tabs li.mho_selected {
   color: #fff;
   background: #9fa8da;
+}
+.mho_center_tabs li:hover i.fa.fa-remove {
+  display: inline-block;
+  animation: removeRotate 2s;
+}
+.mho_center_tabs li i.fa.fa-remove {
+  display: none;
+  position: absolute;
+  right: 5px;
+}
+.mho_center_tabs li i.fa.fa-remove:hover {
+  color: #2d3b99;
+}
+@keyframes removeRotate
+{
+0% {transform:rotate(0deg);}
+50% {transform:rotate(360deg);}
+100% {transform:rotate(0deg);}
 }
 .mho_center_main {
   top: 40px;
@@ -682,7 +727,7 @@ input[type=radio] {
 }
 .mho_modal_footer button {
     margin-left: 20px;
-    width: 80px;
+    min-width: 80px;
 }
 .mho_modal_header {
     text-align: center;

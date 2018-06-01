@@ -16,7 +16,7 @@ $(function() {
                         type: 'POST',
                         dataType: 'json',
                         data: {
-                            "ruleFlowContent": encodeURI(data).replace(/\+/g,'%2B'),
+                            "ruleFlowContent": data,//encodeURI(data).replace(/\+/g,'%2B'),
                             "id":id,
                             "ruleFlowId":ruleFlowId,
                         },

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="yhFlowComponentForm" type="com.yh.hr.component.flow.web.form.YhFlowComponentForm" />
+    </form-beans>
+	<action-mappings>
+		<action path="/goFlowWorktop"
+				scope="request"
+				type="com.yh.hr.component.flow.web.action.YhFlowBusinessWorktopAction"
+				parameter="method">
+			<description>跳转到流程工作台</description>
+			<forward name="daiban" path="/hrcomponent/flow/worktop/yhflow_worktop_daiban.jsp"/>
+			<forward name="yiban" path="/hrcomponent/flow/worktop/yhflow_worktop_yiban.jsp"/>
+			<forward name="jiaqian" path="/hrcomponent/flow/worktop/yhflow_worktop_jiaqian.jsp"/>
+			<forward name="chaosong" path="/hrcomponent/flow/worktop/yhflow_worktop_chaosong.jsp"/>
+			<forward name="xietong" path="/hrcomponent/flow/worktop/yhflow_worktop_xietong.jsp"/>
+		</action>
+		<action path="/listBusinessInfo"
+				scope="request"
+				type="com.yh.hr.component.flow.web.action.YhFlowBusinessWorktopAction"
+				parameter="method">
+			<description>查询业务列表</description>
+		</action>
+		<action path="/getBusinessTotal"
+				scope="request"
+				type="com.yh.hr.component.flow.web.action.YhFlowBusinessWorktopAction"
+				parameter="method">
+			<description>获取业务记录总数</description>
+		</action>
+	</action-mappings>
+</struts-config>

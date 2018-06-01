@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+<!--附件组件-->
+	<bean id="uploadAnnexComponentFacade" parent="txnProxyParent">
+		<property name="target">
+			<bean class="com.yh.hr.component.annex.facade.UploadAnnexComponentFacade">
+				<property name="uploadAnnexComponentService" ref="uploadAnnexComponentService" />
+			</bean>
+		</property>
+	</bean>
+   <bean id="uploadAnnexComponentService" class="com.yh.hr.component.annex.service.impl.UploadAnnexComponentServiceImpl"/>
+</beans>

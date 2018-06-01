@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+	</form-beans>
+	<action-mappings>
+		<action path="/uploadAnnexFile"
+			type="com.yh.hr.component.annex.web.action.UploadAnnexComponentAction" 
+			scope="request"
+			parameter="method">
+			<description>上传文件</description>
+		</action>
+		<action path="/listAnnexFile"
+			type="com.yh.hr.component.annex.web.action.UploadAnnexComponentAction" 
+			scope="request"
+			parameter="method">
+			<description>查询文件列表</description>
+		</action>
+		<action path="/deleteAnnexFile"
+			type="com.yh.hr.component.annex.web.action.UploadAnnexComponentAction" 
+			scope="request"
+			parameter="method">
+			<description>删除文件</description>
+		</action>
+		<action path="/downAnnexFile"
+			type="com.yh.hr.component.annex.web.action.UploadAnnexComponentAction" 
+			scope="request"
+			parameter="method">
+			<description>下载文件</description>
+		</action>
+		<action path="/checkAnnexFileName"
+			type="com.yh.hr.component.annex.web.action.UploadAnnexComponentAction" 
+			scope="request"
+			parameter="method">
+			<description>检查是否存在同名附件</description>
+		</action>
+	</action-mappings>
+</struts-config>
