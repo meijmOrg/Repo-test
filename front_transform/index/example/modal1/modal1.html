@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="../../../font-awesome-4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="../../../mho.css">
     <script src="../../../lib/jquery-3.2.1.min.js"></script>
-    <script src="../../../component/dialog/dialog.js"></script>
     <title></title>
 </head>
 <body>
@@ -102,7 +101,6 @@
     <div class="mho_modal_footer">
         <button id="sure" class="mho_btn mho_btn_empty mho_btn_circle">确认</button>
         <button id="cancle" class="mho_btn mho_btn_empty mho_btn_circle">取消</button>
-        <button id="alert" class="mho_btn mho_btn_empty mho_btn_circle">弹出二级模态框</button>
     </div>
     <script>
         $('#sure').click(function() {
@@ -110,13 +108,6 @@
         });
         $('#cancle').click(function() {
             Dialog.close();
-        });
-        $('#alert').click(function() {
-            Dialog.page({
-                title: '二级模态框',
-                width: 1000,
-                content: '<div style="padding: 20px;">测试</div>'
-            });
         });
     </script>
 </body>

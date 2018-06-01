@@ -66,8 +66,6 @@ $(function() {
 			that = null;
 		}
 	};
-	window.Dialog = Dialog;
-	window.top.Dialog = Dialog;
 	$.extend(Dialog, {
 		dialogs: [],
 		page: function(setting) {
@@ -78,4 +76,6 @@ $(function() {
 			this.dialogs[this.dialogs.length-1].close();
 		}
 	});
+	window.Dialog = Dialog;
+	window.top.Dialog = Dialog;
 }());
