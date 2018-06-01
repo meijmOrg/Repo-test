@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="yhFlowComponentForm" type="com.yh.hr.component.flow.web.form.YhFlowComponentForm" />
+    </form-beans>
+	<action-mappings>
+		<action path="/goProUserListPartial"
+				scope="request"
+				type="com.yh.hr.component.flow.web.action.YhFlowProcedureComponentAction"
+				parameter="method">
+			<description>跳转到提交流程(用户弹框)页面</description>
+			<forward name="success" path="/hrcomponent/flow/procedure/yhflow_procedure_submit.jsp"/>
+			<forward name="jq" path="/hrcomponent/flow/procedure/yhflow_pro_sigh.jsp"/>
+			<forward name="cc" path="/hrcomponent/flow/procedure/yhflow_pro_duplicate.jsp"/>
+			<forward name="xt" path="/hrcomponent/flow/procedure/yhflow_coordination.jsp"/>
+		</action>
+		<action path="/submitFlowProcedure"
+				scope="request"
+				name="yhFlowComponentForm"
+				type="com.yh.hr.component.flow.web.action.YhFlowProcedureComponentAction"
+				parameter="method">
+			<description>提交流程(确定)</description>
+		</action>
+		<action path="/sendBack"
+				scope="request"
+				type="com.yh.hr.component.flow.web.action.YhFlowProcedureComponentAction"
+				parameter="method">
+			<description>退回</description>
+		</action>
+		<action path="/submitProSighUsers"
+				scope="request"
+				name="yhFlowComponentForm"
+				type="com.yh.hr.component.flow.web.action.YhFlowProcedureComponentAction"
+				parameter="method">
+			<description>加签(确定)</description>
+		</action>
+		<action path="/submitProCsUsers"
+				scope="request"
+				name="yhFlowComponentForm"
+				type="com.yh.hr.component.flow.web.action.YhFlowProcedureComponentAction"
+				parameter="method">
+			<description>抄送(确定)</description>
+		</action>
+		<action path="/submitCoordinationUsers"
+				scope="request"
+				name="yhFlowComponentForm"
+				type="com.yh.hr.component.flow.web.action.YhFlowProcedureComponentAction"
+				parameter="method">
+			<description>协同(确定)</description>
+		</action>
+	</action-mappings>
+</struts-config>

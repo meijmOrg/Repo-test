@@ -1068,5 +1068,7 @@ public class DicConstants {
 	public static final String YHRS4008_5 = "5";
 	/** 历史数据*/
 	public static final String YHRS4008_6 = "6";
+	/** 已退回*/
+	public static final String YHRS4008_7 = "7";
 	
 }

@@ -23,16 +23,12 @@ $(document).ready(function() {
 	});
 	
 	$('#confirm').click(function() {
-		if($('input[name=checkbox]:checked').length != 1){
-			MessageBox.alert('消息','请选择一条记录！');
-			return;
-		}
 		MessageBox.yes('提示','确认要提交流程吗?', function(){
-			/* var nextUserList = new Array();
+			var nextUserList = new Array();
 			$('input[name=checkbox]:checked').each(function(index, element) {
 				nextUserList.push($(this).val());
-			}); */
-			$('input[name=nextUserList]').val($('input[name=checkbox]:checked').val());
+			});
+			$('input[name=nextUserList]').val(nextUserList);
 			
 			$.ajax({ 
 				  url: $('#flowComponentForm').attr("action"), 
@@ -64,7 +60,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-	<html:form styleId="flowComponentForm" action="submitSighUsers.do?method=submitSighUsers"  method="post"  onsubmit="return false">
+	<html:form styleId="flowComponentForm" action="submitProSighUsers.do?method=submitProSighUsers"  method="post"  onsubmit="return false">
 	<input type="hidden" name="nextUserList"/>
 	<input type="hidden" name="templateId" value="${templateId}"/>
 	<input type="hidden" name="taskPreActId" value="${preActId}"/>

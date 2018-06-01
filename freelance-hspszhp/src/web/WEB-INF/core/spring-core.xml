@@ -18,6 +18,16 @@
 		<property name="password">
 			<value>123456</value>
 		</property>
+		<!-- 远程服务器
+		<property name="url">
+			<value>jdbc:sqlserver://47.106.165.149:1433;DatabaseName=hspszhp</value>
+		</property>
+		<property name="username">
+			<value>SA</value>
+		</property>
+		<property name="password">
+			<value>Yh@123456</value>
+		</property>-->
 
 		<!-- 测试库-->
 		<!-- <property name="url">

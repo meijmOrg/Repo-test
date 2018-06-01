@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--流程审批过程组件-->
+	<bean id="yhFlowProcedureComponentFacade" parent="txnProxyParent">
+		<property name="target">
+			<bean class="com.yh.hr.component.flow.facade.YhFlowProcedureComponentFacade">
+				<property name="yhFlowProcedureComponentService" ref="yhFlowProcedureComponentService" />
+			</bean>
+		</property>
+	</bean>
+   <bean id="yhFlowProcedureComponentService" class="com.yh.hr.component.flow.service.impl.YhFlowProcedureComponentServiceImpl"/>
+</beans>

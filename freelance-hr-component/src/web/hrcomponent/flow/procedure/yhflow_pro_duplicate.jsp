@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>加签</title>
+<title>抄送</title>
 <link rel="stylesheet"
 	href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
 <link rel="stylesheet" href="component/front_transform/mho.css">
@@ -23,18 +23,19 @@ $(document).ready(function() {
 	});
 	
 	$('#confirm').click(function() {
-		if($('input[name=checkbox]:checked').length != 1){
-			MessageBox.alert('消息','请选择一条记录！');
-			return;
-		}
 		MessageBox.yes('提示','确认要提交流程吗?', function(){
-			/* var nextUserList = new Array();
+			var nextUserList = new Array();
 			$('input[name=checkbox]:checked').each(function(index, element) {
 				nextUserList.push($(this).val());
-			}); */
-			$('input[name=nextUserList]').val($('input[name=checkbox]:checked').val());
+			});
+			/* $('input[name=nextUserList]').val(nextUserList); */
+			localStorage.removeItem('nextUserList');
+			localStorage.setItem('nextUserList', JSON.stringify(nextUserList));
+			MessageBox.alert('消息','保存成功！',function(){
+          	  $('#cancel').trigger("click");
+            });
 			
-			$.ajax({ 
+			/* $.ajax({ 
 				  url: $('#flowComponentForm').attr("action"), 
 				  data: $('#flowComponentForm').serializeArray(),  
 				  dataType:'json', 
@@ -50,7 +51,7 @@ $(document).ready(function() {
 			              MessageBox.alert('消息',data.message);
 			          }
 				  }
-			  })
+			  }) */
 		})
 	});
 	/*重置 */
@@ -64,7 +65,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-	<html:form styleId="flowComponentForm" action="submitSighUsers.do?method=submitSighUsers"  method="post"  onsubmit="return false">
+	<html:form styleId="flowComponentForm" action="submitProCsUsers.do?method=submitProCsUsers"  method="post"  onsubmit="return false">
 	<input type="hidden" name="nextUserList"/>
 	<input type="hidden" name="templateId" value="${templateId}"/>
 	<input type="hidden" name="taskPreActId" value="${preActId}"/>

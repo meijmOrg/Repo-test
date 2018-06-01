@@ -22,8 +22,10 @@ $(document).ready(function() {
 	params.duplicate=false;
 	buttonControl(params);
 	$('#submitFlow').click(function() {
+		var csUserList = JSON.parse(localStorage.getItem('nextUserList'));
+		localStorage.removeItem('nextUserList');
 	    var dialog = new Dialog({
-	        url: 'goUserListPartial.do?method=goUserListPartial',
+	        url: 'goUserListPartial.do?method=goUserListPartial&csUserList='+csUserList.join(','),
 	        width: '80%',
 	        title: '流程下一步'
 	    });
@@ -80,6 +82,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
+	<input type="hidden" name="csUserList" id="csUserList" value="ww" />
 	<div class="mho_row mho_row_no_margin">
 		<div class="mho_col mho_col_2"></div>
 		<div class="mho_col mho_col_8 mho_btn_row">

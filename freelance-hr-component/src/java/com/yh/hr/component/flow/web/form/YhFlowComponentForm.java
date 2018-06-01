@@ -9,10 +9,11 @@ public class YhFlowComponentForm extends ValidatorForm{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private java.lang.String 	isSend;//是否发送短信
+	private java.lang.String 	isSendList;//是否发送短信
 	private java.lang.String	messageContent;	//自定义提醒短信内容
 	private java.lang.String 	nextUserList;//下一步选中的用户集合
 	private java.lang.String 	otherUserList;//其他步骤选中的用户集合
+	private java.lang.String 	csUserList;//抄送选中的用户集合
 	
 	private java.lang.String	templateId;	//模板主键
 	private java.lang.String	templateCode;	//模板Code
@@ -38,11 +39,12 @@ public class YhFlowComponentForm extends ValidatorForm{
 	private java.lang.String	taskProcessResult;	//处理结果
 	private java.lang.String	taskProcessExplain;	//处理意见
 	
-	public java.lang.String getIsSend() {
-		return isSend;
+	
+	public java.lang.String getIsSendList() {
+		return isSendList;
 	}
-	public void setIsSend(java.lang.String isSend) {
-		this.isSend = isSend;
+	public void setIsSendList(java.lang.String isSendList) {
+		this.isSendList = isSendList;
 	}
 	public java.lang.String getMessageContent() {
 		return messageContent;
@@ -61,6 +63,12 @@ public class YhFlowComponentForm extends ValidatorForm{
 	}
 	public void setOtherUserList(java.lang.String otherUserList) {
 		this.otherUserList = otherUserList;
+	}
+	public java.lang.String getCsUserList() {
+		return csUserList;
+	}
+	public void setCsUserList(java.lang.String csUserList) {
+		this.csUserList = csUserList;
 	}
 	public java.lang.String getTemplateId() {
 		return templateId;

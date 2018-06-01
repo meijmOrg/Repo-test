@@ -50,18 +50,17 @@ public class YhFlowComponentAction extends BaseAction {
 			//String templateId = request.getParameter("templateId");
 			String templateId = "68785b4b-e1cd-43dc-877a-79ef103d1c95";
 			String flag = request.getParameter("flag");
-			Map<String,List<WorkflowActivityDTO>> ActInfo = yhFlowComponentFacade.goUserListPartial(templateId);
-			if(!MapUtils.isEmpty(ActInfo)){
-	        	 for(Map.Entry<String, List<WorkflowActivityDTO>> me:ActInfo.entrySet()){
+			String csUserList = request.getParameter("csUserList");
+			Map<String,List<WorkflowActivityDTO>> actInfo = yhFlowComponentFacade.goUserListPartial(templateId);
+			if(!MapUtils.isEmpty(actInfo)){
+	        	 for(Map.Entry<String, List<WorkflowActivityDTO>> me:actInfo.entrySet()){
 	        		 request.setAttribute(me.getKey(), me.getValue());
 	        	 }
 			   }
 			request.setAttribute("templateId", templateId);
-			if("jq".equals(flag)){
-				return mapping.findForward("jq");
-			}
-			if("cc".equals(flag)){
-				return mapping.findForward("cc");
+			request.setAttribute("csUserList", csUserList);
+			if(StringUtils.isNotEmpty(flag)){
+				return mapping.findForward(flag);
 			}
 			return mapping.findForward(FORWARD_SUCCESS);
 		} catch (Exception e) {

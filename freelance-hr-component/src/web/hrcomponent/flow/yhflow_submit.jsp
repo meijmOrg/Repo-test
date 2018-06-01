@@ -19,14 +19,19 @@ $(document).ready(function() {
 		MessageBox.yes('提示','确认要提交流程吗?', function(){
 			var nextUserList = new Array();
 			var otherUserList = new Array();
-			$('input[name=nextCheckbox]:checked').each(function(index, element) {
+			var isSendList = new Array();
+			$('.nextRadio:checked').each(function(index, element) {
 				nextUserList.push($(this).val());
 			});
-			$('input[name=otherCheckbox]:checked').each(function(index, element) {
+			$('.otherRadio:checked').each(function(index, element) {
 				otherUserList.push($(this).val());
+			});
+			$('.isSend:checked').each(function(index, element) {
+				isSendList.push($(this).val());
 			});
 			$('input[name=nextUserList]').val(nextUserList);
 			$('input[name=otherUserList]').val(otherUserList);
+			$('input[name=isSendList]').val(isSendList);
 			
 			//var url = $('#flowComponentForm').attr("action");
 			//var data = $('#flowComponentForm').serializeArray();   
@@ -52,7 +57,7 @@ $(document).ready(function() {
 	});
 	/*重置 */
 	$('#reset').click(function() {
-		$(':checkbox:checked').attr("checked",false);
+		/* $(':checkbox:checked').attr("checked",false); */
 		$(':radio:checked').attr("checked",false);
 		$('textarea[name=messageContent]').val('');
 	});
@@ -63,6 +68,8 @@ $(document).ready(function() {
 	<html:form styleId="flowComponentForm" action="submitFlowStart.do?method=submitFlowStart"  method="post"  onsubmit="return false">
 	<input type="hidden" name="nextUserList"/>
 	<input type="hidden" name="otherUserList"/>
+	<input type="hidden" name="csUserList" value="${csUserList}"/>
+	<input type="hidden" name="isSendList"/>
 	<input type="hidden" name="templateId" value="${templateId}"/>
 	<input type="hidden" name="taskPreActId" value="${preActId}"/>
 	<div style="padding: 20px;">
@@ -85,7 +92,7 @@ $(document).ready(function() {
 					<c:forEach items="${dto.puList}" var="pu" varStatus="ss">
 						<c:if test="${pu.userId ne ''}">
 						<span class="mho_checkbox" style="margin: 0 5px -4px 5px;">
-						<input type="checkbox" name="nextCheckbox" value="${dto.actId}${pu.userId}"><i class="fa fa-check"></i>
+						<input class="nextRadio" type="radio" name="nextRadio${dto.actId}" value="${dto.actId}${pu.userId}"><i class="fa fa-check"></i>
 						</span> 
 						<label style="margin-right: 10px;">${pu.userName}</label> 
 						</c:if>
@@ -93,11 +100,11 @@ $(document).ready(function() {
 					</td>
 					<td>
 					<span class="mho_checkbox" style="margin: 0 5px -4px 5px;">
-					<input type="radio" name="isSend" value="${dto.actId}Y"><i class="fa fa-check"></i>
+					<input class="isSend" type="radio" name="isSend${dto.actId}" value="${dto.actId}Y"><i class="fa fa-check"></i>
 					</span> 
 					<label style="margin-right: 10px;">是</label> 
 					<span class="mho_checkbox" style="margin: 0 5px -4px 5px;">
-					<input type="radio" name="isSend" value="${dto.actId}N"><i class="fa fa-check"></i>
+					<input class="isSend" type="radio" name="isSend${dto.actId}" value="${dto.actId}N"><i class="fa fa-check"></i>
 					</span> 
 					<label style="margin-right: 10px;">否</label></td>
 				</tr>
@@ -128,8 +135,8 @@ $(document).ready(function() {
 						<c:forEach items="${adto.puList}" var="apu" varStatus="ass">
 						<c:if test="${apu.userId ne ''}">
 						<c:if test="${adto.actOrder gt actOrder}">
-						<span class="mho_checkbox" style="margin: 0 5px -4px 5px;"><input
-								type="checkbox" name="otherCheckbox" value="${adto.actId}${apu.userId}"><i class="fa fa-check"></i>
+						<span class="mho_checkbox" style="margin: 0 5px -4px 5px;">
+						<input class="otherRadio" type="radio" name="otherRadio${adto.actId}" value="${adto.actId}${apu.userId}"><i class="fa fa-check"></i>
 						</span> <label style="margin-right: 10px;">${apu.userName}</label>
 						</c:if>
 						</c:if>

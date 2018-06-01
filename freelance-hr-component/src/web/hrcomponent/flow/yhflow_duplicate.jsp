@@ -23,15 +23,22 @@ $(document).ready(function() {
 	});
 	
 	$('#confirm').click(function() {
-		MessageBox.yes('提示','确认要提交流程吗?', function(){
-			debugger
+		if($('input[name=checkbox]:checked').length == 0){
+			MessageBox.alert('消息','请至少选择一条记录！');
+			return;
+		}
+		MessageBox.yes('提示','确认要保存抄送人吗?', function(){
 			var nextUserList = new Array();
 			$('input[name=checkbox]:checked').each(function(index, element) {
 				nextUserList.push($(this).val());
 			});
-			$('input[name=nextUserList]').val(nextUserList);
-			
-			$.ajax({ 
+			/* $('input[name=nextUserList]').val(nextUserList); */
+			localStorage.removeItem('nextUserList');
+			localStorage.setItem('nextUserList', JSON.stringify(nextUserList));
+			MessageBox.alert('消息','保存成功！',function(){
+          	  $('#cancel').trigger("click");
+            });
+			/* $.ajax({ 
 				  url: $('#flowComponentForm').attr("action"), 
 				  data: $('#flowComponentForm').serializeArray(),  
 				  dataType:'json', 
@@ -47,7 +54,7 @@ $(document).ready(function() {
 			              MessageBox.alert('消息',data.message);
 			          }
 				  }
-			  })
+			  }) */
 		})
 	});
 	/*重置 */

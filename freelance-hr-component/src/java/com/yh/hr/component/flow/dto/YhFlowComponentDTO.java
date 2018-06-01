@@ -2,13 +2,15 @@ package com.yh.hr.component.flow.dto;
 
 
 public class YhFlowComponentDTO{
-	private java.lang.String 	isSend;//是否发送短信
+	private java.lang.String 	isSendList;//是否发送短信
 	private java.lang.String	messageContent;	//自定义提醒短信内容
 	private java.lang.String 	nextUserList;//下一步选中的用户集合
 	private java.lang.String 	otherUserList;//其他步骤选中的用户集合
+	private java.lang.String 	csUserList;//抄送选中的用户集合
 	
 	private java.lang.String	templateId;	//模板主键
 	private java.lang.String	templateCode;	//模板Code
+	private java.lang.String	fileId;	//文档主键
 	private java.lang.String	fileCode;	//文档Code
 	private java.lang.String	fileTitle;	//文件标题
 	private java.lang.String	fileFlowStatus;	//审批状态
@@ -31,11 +33,12 @@ public class YhFlowComponentDTO{
 	private java.lang.String	taskProcessResult;	//处理结果
 	private java.lang.String	taskProcessExplain;	//处理意见
 	
-	public java.lang.String getIsSend() {
-		return isSend;
+	
+	public java.lang.String getIsSendList() {
+		return isSendList;
 	}
-	public void setIsSend(java.lang.String isSend) {
-		this.isSend = isSend;
+	public void setIsSendList(java.lang.String isSendList) {
+		this.isSendList = isSendList;
 	}
 	public java.lang.String getMessageContent() {
 		return messageContent;
@@ -55,6 +58,12 @@ public class YhFlowComponentDTO{
 	public void setOtherUserList(java.lang.String otherUserList) {
 		this.otherUserList = otherUserList;
 	}
+	public java.lang.String getCsUserList() {
+		return csUserList;
+	}
+	public void setCsUserList(java.lang.String csUserList) {
+		this.csUserList = csUserList;
+	}
 	public java.lang.String getTemplateId() {
 		return templateId;
 	}
@@ -66,6 +75,12 @@ public class YhFlowComponentDTO{
 	}
 	public void setTemplateCode(java.lang.String templateCode) {
 		this.templateCode = templateCode;
+	}
+	public java.lang.String getFileId() {
+		return fileId;
+	}
+	public void setFileId(java.lang.String fileId) {
+		this.fileId = fileId;
 	}
 	public java.lang.String getFileCode() {
 		return fileCode;
