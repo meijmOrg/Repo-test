@@ -89,6 +89,27 @@
         </tr>
         </tbody>
     </table>
+    <div class="mho_modal_footer">
+        <button id="sure" class="mho_btn mho_btn_empty mho_btn_circle">确认</button>
+        <button id="cancle" class="mho_btn mho_btn_empty mho_btn_circle">取消</button>
+        <button id="alert" class="mho_btn mho_btn_empty mho_btn_circle">弹出多层模态框</button>
+    </div>
+    <script>
+        $('#sure').click(function() {
+            Dialog.close();
+        });
+        $('#cancle').click(function() {
+            Dialog.close();
+        });
+        $(document).find('#alert').alert(function() {
+            console.log(Dialog.dialogs);
+            Dialog.page({
+                title: '多层模态框',
+                width: 1000,
+                content: '<div style="padding: 20px;">测试</div>'
+            });
+        });
+    </script>
 </div>
 </body>
 </html>
