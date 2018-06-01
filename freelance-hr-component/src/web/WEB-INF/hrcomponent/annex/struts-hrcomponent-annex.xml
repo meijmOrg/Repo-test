@@ -19,6 +19,7 @@
 			scope="request"
 			parameter="method">
 			<description>查询文件列表</description>
+			<forward name="success" path="/hrcomponent/flow/yhflow_attachment_view_win.jsp"/>
 		</action>
 		<action path="/deleteAnnexFile"
 			type="com.yh.hr.component.annex.web.action.UploadAnnexComponentAction" 

@@ -110,6 +110,9 @@ $(document).ready(function(){
 function goback(){
 	HistoryRegister.go("goHomepage");
 }
+function goFlowProcedure(){
+	Widget.openContent("goFlowProcedureMainPage.do?method=goFlowProcedureMainPage");
+}
 </script>
 </head>
 <body  style="overflow-x: hidden;">
@@ -125,6 +128,7 @@ function goback(){
 		<div class="handle-btn clearfix" id="fr_tbar">
 			<button class="btn-add btn-left-icon btn-default check_transaction_popdown" button-click="add">新增</button>
 			<button class="btn-delete btn-left-icon btn-default" button-click="delete">删除</button>
+		<button class="btn_add" onclick="goFlowProcedure()">流程过程</button>
 	    </div>
 		<!-- 列表内容展示-->
 		<table class="x-table sortable ellipsis striped hover"></table>

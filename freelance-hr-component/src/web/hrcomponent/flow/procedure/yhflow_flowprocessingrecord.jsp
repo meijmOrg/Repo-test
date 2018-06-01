@@ -6,7 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>流程处理记录</title>
+<script src="component/front_transform/component/dialog/dialog.js"></script>
 <script type="text/javascript">
+function viewAttachment(fileId,faUserName){
+	var dialog = new Dialog({
+        url: 'listAnnexFile.do?method=listAnnexFile&fileId='+fileId+'&faUserName='+faUserName,
+        width: '80%',
+        title: '附件信息'
+    });
+}
 </script>
 </head>
 <body>
@@ -41,8 +49,15 @@
 												<td>${list.taskProcessName }</td>
 												<td>${list.taskProcessResult }</td>
 												<td>${list.taskProcessExplain }</td>
-												<td><a >查看附件</a></td>
-												<td><a >查看协同记录</a></td>
+												<c:if test="${empty list.haveAnnex }"><td>无</td></c:if>
+												<c:if test="${!empty list.haveAnnex }">
+													<td><a href="javascript:void(0)" onclick=" viewAttachment('${list.fileId}','${list.taskProcessUser }')">查看附件</a></td>
+												</c:if>
+												<c:if test="${empty list.haveCoordination }"><td>无</td></c:if>
+												<c:if test="${!empty list.haveCoordination }">
+													<td><a href="javascript:void(0)" onclick=" viewAttachment('${list.fileId}','${list.taskProcessUser }')">查看协同记录</a></td>
+												</c:if>
+												
 											</tr>
 										</c:forEach>
 									</tbody>

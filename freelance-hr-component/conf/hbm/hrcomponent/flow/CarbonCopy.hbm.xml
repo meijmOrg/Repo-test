@@ -6,8 +6,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
-<hibernate-mapping package="com.yh.component.workflow.bo">
-    <class name="com.yh.component.workflow.bo.CarbonCopy" table="YHF_CarbonCopy">
+<hibernate-mapping package="com.yh.hr.component.flow.bo">
+    <class name="com.yh.hr.component.flow.bo.CarbonCopy" table="YHF_CarbonCopy">
         <id name="ccId" column="cc_Id" type="java.lang.String"  length="36">
         </id>
         <property name="ccActId" type="java.lang.String">

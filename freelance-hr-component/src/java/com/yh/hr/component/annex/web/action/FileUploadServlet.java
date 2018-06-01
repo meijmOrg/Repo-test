@@ -2,7 +2,6 @@ package com.yh.hr.component.annex.web.action;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,11 +13,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
 
 import com.yh.hr.component.annex.facade.UploadAnnexComponentFacade;
 import com.yh.hr.component.annex.utils.UploadAnnexComponentUtil;
-import com.yh.platform.core.util.ConfigUtil;
 import com.yh.platform.core.util.DateUtil;
 import com.yh.platform.core.util.SpringBeanUtil;
 

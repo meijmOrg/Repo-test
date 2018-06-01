@@ -5,7 +5,7 @@ import java.io.File;
 import java.util.List;
 
 import com.yh.component.taglib.TableTagBean;
-import com.yh.component.workflow.bo.FileAnnex;
+import com.yh.hr.component.annex.bo.FileAnnex;
 import com.yh.hr.component.annex.dto.FileAnnexDTO;
 import com.yh.hr.component.annex.service.UploadAnnexComponentService;
 import com.yh.platform.core.dao.DaoUtil;

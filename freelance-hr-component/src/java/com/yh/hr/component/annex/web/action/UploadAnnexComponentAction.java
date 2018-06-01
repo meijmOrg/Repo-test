@@ -3,19 +3,9 @@ package com.yh.hr.component.annex.web.action;
 
 
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-
-import java.io.FileOutputStream;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,11 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.fileupload.DiskFileUpload;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -37,12 +22,12 @@ import com.yh.component.taglib.TableTagBean;
 import com.yh.hr.component.annex.dto.FileAnnexDTO;
 import com.yh.hr.component.annex.facade.UploadAnnexComponentFacade;
 import com.yh.hr.component.annex.utils.UploadAnnexComponentUtil;
+import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.ConfigUtil;
 import com.yh.platform.core.util.DateUtil;
 import com.yh.platform.core.util.IOUtil;
 import com.yh.platform.core.util.JSONHelper;
 import com.yh.platform.core.util.SpringBeanUtil;
-import com.yh.platform.core.util.StringUtil;
 import com.yh.platform.core.web.action.BaseAction;
 
 
@@ -74,29 +59,24 @@ public class UploadAnnexComponentAction extends BaseAction
         path.append("/").append(year).append("/").append(month);
         return path.toString();
     }
-    /*public ActionForward listAnnexFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward listAnnexFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
 			
 			TableTagBean ttb = new TableTagBean(request);
-			
-//			String refRoleCode = request.getParameter("refRoleCode");//当前角色
-			String viewRefCodes = StringUtil.joinWrap(StringUtils.split(request.getParameter("viewRefCodes"),","));//查看的来源，如果为空，表示查看所有来源
-			
-			ttb.getCondition().put("viewRefCodes", viewRefCodes);
-			
-			List<JSONObject> list = uploadAnnexComponentFacade.listAnnexFile(ttb);
-			
-			JSONObject json = new JSONObject();
-			json.put("total", ttb.getTotal());
-			json.put("rows", null!=list?list:new ArrayList<Object>());
-			response.getWriter().print(json.toString());
+			if(StringUtils.isEmpty(ttb.getCondition().get("fileId"))){
+				throw new ServiceException(null,"fileId is null");
+			}
+			if(StringUtils.isEmpty(ttb.getCondition().get("faUserName"))){
+				throw new ServiceException(null,"faUserName is null");
+			}
+			List<FileAnnexDTO> list = uploadAnnexComponentFacade.listAnnexFile(ttb);
+			request.setAttribute("annexFileList", list);
 		} catch (Exception e) {
-			handleException(request, e, "查询文件列表失败");
-			response.getWriter().print(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(e.getMessage(), "查询文件列表失败")));
+			handleException(request, e, "查询附件列表失败");
+			response.getWriter().print(JSONHelper.fromObject(false, StringUtils.defaultIfEmpty(e.getMessage(), "查询附件列表失败")));
 		}
-		
-		return null;
-	}*/
+		return mapping.findForward(FORWARD_SUCCESS);
+	}
     /**
 	 * 下载上传文件
 	 * @param mapping

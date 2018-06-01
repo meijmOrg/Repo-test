@@ -6,8 +6,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
-<hibernate-mapping package="com.yh.component.workflow.bo">
-    <class name="com.yh.component.workflow.bo.SelUser" table="yhf_sel_user">
+<hibernate-mapping package="com.yh.hr.component.flow.bo">
+    <class name="com.yh.hr.component.flow.bo.SelUser" table="yhf_sel_user">
         <id name="selUserId" column="sel_user_ID" type="java.lang.String"  length="36">
         </id>
 

@@ -12,19 +12,16 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yh.component.workflow.bo.FileAnnex;
 import com.yh.hr.component.annex.dto.FileAnnexDTO;
 import com.yh.hr.component.annex.facade.UploadAnnexComponentFacade;
 import com.yh.hr.component.annex.utils.UploadAnnexComponentUtil;
 import com.yh.platform.core.exception.ServiceException;
-import com.yh.platform.core.util.ConfigUtil;
 import com.yh.platform.core.util.DateUtil;
 import com.yh.platform.core.util.SpringBeanUtil;
 

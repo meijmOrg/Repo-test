@@ -33,6 +33,8 @@ public class TaskProcessDTO{
 	private java.lang.String	taskSendNextUser;	//任务下一步用户
 	
 	private java.lang.String actOrder; //活动序号
+	private java.lang.String haveAnnex;//是否存在附件 1存在 0 无
+	private java.lang.String haveCoordination;//是否存在协同记录 1存在0无
 	public java.lang.String getTaskProcessId() {
 		return taskProcessId;
 	}
@@ -164,6 +166,18 @@ public class TaskProcessDTO{
 	}
 	public void setActOrder(java.lang.String actOrder) {
 		this.actOrder = actOrder;
+	}
+	public java.lang.String getHaveAnnex() {
+		return haveAnnex;
+	}
+	public void setHaveAnnex(java.lang.String haveAnnex) {
+		this.haveAnnex = haveAnnex;
+	}
+	public java.lang.String getHaveCoordination() {
+		return haveCoordination;
+	}
+	public void setHaveCoordination(java.lang.String haveCoordination) {
+		this.haveCoordination = haveCoordination;
 	}
 
 }
