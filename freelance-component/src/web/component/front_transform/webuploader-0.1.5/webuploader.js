@@ -2710,7 +2710,6 @@
                     this.stats.numofDeleted++;
                 }
             },
-            
             //liul 添加 调试removeFile方法无法删除的问题
             _delFile : function(file){
                 for(var i = this._queue.length-1 ; i >= 0 ;i-- ){
@@ -2720,7 +2719,6 @@
                   }
                }
             },
-            
             _fileAdded: function( file ) {
                 var me = this,
                     existing = this._map[ file.id ];
