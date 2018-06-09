@@ -9,6 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.yh.component.workflow.bo.CarbonCopy;
+import com.yh.component.workflow.bo.File;
 import com.yh.component.workflow.bo.FlowActivity;
 import com.yh.component.workflow.bo.FlowRule;
 import com.yh.component.workflow.bo.SelUser;
@@ -183,7 +184,7 @@ public class YhFlowProcedureComponentServiceImpl implements  YhFlowProcedureComp
 		tp.setFlowId(probo.getFlowId());
 		tp.setActId(probo.getActId());
 		tp.setActName(probo.getActName());
-		tp.setFileId(dto.getFlowId());
+		tp.setFileId(dto.getFileId());
 		tp.setRuleId(probo.getActBeginRuleId());
 		tp.setTaskProcessDoTime(DateUtil.now());
 		tp.setTaskProcessUser(UserContext.getLoginUserID());
@@ -219,13 +220,41 @@ public class YhFlowProcedureComponentServiceImpl implements  YhFlowProcedureComp
 	}
 	
 	/**
-	 * 退回
+	 * 退回（退回到经办人（发起人））
 	 * @param 
 	 * @return
 	 * @throws ServiceException
 	 */
 	public void recheckBack(YhFlowComponentDTO dto) throws ServiceException{
+		//获取文档信息
+		File file = DaoUtil.get(File.class, dto.getFileId());
+		//获取经办人（文档创建人）
+		String createUserID = file.getCreateUserID();
+		//获取上一步活动单元信息
+		FlowActivity probo = DaoUtil.get(FlowActivity.class, dto.getTaskPreActId());
+		//获取当前（下一步审批：经办人）活动单元信息
+		List<WorkflowActivityDTO> allActivityDTOList = YhFlowComponentQueryHelper.getFlowActivityByFlowId(dto.getFlowId());
+		WorkflowActivityDTO wdto = allActivityDTOList.get(0);
+		FlowActivity currentbo = new FlowActivity();
+		BeanHelper.copyProperties(wdto, currentbo);
 		
+		//1.保存文档信息 YHFile(文件基础表状态7-已退回)
+//		String fileId = saveFileInfo(dto);
+		
+		//2.保存任务表信息 YHTask
+		saveTaskInfo(dto, probo, currentbo, dto.getFileId());
+		
+		//3.保存任务进程表信息 YHTaskProcess
+		
+		//4.保存经办人信息
+		SelUser su = new SelUser();
+		su.setSelUserId(UuidUtils.getUUID36());
+		su.setFileId(dto.getFileId());
+		su.setActId(wdto.getActId());
+		su.setUserId(createUserID);
+		su.setSelType("3");//退回所选择的用户
+		su.save();
+		//5.保存其他业务信息
 	}
 	
 	/**

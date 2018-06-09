@@ -24,6 +24,7 @@ import com.yh.component.workflow.bo.FlowActivity;
 import com.yh.component.workflow.bo.FlowRule;
 import com.yh.component.workflow.bo.SelUser;
 import com.yh.component.workflow.bo.Task;
+import com.yh.component.workflow.bo.TaskProcess;
 import com.yh.component.workflow.dto.CarbonCopyDTO;
 import com.yh.component.workflow.dto.FlowActivityPermissionDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
@@ -172,33 +173,8 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 				saveTaskInfo(dto, probo, currentbo, fileId);
 			}
 		
-		
-			//3.保存任务进程表信息 YHTaskProcess(发起不保存)
-	//		Task task = YhFlowComponentQueryHelper.getTaskInfoByTaskPreActId(dto.getTaskPreActId());
-	//		if(probo != null && probo.getActOrder() > 1){
-	//			TaskProcess tp = new TaskProcess();
-	//			tp.setTaskProcessId(UuidUtils.getUUID36());
-	//			tp.setTaskId(task.getTaskId());
-	//			tp.setFlowId(probo.getFlowId());
-	//			tp.setActId(probo.getActId());
-	//			tp.setActName(probo.getActName());
-	//			tp.setFileId(f.getFileId());
-	//			tp.setRuleId(probo.getActBeginRuleId());
-	//			tp.setTaskProcessDoTime(DateUtil.now());
-	//			tp.setTaskProcessUser(UserContext.getLoginUserID());
-	//			tp.setTaskProcessResult(dto.getTaskProcessResult());
-	//			tp.setTaskProcessExplain(dto.getTaskProcessExplain());
-	//			tp.setDeptId(UserContext.getLoginUserDeptOid());
-	//			tp.setTaskProcessName(task.getTaskName());
-	//			tp.setTaskProcessType("");
-	//			tp.setIsSkip(null);
-	//			tp.setSkipUser("");
-	//			tp.setTaskStartTime(task.getTaskSendTime());
-	//			tp.setTaskEndTime(DateUtil.now());
-	//			tp.setTaskFromUser(task.getTaskSendUser());
-	//			tp.setTaskSendNextUser("");
-	//			tp.save();
-	//		}
+			//3.保存任务进程表信息 YHTaskProcess
+			saveTaskProcessInfo(dto);
 			//4.保存设置的下一步用户办理人信息
 			saveSelUserInfo(dto, fileId, nextUsers);
 			//5.保存抄送记录信息(如果有选择抄送人才保存)
@@ -256,6 +232,31 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 		t.setTaskCoordination(dto.getTaskCoordination());
 		t.setTaskConunterSign(dto.getTaskConunterSign());
 		t.save();
+	}
+	
+	public void saveTaskProcessInfo(YhFlowComponentDTO dto) throws ServiceException{
+		TaskProcess tp = new TaskProcess();
+		tp.setTaskProcessId(UuidUtils.getUUID36());
+		tp.setTaskId("");
+		tp.setFlowId(dto.getFlowId());
+		tp.setActId("");
+		tp.setActName("");
+		tp.setFileId(dto.getFileId());
+		tp.setRuleId("");
+		tp.setTaskProcessDoTime(DateUtil.now());
+		tp.setTaskProcessUser(UserContext.getLoginUserID());
+		tp.setTaskProcessResult(dto.getTaskProcessResult());
+		tp.setTaskProcessExplain(dto.getTaskProcessExplain());
+		tp.setDeptId(UserContext.getLoginUserDeptOid());
+		tp.setTaskProcessName("");
+		tp.setTaskProcessType("");
+		tp.setIsSkip(null);
+		tp.setSkipUser("");
+		tp.setTaskStartTime(null);
+		tp.setTaskEndTime(DateUtil.now());
+		tp.setTaskFromUser(UserContext.getLoginUserID());
+		tp.setTaskSendNextUser("");
+		tp.save();
 	}
 	
 	public void saveSelUserInfo(YhFlowComponentDTO dto, String fileId, String[] nextUsers) throws ServiceException{
