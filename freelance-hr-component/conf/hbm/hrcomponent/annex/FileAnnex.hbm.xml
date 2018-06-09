@@ -6,8 +6,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
-<hibernate-mapping package="com.yh.component.workflow.bo">
-    <class name="com.yh.component.workflow.bo.FileAnnex" table="yhf_file_annex">
+<hibernate-mapping package="com.yh.hr.component.annex.bo">
+    <class name="com.yh.hr.component.annex.bo.FileAnnex" table="yhf_file_annex">
         <id name="faId" column="FA_ID" type="java.lang.String"  length="36">
         </id>
 		<property name="fileId" type="java.lang.String">

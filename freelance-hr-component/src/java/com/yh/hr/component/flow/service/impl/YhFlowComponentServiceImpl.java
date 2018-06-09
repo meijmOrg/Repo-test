@@ -17,14 +17,9 @@ import com.yh.admin.dto.RolesDTO;
 import com.yh.admin.roles.queryhelper.RolesQueryHelper;
 import com.yh.admin.util.AuthConstants;
 import com.yh.component.taglib.TableTagBean;
-import com.yh.component.workflow.bo.CarbonCopy;
-import com.yh.component.workflow.bo.File;
 import com.yh.component.workflow.bo.FileTemplate;
 import com.yh.component.workflow.bo.FlowActivity;
 import com.yh.component.workflow.bo.FlowRule;
-import com.yh.component.workflow.bo.SelUser;
-import com.yh.component.workflow.bo.Task;
-import com.yh.component.workflow.bo.TaskProcess;
 import com.yh.component.workflow.dto.CarbonCopyDTO;
 import com.yh.component.workflow.dto.FlowActivityPermissionDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
@@ -34,9 +29,14 @@ import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.component.workflow.dto.WorkflowBaseInfoDTO;
 import com.yh.component.workflow.queryhelper.WorkFlowCarbonCopyQueryHelper;
 import com.yh.component.workflow.queryhelper.WorkFlowKeyWordQueryHelper;
-import com.yh.component.workflow.queryhelper.WorkFlowTaskProcessQueryHelper;
+import com.yh.hr.component.flow.bo.CarbonCopy;
+import com.yh.hr.component.flow.bo.File;
+import com.yh.hr.component.flow.bo.SelUser;
+import com.yh.hr.component.flow.bo.Task;
+import com.yh.hr.component.flow.bo.TaskProcess;
 import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.queryhelper.YhFlowComponentQueryHelper;
+import com.yh.hr.component.flow.queryhelper.YhFlowTaskProcessQueryHelper;
 import com.yh.hr.component.flow.service.YhFlowComponentService;
 import com.yh.hr.component.orgtree.queryhelper.JhcOrgTreeQueryHelper;
 import com.yh.hr.res.unit.dto.UtOrgDTO;
@@ -447,7 +447,7 @@ public class YhFlowComponentServiceImpl implements  YhFlowComponentService
 	@Override
 	public Map<String, List<TaskProcessDTO>> listTaskProcess(TableTagBean ttb)
 			throws ServiceException {
-		List<TaskProcessDTO> tpList = WorkFlowTaskProcessQueryHelper.listTaskProcess(ttb);
+		List<TaskProcessDTO> tpList = YhFlowTaskProcessQueryHelper.listTaskProcess(ttb);
 		Map<String, List<TaskProcessDTO>> map = new TreeMap<String, List<TaskProcessDTO>>(
                 new Comparator<String>() {
                     public int compare(String obj1, String obj2) {

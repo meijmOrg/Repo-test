@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 
 import com.yh.component.taglib.TableTagBean;
-import com.yh.component.workflow.bo.FileAnnex;
+import com.yh.hr.component.annex.bo.FileAnnex;
 import com.yh.hr.component.annex.dto.FileAnnexDTO;
 import com.yh.hr.component.annex.queryhelper.UploadAnnexComponentQueryHelper;
 import com.yh.hr.component.annex.service.UploadAnnexComponentService;

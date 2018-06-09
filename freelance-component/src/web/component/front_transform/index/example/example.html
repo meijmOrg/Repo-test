@@ -12,14 +12,14 @@
 	<button id="modal2" type="button" class="mho_btn mho_btn_primary" style="margin-left:20px;">打开模态框2</button>
 	<script>
 		$('#modal1').click(function() {
-			var dialog = new Dialog({
+			Dialog.page({
 				url: '../example/modal1/modal1.html',
 				width: 800,
 				title: '用户选择'
 			});
 		});
         $('#modal2').click(function() {
-            var dialog = new Dialog({
+            Dialog.page({
                 url: '../example/modal2/modal2.html',
                 width: '80%',
                 title: '流程下一步'

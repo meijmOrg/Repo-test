@@ -1,4 +1,4 @@
-package com.yh.component.workflow.bo;
+package com.yh.hr.component.annex.bo;
 
 import com.yh.platform.core.bo.BaseBo;
 

@@ -5,14 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-
 import net.sf.json.JSONObject;
 
-import com.yh.component.dictionary.utils.DicHelper;
+import org.apache.commons.collections.CollectionUtils;
+
 import com.yh.component.taglib.TableTagBean;
-import com.yh.component.workflow.utils.WorkFlowConfigurationUtil;
 import com.yh.platform.core.dao.DaoUtil;
 import com.yh.platform.core.exception.DataAccessFailureException;
 import com.yh.platform.core.exception.ServiceException;
