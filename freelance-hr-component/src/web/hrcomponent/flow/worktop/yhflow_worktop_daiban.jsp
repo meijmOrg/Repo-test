@@ -26,13 +26,14 @@ $(document).ready(function(){
 			iPageLength: '${param.limit}'==''?30:'${param.limit}',
 			singleCheck: false,
 			columns: [
+				{header:'任务名称', field:'task_name', width:80 ,render:
+					function(v,r){
+					return $.format("<a  onclick=goFlowProcedure('"+r.data.file_ID+"','"+r.data.task_id+"')  style=color:green>{0}</a>",v);
+				}
+				},
 				{header:'流程处理状态', field:'file_Flow_Status', width:80},
-				{header:'模板编码', field:'template_Code', width:80},
-				{header:'文件标题', field:'file_title', width:80},
-				{header:'文档描述', field:'file_KeyWord', width:80},
-				
-				{header:'文档创建人ID', field:'file_Create_User_Id', width:80},
-				{header:'文档创建时间', field:'file_Create_Date', width:80}
+				{header:'发送人', field:'send_user', width:80},
+				{header:'发送时间', field:'send_time', width:80}
 			]
 		},
 		{
@@ -46,11 +47,11 @@ $(document).ready(function(){
 			tbar: '#fr_tbar',
 			fbar: '#fr_fbar',
 			buttons: {
-				/* 'add': function(){
-					 Widget.openContent("",function(){
+				 'add': function(){
+					 Widget.openContent("goFlowStartMainPage.do?method=goFlowStartMainPage",function(){
 						 worktop.form.goQuery();
 					 });
-				},
+				}/*,
 				'update': function(grid,record,worktop){
 					Widget.openContent(,function(){
 						worktop.form.goQuery();
@@ -110,8 +111,8 @@ $(document).ready(function(){
 function goback(){
 	HistoryRegister.go("goHomepage");
 }
-function goFlowProcedure(){
-	Widget.openContent("goFlowProcedureMainPage.do?method=goFlowProcedureMainPage");
+function goFlowProcedure(fileId,taskId){
+	Widget.openContent("goFlowProcedureMainPage.do?method=goFlowProcedureMainPage&fileId="+fileId+"&taskId="+taskId);
 }
 </script>
 </head>
@@ -134,13 +135,13 @@ function goFlowProcedure(){
 		<table class="x-table sortable ellipsis striped hover"></table>
 	</div>
 	
-	<!--浮动操作列表-->
+	<!--浮动操作列表
 	<div id="fr_fbar" style="display:none;" class="handel-float" >
 	    <em></em>
 	    <span></span>
 	    <button class="btn-modify btn-left-icon btn-default" button-click="update">修改</button>
 	    <button class="btn-look btn-left-icon btn-default" button-click="show">查看</button>
-	</div>
+	</div>-->
 </div>
 </body>
 

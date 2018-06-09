@@ -15,6 +15,13 @@ function viewAttachment(fileId,faUserName){
         title: '附件信息'
     });
 }
+function viewCoordination(fileId,faUserName){
+	var dialog = new Dialog({
+        url: 'listAnnexFile.do?method=listAnnexFile&fileId='+fileId+'&faUserName='+faUserName,
+        width: '80%',
+        title: '附件信息'
+    });
+}
 </script>
 </head>
 <body>

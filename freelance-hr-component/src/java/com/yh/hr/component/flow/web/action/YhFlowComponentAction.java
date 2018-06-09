@@ -29,6 +29,7 @@ import com.yh.hr.res.dictionary.DicConstants;
 import com.yh.platform.core.util.BeanHelper;
 import com.yh.platform.core.util.JSONHelper;
 import com.yh.platform.core.util.SpringBeanUtil;
+import com.yh.platform.core.web.UserContext;
 import com.yh.platform.core.web.action.BaseAction;
 
 /**
@@ -304,11 +305,15 @@ public class YhFlowComponentAction extends BaseAction {
 		//获取附件列表
 		String fileId = request.getParameter("fileId");
 		String faUserName = request.getParameter("faUserName");
+		if(StringUtils.isEmpty(faUserName)){
+			faUserName = UserContext.getLoginUserID();
+		}
+		String taskId = request.getParameter("taskId");
 		request.setAttribute("fileId", fileId);
 		request.setAttribute("faUserName", faUserName);
 		TableTagBean ttb = new TableTagBean();
 		ttb.getCondition().put("fileId", fileId);
-		ttb.getCondition().put("faUserName", faUserName);
+		ttb.getCondition().put("faUserName",faUserName );
 		List<FileAnnexDTO> annexFileList = uploadAnnexComponentFacade.listAnnexFile(ttb);
 		request.setAttribute("annexFileList", annexFileList);
 		//获取抄送信息
