@@ -304,11 +304,8 @@ public class YhFlowComponentAction extends BaseAction {
 		request.setAttribute("acceptFileTypes", acceptFileTypes);
 		//获取附件列表
 		String fileId = request.getParameter("fileId");
-		String faUserName = request.getParameter("faUserName");
-		if(StringUtils.isEmpty(faUserName)){
-			faUserName = UserContext.getLoginUserID();
-		}
-		String taskId = request.getParameter("taskId");
+		String faUserName = UserContext.getLoginUserID();
+		//String taskId = request.getParameter("taskId");
 		request.setAttribute("fileId", fileId);
 		request.setAttribute("faUserName", faUserName);
 		TableTagBean ttb = new TableTagBean();

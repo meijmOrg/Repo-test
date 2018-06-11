@@ -44,54 +44,14 @@ $(document).ready(function(){
 		{
 			xtype: 'Toolbar',//属性对应的构造函数
 			xname: 'tbar',
-			tbar: '#fr_tbar',
-			fbar: '#fr_fbar',
+			//tbar: '#fr_tbar',
+			//fbar: '#fr_fbar',
 			buttons: {
-				 'add': function(){
+				 /* 'add': function(){
 					 Widget.openContent("goFlowStartMainPage.do?method=goFlowStartMainPage",function(){
 						 worktop.form.goQuery();
 					 });
-				}/*,
-				'update': function(grid,record,worktop){
-					Widget.openContent(,function(){
-						worktop.form.goQuery();
-				    });
-					
-				},
-				'delete': function(grid,record,worktop){
-					var rows = worktop.grid.selectModel.getSelectRows();
-					if (rows.length == 0) {
-						MessageBox.alert('提示', "请至少选择一条记录再操作");
-					} else {
-						MessageBox.confirm('提示', warning, function (yes) {
-							if (yes == "yes") {
-								$.ajax({
-									url: '',
-									dataType: 'json',
-									error: function (x, t) {
-										alert(t)
-									},
-									async: false,
-									success: function (data) {
-										if (data.success) {
-											worktop.form.goQuery();
-										} else {
-											MessageBox.alert('提示', data.message, function () {
-												Widget.close();
-											});
-										}
-									}
-								});
-							}
-						})
-					}
-				},
-				'show': function(grid,record,worktop){
-					Widget.openContent(,function(){
-						worktop.form.goQuery();
-				    });
 				} */
-				
 			} 
 		}    
 	]);
