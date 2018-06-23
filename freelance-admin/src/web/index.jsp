@@ -59,11 +59,17 @@
 			</ul>
 		</div>
 		<div class="mho_center">
+			<div class="mho_center_left_tools">
+				<a href="javascript:void(0)" id="toggleLeft"><i class="fa fa-arrow-left"></i></a>
+			</div>
 			<ul class="mho_center_tabs">
-				<li id="toggleLeft"><i class="fa fa-arrow-left"></i></li>
-				<!-- <li class="mho_selected"><a href="javascript:void(0);">首页</a></li> -->
+				<li class="mho_selected"><a href="javascript:void(0);" url="goHomepage.do?method=goHomepage">首页</a></li>
 			</ul>
-			<iframe class="mho_center_main" name="szghrsmain" style="width:100%;height:100%;border:0;">
+			<div class="mho_center_right_tools">
+				<a href="javascript:void(0)" id="backward"><i class="fa fa-backward"></i></a>
+				<a href="javascript:void(0)" id="forward"><i class="fa fa-forward"></i></a>
+			</div>
+			<iframe id="mho_main_frame" class="mho_center_main" name="szghrsmain" style="width:100%;height:100%;border:0;">
 			</iframe>
 		</div>
 	</div>
