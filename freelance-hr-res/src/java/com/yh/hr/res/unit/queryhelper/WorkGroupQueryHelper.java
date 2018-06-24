@@ -23,7 +23,7 @@ public class WorkGroupQueryHelper {
      */
 	public static List<WorkGroupDTO> queryWorkGroupList() throws DataAccessFailureException, ServiceException {
         StringBuilder hql = new StringBuilder();
-		hql.append("from WorkGroup w where 1=1 and wpStatus = '0'");
+		hql.append("from WorkGroup w where 1=1");
 		return BeanHelper.copyProperties(DaoUtil.find(hql.toString()), WorkGroupDTO.class);
 	}	
 
