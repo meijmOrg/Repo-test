@@ -3,6 +3,22 @@ var selectOrgOid="";
 var queryOrgName = "";
 var isPersonInfoFlag="";
 var templetIdOrg = "";
+//选择事件
+function createFlowOrUpdate(obj,isPersonInfo,templetId,flowId,flag)
+{
+
+	 HistoryRegister.set("goWorkflowConfigurationUpdate", "goWorkflowConfigurationUpdate.do?method=goWorkflowConfigurationUpdate");
+     if("update"==flag)
+    	 {
+    	 location.href = "goCreateWorkflowBaseInfo.do?method=goUpdateFlow&templetId="+templetId+"&flowId="+flowId;
+    	 }
+     else{
+    	 location.href = "goCreateWorkflowBaseInfo.do?method=goUpdateFlow&templetId="+templetId;
+    	  
+     }
+    
+
+}
 function selectOrgForCreateFlow(obj,isPersonInfo,templetId)
 {
 	templetIdOrg = templetId;
@@ -129,4 +145,67 @@ function goQuery1(pageNo,flag,queryOrgName)
 			//queryHisPositionName="";
 		}
 	});
+}
+
+
+function selectOrg()
+{
+	var div="<div class='modal_box select_unit_dialog' id='dictionaryHtml'>"+
+				"<div class='modal-dialog-container'>"+
+					"<!-- 头部-->"+
+					"<div class='md-title'>"+
+						"<h3>选择部门<span class='fr md-close close-popdown' onclick='closeRankCode1()'><i class='iconfont icon-close font-16'></i></span></h3>"+
+					"</div>"+
+					"<div class='md-body'>"+
+						"<div class='search-cont search-one-row clearfix'>"+
+							"<dl class='search-col'>"+
+								"<dt></dt>"+
+								"<dd><input id='queryOrgNameId' type='text'></dd>"+
+							"</dl>"+
+						"</div>"+
+						"<div class='supplier-info'>"+
+							"<ul class='fluid' id='set_next_city'>"+
+			                	"<div class='clearfix'></div>"+
+			            	"</ul>"+
+		            	"</div>"+
+                	"</div>"+
+		        	"<div class='md-btns'>"+
+		            	"<button id='unit_add' class='btn-bg-blue btn-default'>确认</button>"+
+		        	"</div>"+
+	        	"</div>"+
+        	"</div>";
+	if($("#dictionaryHtml").length<=0){
+		$(document.getElementsByTagName("body")).append(div);
+	}
+	$("#dictionaryHtml").show();
+	
+	//查询
+	goQuery1(null,"query",queryOrgName);
+	
+	//选择事件
+	$("#unit_add").click(function(){
+		queryOrgName = "";
+		$(".select_unit_dialog").remove();
+		$("#hireDeptName").val(selectOrgName);
+		$("#hireDeptOid").val(selectOrgOid);
+		  selectOrgName = "";
+         selectOrgOid = "";
+
+	});
+	
+	//供应商信息弹窗
+    $(document).on('click','.supplier-info li',function () {
+        $(this).addClass('blue').siblings().removeClass('blue');
+    });
+    
+    $("#queryOrgNameId").keydown(function() {
+	    if (event.keyCode == "13") {//keyCode=13是回车键
+	    	query1();
+	    }
+	});
+	
+	$("#searchButton").click(function() {
+		query1();
+	});
+
 }

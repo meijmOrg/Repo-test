@@ -4,6 +4,8 @@
 **/
 package com.yh.component.workflow.web.action;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -323,12 +325,12 @@ public class WorkflowConfigurationAction extends BaseAction {
 		String orgName = request.getParameter("orgName");//所属部门名称
 		String orgOid = request.getParameter("orgOid");//部门ID
 		//《增改 同一方法》
-		String baseInfoId = request.getParameter("baseInfoId");//流程Id
+		String flowId = request.getParameter("flowId");//流程Id
 		WorkflowConfigurationDTO workflowConfigurationDto = new WorkflowConfigurationDTO();
 		
-		if(StringUtils.isNotEmpty(baseInfoId)){
+		if(StringUtils.isNotEmpty(flowId)){
 			//修改
-			workflowConfigurationDto=workflowConfigurationFacade.getBaseFlowInfo(baseInfoId);
+			workflowConfigurationDto=workflowConfigurationFacade.getBaseFlowInfo(flowId);
 		}else{
 			//新增
 			//获取默认的活动（启动，结束？）与规则
@@ -463,10 +465,14 @@ public class WorkflowConfigurationAction extends BaseAction {
 			HttpServletResponse response) throws Exception
 	{
 		String ruleFlowContent = request.getParameter("ruleFlowContent");
-		String id = request.getParameter("id"); //ruleId
-		String ruleFlowId = request.getParameter("ruleFlowId");
+		/*String id = request.getParameter("id"); //ruleId
+		String ruleFlowId = request.getParameter("ruleFlowId");*/
 		String templateId = request.getParameter("templateId");//模板id
 		String flowId = request.getParameter("flowId"); //流程ID
+		String flowName = request.getParameter("flowName"); //ruleId
+		String flowType = request.getParameter("flowType");
+		String flowOrgOid = request.getParameter("flowOrgOid"); //ruleId
+		String flowOrgName = request.getParameter("flowOrgName");
 		try
 		{
 			if(StringUtils.isEmpty(templateId))
@@ -478,9 +484,19 @@ public class WorkflowConfigurationAction extends BaseAction {
 				DrawingFlow df = new DrawingFlow();
 				df.setTemplateId(templateId);
 				df.setFlowId(flowId);
-				df.setFlowData(ruleFlowContent);
+				
+				df.setFlowName(flowName);
+				df.setFlowType(flowType);
+				if(StringUtils.isNotBlank(flowOrgOid))
+				{
+					df.setFlowOrgOid(Long.valueOf(flowOrgOid));
+					df.setFlowOrgName(flowOrgName);
+				}
 				List<DrawingBaseInfo> dbiList = new ArrayList<DrawingBaseInfo>();
 				List<DrawingFlowRule> dfrList = new ArrayList<DrawingFlowRule>();
+				/*ruleFlowContent =URLEncoder.encode(ruleFlowContent);
+				ruleFlowContent=URLDecoder.decode(URLDecoder.decode(ruleFlowContent, "utf-8"), "utf-8");*/
+				df.setFlowData(ruleFlowContent);
 				JSONObject ja = JSONObject.fromObject(ruleFlowContent);
 				JSONObject states = ja.getJSONObject("states");
 				Map<String,Object> statesMaps = JSON.parseObject(states.toString()); 

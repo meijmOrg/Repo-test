@@ -21,11 +21,42 @@
 	<script type="text/javascript" src="component/workflow/configuration/drawing/myflow.jpdl4.js"></script>
 	<script type="text/javascript" src="component/workflow/configuration/drawing/myflow.editors.js"></script>
 	<script type="text/javascript" src="component/workflow/configuration/drawing/index.js"></script>
-	
+	<script type="text/javascript" src="component/workflow/configuration/js/selectOrgForCreateFlow.js"></script>
 	<link rel="stylesheet" type="text/css" href="component/workflow/configuration/drawing/ruleFlowProps.css">
 		<link rel="stylesheet" href="component/front_transform/mho.css">
+		<script type="text/javascript">
+	var templateId = '${templetId}';
+	var flowdata='${workflowConfigurationDto.flowData}';
+	 $.asset["ruleParams"]={}; // 节点属性参数
+	 $.asset["ruleParamsPath"]={}; // 连线属性
+	
+	</script>
 </head>
 <body>
+		<div style="overflow-x:hidden;padding-bottom: 20px;">
+		<input type="hidden" id="templetId" name="templetId" value='${templetId}' /> 
+		<input type="hidden" id="flowId" name="flowId" value='${workflowConfigurationDto.flowId}' /> 
+				<dl class="data-unit-dl">
+					<dt>流程名称：</dt>
+					<dd>
+						<label><input type="text" name="flowName" class="modal_iput" id="flowName" value='${workflowConfigurationDto.flowName}' maxlength="100"/></label>
+					</dd>
+				</dl>
+				<dl class="data-unit-dl">
+					<dt>流程类别：</dt>
+					<dd>
+					<label><dictionary:dicItemSelect id="flowType" name="flowType" styleClass="modal_select" emptyText="<%=WorkFlowConfigurationUtil.EMPTY_SELECT %>"  dicTypeCode="<%=WorkFlowConfigurationUtil.YHRS4004%>"  selected='${workflowConfigurationDto.flowType}'/> </label>
+					</dd>
+				</dl>
+				<dl class='data-unit-dl'>
+							<dt class="search-unit-dt">所属科室：</dt>
+							<dd class="search-unit-dd">
+									<input type="text" class="modal_iput" name="hireDeptName" id="hireDeptName" readonly="readonly" onclick="selectOrg()" value='${workflowConfigurationDto.flowOrgName}' /> 
+									<input type="hidden" id="hireDeptOid" name="hireDeptOid" value='${workflowConfigurationDto.flowOrgOid}' /> 
+									<!-- <a class="md-unit-clear" onclick="$(this).siblings('input').val('')"></a> -->
+							</dd>
+						</dl>
+		</div>
 <div class="substance"  id="tabs-1">
 	<div id="myflow_tools" class="ui-widget-content">
 		<div id="myflow_tools_handle" style="text-align: center;"

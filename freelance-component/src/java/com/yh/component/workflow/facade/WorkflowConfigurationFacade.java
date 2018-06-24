@@ -98,7 +98,7 @@ public class WorkflowConfigurationFacade {
 	 * @throws ServiceException
 	 */
 	public void deleteFlow(String baseInfoId) throws ServiceException{
-		// TODO Auto-generated method stub
+		
 		workflowConfigurationService.deleteFlow(baseInfoId);
 		
 	}
