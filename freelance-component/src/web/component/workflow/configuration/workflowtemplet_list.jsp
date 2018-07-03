@@ -7,6 +7,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0"/>
 <title>模板管理页面</title>
+<link rel="stylesheet" href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="component/front_transform/mho.css">
 <%-- <%@ include file="/include/js_css_admin_include.jsp"%> --%>
 	<%@ include file="/include/js_css_base_include.jsp"%>
 <style type="text/css">
@@ -46,9 +48,17 @@
 	<div class="right_content_wfc" style="height: auto; padding-bottom: 0px;">
 		<div id="sp_fbar" style="display: block;">
 		<em></em><span></span>
-		<button class="btn_add" onclick="addTemplet()">新增</button>
-		<button class="btn_add" onclick="updateTemplet()">修改</button>
-		<button class="btn_delete" onclick="deleteTemplet()">删除</button>
+		<button type="button" class="mho_btn mho_dep_yellow" onclick="addTemplet()">
+			<i class="fa fa-plus"></i>
+			新增</button>
+		<button type="button" class="mho_btn mho_blue" onclick="updateTemplet()">
+			<i class="fa fa-edit"></i>
+			修改
+		</button>
+		<button type="button" class="mho_btn mho_red" onclick="deleteTemplet()">
+			<i class="fa fa-remove"></i>
+			删除
+		</button>
 	</div>
 	<div id="right_wfc"></div>
 	</div>

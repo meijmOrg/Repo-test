@@ -19,21 +19,45 @@ a:hover {
 }
 .mho_blue {
   background: #3f51b5;
+  color: #fff;
+}
+.mho_blue:hover {
+  background: #303f9f;
 }
 .mho_dep_blue {
   background: #303f9f;
+  color: #fff;
+}
+.mho_dep_blue:hover {
+  background: #301080;
 }
 .mho_red {
   background: #e64a19;
+  color: #fff;
+}
+.mho_red:hover {
+  background: #e63019;
 }
 .mho_green {
   background: #4caf50;
+  color: #fff;
+}
+.mho_green:hover {
+  background: #4c9050;
 }
 .mho_pink {
-	background: #cfd3ec;
+  background: #cfd3ec;
+  color: #fff;
+}
+.mho_pink:hover {
+  background: #cfa0ec;
 }
 .mho_dep_yellow {
   background: #ffa000;
+  color: #fff;
+}
+.mho_dep_yellow:hover {
+  background: #ff7000;
 }
 .mho_blue_color {
   color: #3f51b5;
@@ -475,6 +499,11 @@ a:hover {
     padding: 0 20px;
     border-bottom: 1px solid #d7e0f1;
 }
+.mho_accordion_title i.fa {
+	float: right;
+	height: 40px;
+	line-height: 40px;
+}
 .mho_accordion_body {
 	padding: 10px 10px;
 }
@@ -536,6 +565,7 @@ input[type=radio] {
     display: inline-block;
     height: 30px;
     padding: 0 10px;
+    margin: 5px 10px;
     line-height: 30px;
     margin-bottom: 0;
     font-size: 14px;

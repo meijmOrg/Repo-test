@@ -39,21 +39,24 @@ $(function () {
          //初始化字典
          initDict: function () {
              $.get("queryDepGroRole.do?method=queryDepGroRole", function (result) {
-                 var u = "";
-                 var O = "";
-                 var t="";
+                 var u = "<div class='mho_form_group'>";
+                 var O = "<div class='mho_form_group'>";
+                 var t= "<div class='mho_form_group'>";
                  var s=eval('(' + result + ')');
                  $.each(s.orgInfo, function (i, item) {              
-                     u += " <div class='mho_form_group'><label> <input type='checkbox' name='orgInfo' value='" + item.orgOid + "'>" + item.orgName + "</label></div>";
+                     u += " <label> <input type='checkbox' name='orgInfo' value='" + item.orgOid + "'>" + item.orgName + "</label>";
                  });
+                 u += "</div>";
                  $(".mho_orgInfo").append(u);
                  $.each(s.roleInfo, function (i, item) {
-                    O += " <div class='mho_form_group'><label> <input type='checkbox' name='roleInfo' value='" + item.roleId + "'>" + item.roleName + "</label></div>";
+                    O += "<label> <input type='checkbox' name='roleInfo' value='" + item.roleId + "'>" + item.roleName + "</label>";
                  });
+                 O += "</div>";
                  $(".mho_roleInfo").append(O);
                  $.each(s.groupInfo, function (i, item) {
-                     t += " <div class='mho_form_group'><label> <input type='checkbox' name='groupInfo' value='" + item.wpId + "'>" + item.wpName + "</label></div>";
+                     t += "<label> <input type='checkbox' name='groupInfo' value='" + item.wpId + "'>" + item.wpName + "</label>";
                   });
+                 t += "</div>";
                   $(".mho_groupInfo").append(t);
              });
              
@@ -366,6 +369,15 @@ $(function () {
         		$(this).addClass('mho_active');
         		$tabs.find('.mho_tab_panel').removeClass('mho_active');
         		$tabs.find('.mho_tab_panel').eq($(this).index()).addClass('mho_active');
+        	});
+            $('.mho_accordion .mho_accordion_title').on('click', function() {
+        		if($(this).children('.fa').hasClass('fa-caret-down')) {
+        			$(this).next('.mho_accordion_body').slideUp();
+        			$(this).children('.fa').removeClass('fa-caret-down').addClass('fa-caret-up');
+        		}else {
+        			$(this).next('.mho_accordion_body').slideDown();
+        			$(this).children('.fa').removeClass('fa-caret-up').addClass('fa-caret-down');
+        		}
         	});
             $.asset["ruleOrPath"]=2;
             $.asset["curRuleParams"]={};
