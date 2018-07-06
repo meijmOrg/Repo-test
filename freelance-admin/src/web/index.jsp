@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
     <title>医院人事管理系统</title>
    <%@ include file="/include/js_css_base_include.jsp"%> 
-    <link rel="stylesheet" href="yhhtml/mho.css">
-    <link rel="stylesheet" href="yhhtml/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="component/front_transform/mho.css">
+    <link rel="stylesheet" href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
 
     <script src="admin/js/jTopMenu.js" type="text/javascript"></script>
     <script type="text/javascript">

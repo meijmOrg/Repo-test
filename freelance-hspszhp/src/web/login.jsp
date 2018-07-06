@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>医院人事管理系统</title>
-    <link rel="stylesheet" href="yhhtml/font-awesome-4.7.0/css/font-awesome.css">
-     <link rel="stylesheet" href="yhhtml/mho.css">
+    <link rel="stylesheet" href="component/front_transform/mho.css">
+    <link rel="stylesheet" href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
     <script type="application/x-javascript"> 
     	addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
     	if (parent.opener != null)  {

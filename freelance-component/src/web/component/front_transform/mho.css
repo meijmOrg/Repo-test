@@ -8,7 +8,7 @@ ol {
   list-style: none;
 }
 body {
-  font: 14px '微软雅黑', Verdana, Helvetica, Arial, sans-serif;
+  font: 14px 'microsoft yahei', Verdana, Helvetica, Arial, sans-serif;
 }
 a {
   text-decoration: none;
@@ -291,6 +291,9 @@ a:hover {
   font-size: 12px;
   color: #7e8082;
 }
+.mho_left_menu_tree {
+	background: #f2f5ff;
+}
 .mho_left_menu_tree > li {
   line-height: 40px;
   color: #7e8082;
@@ -309,7 +312,7 @@ a:hover {
 }
 .mho_left_menu_tree > li > ul > li > ul {
   display: none;
-  background: #f2f9ee;
+  background: #fff;
 }
 .mho_left_menu_tree > li > ul > li > ul > li a {
   display: inline-block;
