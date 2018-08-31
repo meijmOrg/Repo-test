@@ -346,3 +346,208 @@ select.as-label {
 .mrb-40.search-include{
 	border:none;
 }
+
+.words{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 160px;
+}
+.li_front_wfc{
+    float: left;
+    width: 50%;
+    clear: left;
+    text-align: right;
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+    /*white-space: nowrap;*/
+    font-size: 14px;
+    margin-left: 20px;
+    color: #7c7c7c;
+}
+.modal_box {
+    position: absolute;
+    top: 50px;
+    left: 20%;
+    width: 60%;
+    /*min-width: 680px;*/
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+.modal_box .blue {
+    color: #5097ed;
+}
+.small-dialog.modal_box {
+    width: 30%;
+    top: 200px;
+    left: 35%;
+    min-width: 300px;
+}
+.big-dialog.modal_box {
+    width: 80%;
+    left: 10%;
+}
+.select_unit_dialog {
+	z-index: 99999;
+}
+@media screen and (min-width:1280px) {
+    .modal-dialog-container .people-detail .detail-ul1 li.detail-li1.textArea{
+        width: 99%;
+    }
+    .people-detail .detail-ul1 li.detail-li1{
+        float: left;
+        width: 33%;
+    }
+     .people-detail .detail-ul1 li.detail-info-img:nth-child(1){
+        display: block;
+    }
+/*    .people-detail .detail-ul1 li.detail-info-img:nth-child(4){
+         display: block;
+     } */
+    .people-detail .detail-li1.textArea span.info-left{
+        width: calc(15.5% - 8px);
+    }
+    .people-detail .detail-li1.textArea span.info-right{
+        width: calc(84.5% + 8px);
+        min-height: 80px;
+    }
+}
+@media screen and (max-width:1280px) {
+    .modal-dialog-container .people-detail .detail-ul1 li.detail-li1.textArea{
+        width: 100%;
+    }
+    .people-detail .detail-ul1 li.detail-li1{
+        float: left;
+        width: 50%;
+    }
+    .people-detail .detail-ul1 li.detail-info-img:nth-child(1){
+        display: block;
+    }
+/*     .people-detail .detail-ul1 li.detail-info-img:nth-child(4){
+        display: none;
+    } */
+    .people-detail .detail-li1.textArea span.info-left{
+        width: calc(23% - 5px);
+        border-bottom: 1px dotted #fff;
+    }
+    .people-detail .detail-li1.textArea span.info-right{
+        width: calc(77% + 5px);
+        min-height: 80px;
+    }
+}
+.md-title {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background-color: #5097ed;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    color: #ffffff;
+    padding-left: 20px;
+}
+.md-title h3 {
+    font-weight: bold;
+    font-size: 16px;
+}
+.md-close {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.md-body {
+    padding: 0 20px;
+    margin: 10px 0;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.md-btns {
+    padding-bottom: 10px;
+    padding-top: 5px;
+    text-align: center;
+}
+.md-btns button {
+    padding: 8px 25px;
+    font-size: 16px;
+    border-radius: 6px;
+}
+.small-dialog .md-btns button {
+    padding: 6px 12px;
+    font-size: 14px;
+}
+.md-btn-close:hover {
+    text-decoration: underline;
+}
+.clearfix { zoom: 1; }
+/*供应商信息*/
+.supplier-info{
+    background-color: #edf4fd;
+    padding: 10px 0 10px 20px;
+    box-sizing: border-box;
+}
+/*单独设置供应商信息模态框主体部分*/
+.md-body .supplier-info{
+    padding: 0;
+    max-height: 440px;
+    overflow-y: auto;
+    margin-top: 8px;
+}
+.md-body .role-empower {
+    padding: 0;
+    max-height: 380px;
+  /*  overflow-y: auto;*/
+}
+.supplier-info li{
+    position: relative;
+    float: left;
+    font-size: 14px;
+    color: #555555;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: break-word;
+    line-height: 2.5;
+    margin-right: 30px;
+    box-sizing: border-box;
+    padding:0 15px 0 5px;
+    cursor: pointer;
+    border: 1px solid #edf4fd;
+}
+.supplier-info li.blue:after{
+    content: '√';
+    float: right;
+    position: absolute;
+    right: 6px;
+}
+.supplier-info li.blue{
+    border: 1px solid #5097ed;
+    color: #5097ed;
+}
+/*流体布局*/
+@media screen and (min-width:1280px) {
+    .fluid li {
+        /*width: 33%;*/
+         width: calc(33% - 30px);
+    }
+}
+@media screen and (max-width:1280px) {
+    .fluid li {
+        width: calc(50% - 30px);
+    }
+}

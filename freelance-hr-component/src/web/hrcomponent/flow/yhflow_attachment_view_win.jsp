@@ -28,6 +28,9 @@ function downloadFile(faId) {
 				</ul>
 			</div>
 		</div>
-		</div>
+	</div>
+	<div class="mho_modal_footer">
+		<button id="cancel" class="mho_btn mho_btn_empty mho_btn_circle" >关闭</button>
+	</div>
 </body>
 </html>

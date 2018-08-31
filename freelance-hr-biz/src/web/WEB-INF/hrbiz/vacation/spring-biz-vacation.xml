@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!--请休假业务-->
+	<bean id="bizVacationFacade" parent="txnProxyParent">
+		<property name="target">
+			<bean class="com.yh.hr.biz.vacation.facade.BizVacationFacade">
+				<property name="bizVacationService" ref="bizVacationService" />
+			</bean>
+		</property>
+	</bean>
+   <bean id="bizVacationService" class="com.yh.hr.biz.vacation.service.impl.BizVacationServiceImpl"/>
+   
+   <!--流程begin-->
+   	<!-- 创建业务事项 -->
+	<bean name="createTaskYHFQXJ" class="com.yh.hr.biz.vacation.service.impl.BizVacationServiceImpl" parent="yhFlowComponentService" singleton="false" />
+	<!-- 加签 -->
+	<bean name="sighTaskYHFQXJ" class="com.yh.hr.biz.vacation.service.impl.BizVacationServiceImpl" parent="yhFlowComponentService" singleton="false" />
+    <!-- 暂存 -->
+	<bean name="saveTempYHFQXJ" class="com.yh.hr.biz.vacation.service.impl.BizVacationServiceImpl" parent="yhFlowComponentService" singleton="false" />
+	<!-- 历史数据 -->
+	<bean name="saveHisYHFQXJ" class="com.yh.hr.biz.vacation.service.impl.BizVacationServiceImpl" parent="yhFlowComponentService" singleton="false" />
+</beans>

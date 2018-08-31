@@ -22,14 +22,14 @@ public class DESUtils {
     private final static String ENCODE = "GBK";
     private final static String defaultKey = "YHStudio";//YHStudio
 
-//    public static void main(String[] args) throws Exception {
-//        String data = "刘垒测试单位YHStudio";
-//        // System.err.println(encrypt(data, key));
-//        // System.err.println(decrypt(encrypt(data, key), key));
-//        System.out.println(encrypt(data));
-//        System.out.println(decrypt(encrypt(data)));
-//
-//    }
+    public static void main(String[] args) throws Exception {
+        String data = "东南科技股份有限公司YHStudio";
+        // System.err.println(encrypt(data, key));
+        // System.err.println(decrypt(encrypt(data, key), key));
+        System.out.println(encrypt(data));
+        System.out.println(decrypt(encrypt(data)));
+
+    }
 
     /**
      * 使用 默认key 加密
@@ -38,6 +38,11 @@ public class DESUtils {
      * @throws Exception
      */
     public static String encrypt(String data) throws Exception {
+    	byte[] b = defaultKey.getBytes(ENCODE);
+    	byte[] bb = data.getBytes(ENCODE);
+    	for(int i=0;i<bb.length;i++){
+    		bb[i] = (byte) (bb[i]+10);
+    	}
         byte[] bt = encrypt(data.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
         String strs = new BASE64Encoder().encode(bt);
         return strs;

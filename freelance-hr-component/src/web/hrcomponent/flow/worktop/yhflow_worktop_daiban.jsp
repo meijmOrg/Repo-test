@@ -26,13 +26,14 @@ $(document).ready(function(){
 			iPageLength: '${param.limit}'==''?30:'${param.limit}',
 			singleCheck: false,
 			columns: [
+				{header:'任务名称', field:'task_name', width:80 ,render:
+					function(v,r){
+					return $.format("<a  onclick=goFlowProcedure('"+r.data.file_ID+"','"+r.data.task_id+"')  style=color:green>{0}</a>",v);
+				}
+				},
 				{header:'流程处理状态', field:'file_Flow_Status', width:80},
-				{header:'模板编码', field:'template_Code', width:80},
-				{header:'文件标题', field:'file_title', width:80},
-				{header:'文档描述', field:'file_KeyWord', width:80},
-				
-				{header:'文档创建人ID', field:'file_Create_User_Id', width:80},
-				{header:'文档创建时间', field:'file_Create_Date', width:80}
+				{header:'发送人', field:'send_user', width:80},
+				{header:'发送时间', field:'send_time', width:80}
 			]
 		},
 		{
@@ -43,8 +44,8 @@ $(document).ready(function(){
 		{
 			xtype: 'Toolbar',//属性对应的构造函数
 			xname: 'tbar',
-			tbar: '#fr_tbar',
-			fbar: '#fr_fbar',
+			//tbar: '#fr_tbar',
+			//fbar: '#fr_fbar',
 			buttons: {
 				 'goFlowProcedure': function(){
 					 var rows = worktop.grid.selectModel.getSelectRows();
@@ -57,47 +58,7 @@ $(document).ready(function(){
 							 worktop.form.goQuery();
 						 });
 					 }
-				},
-				/*'update': function(grid,record,worktop){
-					Widget.openContent(,function(){
-						worktop.form.goQuery();
-				    });
-					
-				},
-				'delete': function(grid,record,worktop){
-					var rows = worktop.grid.selectModel.getSelectRows();
-					if (rows.length == 0) {
-						MessageBox.alert('提示', "请至少选择一条记录再操作");
-					} else {
-						MessageBox.confirm('提示', warning, function (yes) {
-							if (yes == "yes") {
-								$.ajax({
-									url: '',
-									dataType: 'json',
-									error: function (x, t) {
-										alert(t)
-									},
-									async: false,
-									success: function (data) {
-										if (data.success) {
-											worktop.form.goQuery();
-										} else {
-											MessageBox.alert('提示', data.message, function () {
-												Widget.close();
-											});
-										}
-									}
-								});
-							}
-						})
-					}
-				},
-				'show': function(grid,record,worktop){
-					Widget.openContent(,function(){
-						worktop.form.goQuery();
-				    });
-				} */
-				
+				}
 			} 
 		}    
 	]);
@@ -116,9 +77,9 @@ $(document).ready(function(){
 });
 function goback(){
 	HistoryRegister.go("goHomepage");
-}
-/* function goFlowProcedure(){
-	Widget.openContent("goFlowProcedureMainPage.do?method=goFlowProcedureMainPage");
+};
+/* function goFlowProcedure(fileId,taskId){
+	Widget.openContent("goFlowProcedureMainPage.do?method=goFlowProcedureMainPage&fileId="+fileId+"&taskId="+taskId);
 } */
 </script>
 </head>
@@ -141,13 +102,13 @@ function goback(){
 		<table class="x-table sortable ellipsis striped hover"></table>
 	</div>
 	
-	<!--浮动操作列表-->
+	<!--浮动操作列表
 	<div id="fr_fbar" style="display:none;" class="handel-float" >
 	    <em></em>
 	    <span></span>
 	    <button class="btn-modify btn-left-icon btn-default" button-click="update">修改</button>
 	    <button class="btn-look btn-left-icon btn-default" button-click="show">查看</button>
-	</div>
+	</div>-->
 </div>
 </body>
 

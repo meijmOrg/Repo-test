@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
     <title>医院人事管理系统</title>
    <%@ include file="/include/js_css_base_include.jsp"%> 
-    <link rel="stylesheet" href="yhhtml/mho.css">
-    <link rel="stylesheet" href="yhhtml/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="component/front_transform/mho.css">
+    <link rel="stylesheet" href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
 
     <script src="admin/js/jTopMenu.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -59,11 +59,17 @@
 			</ul>
 		</div>
 		<div class="mho_center">
+			<div class="mho_center_left_tools">
+				<a href="javascript:void(0)" id="toggleLeft"><i class="fa fa-arrow-left"></i></a>
+			</div>
 			<ul class="mho_center_tabs">
-				<li id="toggleLeft"><i class="fa fa-arrow-left"></i></li>
-				<!-- <li class="mho_selected"><a href="javascript:void(0);">首页</a></li> -->
+				<li class="mho_selected"><a href="javascript:void(0);" url="goHomepage.do?method=goHomepage">首页</a></li>
 			</ul>
-			<iframe class="mho_center_main" name="szghrsmain" style="width:100%;height:100%;border:0;">
+			<div class="mho_center_right_tools">
+				<a href="javascript:void(0)" id="backward"><i class="fa fa-backward"></i></a>
+				<a href="javascript:void(0)" id="forward"><i class="fa fa-forward"></i></a>
+			</div>
+			<iframe id="mho_main_frame" class="mho_center_main" name="szghrsmain" style="width:100%;height:100%;border:0;">
 			</iframe>
 		</div>
 	</div>

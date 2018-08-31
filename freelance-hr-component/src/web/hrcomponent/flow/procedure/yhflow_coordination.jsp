@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>抄送</title>
+<title>协同</title>
 <link rel="stylesheet"
 	href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
 <link rel="stylesheet" href="component/front_transform/mho.css">
@@ -48,6 +48,10 @@ $(document).ready(function() {
 				  }
 			  })
 		})
+	});
+	/*取消 */
+	$('#cancel').click(function() {
+		Dialog.close();
 	});
 	/*重置 */
 	$('#reset').click(function() {
@@ -114,5 +118,10 @@ $(document).ready(function() {
 		</div>
 	</div>
 	</html:form>
+	<div class="mho_modal_footer">
+		<button id="confirm" class="mho_btn mho_btn_empty mho_btn_circle">确认</button>
+		<button id="cancel" class="mho_btn mho_btn_empty mho_btn_circle">取消</button>
+		<button id="reset" class="mho_btn mho_btn_empty mho_btn_circle">重置</button>
+	</div>
 </body>
 </html>

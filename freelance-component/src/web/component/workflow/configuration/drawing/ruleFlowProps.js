@@ -2,9 +2,10 @@
 $(function () {
     $.asset["slideInfoIndex"] = 999999;
     $.asset["slideMaskIndex"] = $.asset["slideInfoIndex"]-1;
-    $.asset["ruleParams"]={}; // 节点属性参数
-    $.asset["ruleParamsPath"]={}; // 连线属性
+   
+    $.asset["curRuleParams"]={}; // 节点属性参数
     $.asset["ruleOrPath"]=0;
+    $.asset["curRuleId"]={};
     $.asset["allKeys"]={};
     $.asset["ruleProps"] = {
             "ruleCond_NUMBER":{"==":"等于","&gt;":"大于","&lt;":"小于","&gt;=":"大于等于","&lt;=":"小于等于","!=":"不等于"},
@@ -38,21 +39,24 @@ $(function () {
          //初始化字典
          initDict: function () {
              $.get("queryDepGroRole.do?method=queryDepGroRole", function (result) {
-                 var u = "";
-                 var O = "";
-                 var t="";
+                 var u = "<div class='mho_form_group'>";
+                 var O = "<div class='mho_form_group'>";
+                 var t= "<div class='mho_form_group'>";
                  var s=eval('(' + result + ')');
                  $.each(s.orgInfo, function (i, item) {              
-                     u += " <div class='mho_form_group'><label> <input type='checkbox' name='orgInfo' value='" + item.orgOid + "'>" + item.orgName + "</label></div>";
+                     u += " <label> <input type='checkbox' name='orgInfo' value='" + item.orgOid + "'>" + item.orgName + "</label>";
                  });
+                 u += "</div>";
                  $(".mho_orgInfo").append(u);
                  $.each(s.roleInfo, function (i, item) {
-                    O += " <div class='mho_form_group'><label> <input type='checkbox' name='roleInfo' value='" + item.roleId + "'>" + item.roleName + "</label></div>";
+                    O += "<label> <input type='checkbox' name='roleInfo' value='" + item.roleId + "'>" + item.roleName + "</label>";
                  });
+                 O += "</div>";
                  $(".mho_roleInfo").append(O);
                  $.each(s.groupInfo, function (i, item) {
-                     t += " <div class='mho_form_group'><label> <input type='checkbox' name='groupInfo' value='" + item.wpId + "'>" + item.wpName + "</label></div>";
+                     t += "<label> <input type='checkbox' name='groupInfo' value='" + item.wpId + "'>" + item.wpName + "</label>";
                   });
+                 t += "</div>";
                   $(".mho_groupInfo").append(t);
              });
              
@@ -84,12 +88,30 @@ $(function () {
             var $detail = $(".rulePropDetailSlide");
             $detail.css("z-index",$.asset["slideInfoIndex"]) // 设置层优先级
                 .on("click",".slideControler",function(){ // 侧边栏切换
+                	 $.ruleFlowProps.setCurRule();
                     $.ruleFlowProps.slideToggle(paramsJson['toggleCallback']||null);
+                    
                 })
                 .on("click",".movePoint",function(event){ // 拖拽模块静止toggle
                     return false;
                 });
         
+        },
+        setCurRule: function () {
+            var rList=$("#ruleList");
+            var rectId = $('[name="rectId"]').val();
+            var rules = {};
+            if(2==$.asset["ruleOrPath"]&&(!$.asset["ruleParams"][rectId])){
+            	 var t = $.ruleFlowProps.processParams.checkParamsOfRule(rList);
+            	 $.asset["curRuleParams"][rectId]=t;
+            	 $.asset["curRuleId"]=rectId;
+           }
+           else if(1==$.asset["ruleOrPath"]&&(!$.asset["ruleParamsPath"][rectId]))
+        	   {
+        	   var t = $.ruleFlowProps.processParams.checkParams(rList);
+        	   $.asset["curRuleParams"][rectId]=t;
+        	   $.asset["curRuleId"]=rectId;
+        	   }
         },
         	hideFieldPanel:function(){
             $(".fbarBack.addDropdownPanel .dropdownPanel.active").each(function(i){
@@ -140,11 +162,18 @@ $(function () {
 			 $('[name="rectId"]').val(id);
 	            dbclick_r=r;
 	            dbclick_scr=_path;	
-	            if($.asset["ruleParamsPath"][id])
+	            if($.asset["ruleParamsPath"][id]||$.asset["curRuleId"]==id)
 	            {
 	            	var e = $(".ruleGroup");
                     $("#ruleList").empty();
-                    var rlist=$.asset["ruleParamsPath"][id];
+                    var rlist
+                    if($.asset["ruleParamsPath"][id])
+                    	{
+                    	rlist=$.asset["ruleParamsPath"][id];
+                    	}
+                    else{
+                    	rlist=$.asset["curRuleParams"][id];
+                    }
                     if(rlist)
                     {
                             var rule=rlist;
@@ -235,36 +264,46 @@ $(function () {
 				    d.append(c);
 				}
 	            $.asset["ruleOrPath"]=1;
-				$.ruleFlowProps.slideToggle(null,"show"); 
+				$.ruleFlowProps.slideToggle(null,"show");
+				 $.asset["curRuleParams"]={};
+	        	 $.asset["curRuleId"]={};
 		},
         //初始化页面数据
         initPageData:function(id,_rect,r){
             $('[name="rectId"]').val(id);
             dbclick_r=r;
             dbclick_scr=_rect;
-            if($.asset["ruleParams"][id])
+            if($.asset["ruleParams"][id]||$.asset["curRuleId"]==id)
             {
                 var e = $(".ruleGroup");
                 $("#ruleList").empty();
+                var rlist
+                if($.asset["ruleParams"][id])
+                	{
+                	rlist=$.asset["ruleParams"][id];
+                	}
+                else{
+                	rlist=$.asset["curRuleParams"][id];
+                }
                 var c = $("#cdtnTemplates .ruleStrategy").clone();
                 var d = $("#ruleList", e);
                 d.append(c);
-                $('[name="activityName"]',d).val($.asset["ruleParams"][id].activityName);
-                $('[name="activityNo"]',d).val($.asset["ruleParams"][id].activityNo);
-                $('[name="activityType"]',d).val($.asset["ruleParams"][id].activityType);
-                $('[name="backWay"]',d).val($.asset["ruleParams"][id].backWay);
-                $('[name="content"]',d).val($.asset["ruleParams"][id].content);
-                $('[name="allowSynergy"]',d).val($.asset["ruleParams"][id].allowSynergy);
-                $('[name="allowEnd"]',d).val($.asset["ruleParams"][id].allowEnd);
-                $('[name="allowCountersign"]',d).val($.asset["ruleParams"][id].allowCountersign);
-                $('[name="allowCopy"]',d).val($.asset["ruleParams"][id].allowCopy);
-                $('[name="allowRetroactive"]',d).val($.asset["ruleParams"][id].allowRetroactive);
+                $('[name="activityName"]',d).val(rlist.activityName);
+                $('[name="activityNo"]',d).val(rlist.activityNo);
+                $('[name="activityType"]',d).val(rlist.activityType);
+                $('[name="backWay"]',d).val(rlist.backWay);
+                $('[name="content"]',d).val(rlist.content);
+                $('[name="allowSynergy"]',d).val(rlist.allowSynergy);
+                $('[name="allowEnd"]',d).val(rlist.allowEnd);
+                $('[name="allowCountersign"]',d).val(rlist.allowCountersign);
+                $('[name="allowCopy"]',d).val(rlist.allowCopy);
+                $('[name="allowRetroactive"]',d).val(rlist.allowRetroactive);
                 
                 
-                $('[name="handlers"]',d).val($.asset["ruleParams"][id].handlers);
-                var orgInfo=$.asset["ruleParams"][id].orgInfo;
-                var groupInfo=$.asset["ruleParams"][id].groupInfo;
-                var roleInfo=$.asset["ruleParams"][id].roleInfo;
+                $('[name="handlers"]',d).val(rlist.handlers);
+                var orgInfo=rlist.orgInfo;
+                var groupInfo=rlist.groupInfo;
+                var roleInfo=rlist.roleInfo;
                 for(var i=0;i<orgInfo.length;i++){  
                     $("input[name='orgInfo']",d).each(function(){  
                         if($(this).val()==orgInfo[i]){  
@@ -286,27 +325,27 @@ $(function () {
                         }  
                     })  
                 }  
-                if($.asset["ruleParams"][id].isMessage)
+                if(rlist.isMessage)
                 	{
                 	$('[name="isMessage"]',d).attr("checked","checked"); ;
                 	}
                 
-                $('[name="isMessageTemp"]').val($.asset["ruleParams"][id].isMessageTemp);
-                if($.asset["ruleParams"][id].isMessageNext)
+                $('[name="isMessageTemp"]').val(rlist.isMessageTemp);
+                if(rlist.isMessageNext)
             	{
             	$('[name="isMessageNext"]',d).attr("checked","checked"); ;
             	}
                
-                $('[name="isMessageTempNext"]').val($.asset["ruleParams"][id].isMessageTempNext);
-                if($.asset["ruleParams"][id].isMessageHistory)
+                $('[name="isMessageTempNext"]').val(rlist.isMessageTempNext);
+                if(rlist.isMessageHistory)
             	{
             	$('[name="isMessageHistory"]',d).attr("checked","checked"); ;
             	}
                
                
-                $('[name="isMessageTempHistory"]').val($.asset["ruleParams"][id].isMessageTempHistory);
+                $('[name="isMessageTempHistory"]').val(rlist.isMessageTempHistory);
                 
-                if($.asset["ruleParams"][id].notification)
+                if(rlist.notification)
             	{
             	$('[name="notification"]',d).attr("checked","checked"); ;
             	}
@@ -325,14 +364,24 @@ $(function () {
             }
             $.ruleFlowProps.slideToggle(null,"show"); 
             $('#ruleList .ruleStrategy .qxControl .mho_accordion_body .mho_tabs .mho_tabs_nav li').on('click', function() {
-        		debugger;
         		var $tabs = $(this).closest('.mho_tabs');
         		$(this).siblings('li').removeClass('mho_active');
         		$(this).addClass('mho_active');
         		$tabs.find('.mho_tab_panel').removeClass('mho_active');
         		$tabs.find('.mho_tab_panel').eq($(this).index()).addClass('mho_active');
         	});
+            $('.mho_accordion .mho_accordion_title').on('click', function() {
+        		if($(this).children('.fa').hasClass('fa-caret-down')) {
+        			$(this).next('.mho_accordion_body').slideUp();
+        			$(this).children('.fa').removeClass('fa-caret-down').addClass('fa-caret-up');
+        		}else {
+        			$(this).next('.mho_accordion_body').slideDown();
+        			$(this).children('.fa').removeClass('fa-caret-up').addClass('fa-caret-down');
+        		}
+        	});
             $.asset["ruleOrPath"]=2;
+            $.asset["curRuleParams"]={};
+       	 	$.asset["curRuleId"]={};
         },
         initDomOperate:function () {
             var a = $("#slideInfoDetail");
@@ -558,53 +607,8 @@ $(function () {
             //添加规则节点内容
             addElementByCond:function (rectId, rList, rules) {
                 var f = $.Deferred();
-                var ruleList = {};
-                ruleList.activityName=$.trim($('[name="activityName"]',rList).val());
-                ruleList.activityNo=$.trim($('[name="activityNo"]',rList).val());
-                ruleList.activityType=$.trim($('[name="activityType"]',rList).val());
-              
-                ruleList.backWay=$.trim($('[name="backWay"]',rList).val());
-                ruleList.content=$.trim($('[name="content"]',rList).val());
-                
-                ruleList.allowSynergy=$.trim($('[name="allowSynergy"]',rList).val());
-                ruleList.allowEnd=$.trim($('[name="allowEnd"]',rList).val());
-              
-                
-                ruleList.allowCountersign=$.trim($('[name="allowCountersign"]',rList).val());
-                ruleList.allowCopy=$.trim($('[name="allowCopy"]',rList).val());
-                ruleList.allowRetroactive=$.trim($('[name="allowRetroactive"]',rList).val());
-                
-                ruleList.handlers=$.trim($('[name="handlers"]',rList).val());
-               
-                var orgInfo =[]; 
-                $("input[name='orgInfo']:checked",rList).each(function(){ 
-                	orgInfo.push($(this).val()); 
-                }); 
-                ruleList.orgInfo=orgInfo;
-               
-                var groupInfo =[]; 
-                $("input[name='groupInfo']:checked",rList).each(function(){ 
-                	groupInfo.push($(this).val()); 
-                }); 
-                ruleList.groupInfo=groupInfo;
-              
-                var roleInfo =[]; 
-                $("input[name='roleInfo']:checked",rList).each(function(){ 
-                	roleInfo.push($(this).val()); 
-                }); 
-                ruleList.roleInfo=roleInfo;
-                
-                ruleList.isMessage=$("input[name='isMessage']:checked",rList).size()>0?$("input[name='isMessage']:checked",rList)[0].checked:false;
-                ruleList.isMessageTemp=$.trim($('[name="isMessageTemp"]',rList).val());
-                
-                ruleList.isMessageNext=$("input[name='isMessageNext']:checked",rList).size()>0?$("input[name='isMessageNext']:checked",rList)[0].checked:false;
-                ruleList.isMessageTempNext=$.trim($('[name="isMessageTempNext"]',rList).val());
-                ruleList.isMessageHistory=$("input[name='isMessageHistory']:checked",rList).size()>0?$("input[name='isMessageHistory']:checked",rList)[0].checked:false;
-                
-                
-                ruleList.isMessageTempHistory=$.trim($('[name="isMessageTempHistory"]',rList).val());
-                ruleList.notification=$("input[name='notification']:checked",rList).size()>0?$("input[name='notification']:checked",rList)[0].checked:false;
-                var rule=ruleList;
+                var ruleList = $.ruleFlowProps.processParams.checkParamsOfRule(rList);
+                 var rule=ruleList;
                 if(!$.trim(rule.activityName))
                 {
                     f.reject("请输入活动名称");
@@ -632,6 +636,55 @@ $(function () {
             },
         },
         processParams:{
+        	checkParamsOfRule:function (rList) {
+        		 var ruleList = {};
+                 ruleList.activityName=$.trim($('[name="activityName"]',rList).val());
+                 ruleList.activityNo=$.trim($('[name="activityNo"]',rList).val());
+                 ruleList.activityType=$.trim($('[name="activityType"]',rList).val());
+               
+                 ruleList.backWay=$.trim($('[name="backWay"]',rList).val());
+                 ruleList.content=$.trim($('[name="content"]',rList).val());
+                 
+                 ruleList.allowSynergy=$.trim($('[name="allowSynergy"]',rList).val());
+                 ruleList.allowEnd=$.trim($('[name="allowEnd"]',rList).val());
+               
+                 
+                 ruleList.allowCountersign=$.trim($('[name="allowCountersign"]',rList).val());
+                 ruleList.allowCopy=$.trim($('[name="allowCopy"]',rList).val());
+                 ruleList.allowRetroactive=$.trim($('[name="allowRetroactive"]',rList).val());
+                 
+                 ruleList.handlers=$.trim($('[name="handlers"]',rList).val());
+                
+                 var orgInfo =[]; 
+                 $("input[name='orgInfo']:checked",rList).each(function(){ 
+                 	orgInfo.push($(this).val()); 
+                 }); 
+                 ruleList.orgInfo=orgInfo;
+                
+                 var groupInfo =[]; 
+                 $("input[name='groupInfo']:checked",rList).each(function(){ 
+                 	groupInfo.push($(this).val()); 
+                 }); 
+                 ruleList.groupInfo=groupInfo;
+               
+                 var roleInfo =[]; 
+                 $("input[name='roleInfo']:checked",rList).each(function(){ 
+                 	roleInfo.push($(this).val()); 
+                 }); 
+                 ruleList.roleInfo=roleInfo;
+                 
+                 ruleList.isMessage=$("input[name='isMessage']:checked",rList).size()>0?$("input[name='isMessage']:checked",rList)[0].checked:false;
+                 ruleList.isMessageTemp=$.trim($('[name="isMessageTemp"]',rList).val());
+                 
+                 ruleList.isMessageNext=$("input[name='isMessageNext']:checked",rList).size()>0?$("input[name='isMessageNext']:checked",rList)[0].checked:false;
+                 ruleList.isMessageTempNext=$.trim($('[name="isMessageTempNext"]',rList).val());
+                 ruleList.isMessageHistory=$("input[name='isMessageHistory']:checked",rList).size()>0?$("input[name='isMessageHistory']:checked",rList)[0].checked:false;
+                 
+                 
+                 ruleList.isMessageTempHistory=$.trim($('[name="isMessageTempHistory"]',rList).val());
+                 ruleList.notification=$("input[name='notification']:checked",rList).size()>0?$("input[name='notification']:checked",rList)[0].checked:false;
+                 return ruleList;
+        	},
             //节点属性操作（）
             checkParams:function (rList) {
             	 var rule = {};

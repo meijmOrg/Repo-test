@@ -45,7 +45,7 @@
 		<action path="/goHomepage"
 				scope="request"
 				type="org.apache.struts.actions.ForwardAction"
-				parameter="/welcome.jsp">
+				parameter="/home.jsp">
 			<description>首页</description>
 		</action>
 		

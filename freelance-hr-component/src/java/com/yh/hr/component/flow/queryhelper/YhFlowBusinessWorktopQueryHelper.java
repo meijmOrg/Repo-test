@@ -38,8 +38,8 @@ public class YhFlowBusinessWorktopQueryHelper {
 		String dataType = ttb.getCondition().get("dataType");
 		if(dataType.equals("daiban")){
 			//待办
-			strbuf.append(getDBSqlByFile("'0'"));
-			strbuf.append(" union all ");
+			/*strbuf.append(getDBSqlByFile("'0'"));
+			strbuf.append(" union all ");*/
 			strbuf.append(getDBSqlByFileAndTask("'0','1','4','5','6'")); 
 		}else if(dataType.equals("yiban")){
 			//已办 
@@ -111,7 +111,8 @@ public class YhFlowBusinessWorktopQueryHelper {
 		strbuf.append(" yf.file_security_rate,");
 		strbuf.append(" yf.file_title,");
 		strbuf.append(" yf.template_Code,");
-		strbuf.append(" yf.template_Id");
+		strbuf.append(" yf.template_Id,");
+		strbuf.append(" yt.task_id,yt.task_name,yt.task_senduser,yt.task_sendtime");
 		strbuf.append(" from yhf_file yf,YHF_Task yt");
 		strbuf.append(" where yf.file_ID = yt.task_entityid ");
 		strbuf.append(" and yt.task_senduser = '"+UserContext.getLoginUserID()+"'");
@@ -139,9 +140,10 @@ public class YhFlowBusinessWorktopQueryHelper {
 		strbuf.append(" yf.file_emergency_level,");
 		strbuf.append(" yf.file_code,");
 		strbuf.append(" yf.file_security_rate,");
-		strbuf.append(" yf.file_title,");
+		strbuf.append(" yf.file_title,");		
 		strbuf.append(" yf.template_Code,");
-		strbuf.append(" yf.template_Id");
+		strbuf.append(" yf.template_Id,");
+		strbuf.append(" ytp.tp_taskid,ytp.tp_name,ytp.tp_fromuser,ytp.tp_begintime");
 		strbuf.append(" from yhf_file yf,YHF_Task_Process ytp");
 		strbuf.append(" where yf.file_ID = ytp.tp_entityid ");
 		strbuf.append(" and ytp.tp_douser = '"+UserContext.getLoginUserID()+"'");
@@ -176,6 +178,10 @@ public class YhFlowBusinessWorktopQueryHelper {
 			json.put("file_title", obj[10]==null?"":obj[10].toString()); // 文件标题
 			json.put("template_Code", obj[11]==null?"":obj[11].toString()); // 模板编码
 			json.put("template_Id", obj[12]==null?"":obj[12].toString()); // 
+			json.put("task_id", obj[13]==null?"":obj[13].toString()); // 任务id
+			json.put("task_name", obj[14]==null?"":obj[14].toString()); // 任务名称
+			json.put("send_user", obj[15]==null?"":obj[15].toString()); // 发送人
+			json.put("send_time", obj[16]==null?"":obj[16].toString()); // 发送时间
 			//是否退回
 			jsonList.add(json);
 		}
@@ -193,8 +199,8 @@ public class YhFlowBusinessWorktopQueryHelper {
 		StringBuffer strbuf = new StringBuffer();
 		strbuf.append("select ");
 		strbuf.append(" (select count(*) from (");
-		strbuf.append(getDBSqlByFile("'0'"));
-		strbuf.append(" union all ");
+		/*strbuf.append(getDBSqlByFile("'0'"));
+		strbuf.append(" union all ");*/
 		strbuf.append(getDBSqlByFileAndTask("'0','1','4','5','6'")); 
 		strbuf.append(") t1) as dbTotal,"); // 待办
 		

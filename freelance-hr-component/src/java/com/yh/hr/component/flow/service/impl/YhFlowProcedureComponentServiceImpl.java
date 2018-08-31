@@ -14,6 +14,7 @@ import com.yh.component.workflow.dto.FlowActivityPermissionDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
 import com.yh.hr.component.flow.bo.CarbonCopy;
+import com.yh.hr.component.flow.bo.CoordinationTask;
 import com.yh.hr.component.flow.bo.File;
 import com.yh.hr.component.flow.bo.SelUser;
 import com.yh.hr.component.flow.bo.Task;
@@ -157,6 +158,13 @@ public class YhFlowProcedureComponentServiceImpl implements  YhFlowProcedureComp
 		}
 	}
 	
+	public void updateFileInfo(YhFlowComponentDTO dto) throws ServiceException{
+		//获取文件信息
+		File f = DaoUtil.get(File.class, dto.getFileId());
+		f.setFileFlowStatus(dto.getFileFlowStatus());
+		f.update();
+	}
+	
 	public void saveTaskInfo(YhFlowComponentDTO dto, FlowActivity probo, FlowActivity currentbo, String fileId) throws ServiceException{
 		Task t = new Task();
 		t.setTaskId(UuidUtils.getUUID36());
@@ -220,51 +228,13 @@ public class YhFlowProcedureComponentServiceImpl implements  YhFlowProcedureComp
 	}
 	
 	/**
-	 * 退回（退回到经办人（发起人））
-	 * @param 
-	 * @return
-	 * @throws ServiceException
-	 */
-	public void recheckBack(YhFlowComponentDTO dto) throws ServiceException{
-		//获取文档信息
-		File file = DaoUtil.get(File.class, dto.getFileId());
-		//获取经办人（文档创建人）
-		String createUserID = file.getCreateUserID();
-		//获取上一步活动单元信息
-		FlowActivity probo = DaoUtil.get(FlowActivity.class, dto.getTaskPreActId());
-		//获取当前（下一步审批：经办人）活动单元信息
-		List<WorkflowActivityDTO> allActivityDTOList = YhFlowComponentQueryHelper.getFlowActivityByFlowId(dto.getFlowId());
-		WorkflowActivityDTO wdto = allActivityDTOList.get(0);
-		FlowActivity currentbo = new FlowActivity();
-		BeanHelper.copyProperties(wdto, currentbo);
-		
-		//1.保存文档信息 YHFile(文件基础表状态7-已退回)
-//		String fileId = saveFileInfo(dto);
-		
-		//2.保存任务表信息 YHTask
-		saveTaskInfo(dto, probo, currentbo, dto.getFileId());
-		
-		//3.保存任务进程表信息 YHTaskProcess
-		
-		//4.保存经办人信息
-		SelUser su = new SelUser();
-		su.setSelUserId(UuidUtils.getUUID36());
-		su.setFileId(dto.getFileId());
-		su.setActId(wdto.getActId());
-		su.setUserId(createUserID);
-		su.setSelType("3");//退回所选择的用户
-		su.save();
-		//5.保存其他业务信息
-	}
-	
-	/**
 	 * 加签(确定)
 	 * @param 
 	 * @return
 	 * @throws ServiceException
 	 */
 	public void submitSighUsers(YhFlowComponentDTO dto) throws ServiceException{
-		//加签选择的办理人
+		//加签选择的办理人(只能选一个人)
 		String nextUsersId = dto.getNextUserList();
 		String nextActId = dto.getTaskCurrentActId();
 		//获取上一步活动单元信息
@@ -273,13 +243,14 @@ public class YhFlowProcedureComponentServiceImpl implements  YhFlowProcedureComp
 		FlowActivity currentbo = DaoUtil.get(FlowActivity.class, nextActId);
 		
 		
-		//1.保存文档信息 YHFile(文件基础表状态5-加签中)
-//		String fileId = saveFileInfo(dto);
+		//1.更新文档信息 YHFile(文件基础表状态5-加签中)
+		updateFileInfo(dto);
 		
 		//2.保存任务表信息 YHTask
 		saveTaskInfo(dto, probo, currentbo, dto.getFileId());
 		
-		//3.保存任务进程表信息 YHTaskProcess(发起不保存)
+		//3.保存任务进程表信息 YHTaskProcess
+		saveTaskProcessInfo(dto, probo);
 		
 		//4.保存加签办理人信息
 		SelUser su = new SelUser();
@@ -299,30 +270,69 @@ public class YhFlowProcedureComponentServiceImpl implements  YhFlowProcedureComp
 	 * @throws ServiceException
 	 */
 	public void submitCsUsers(YhFlowComponentDTO dto) throws ServiceException{
-		//抄送选择的用户
-		String nextUsersId = dto.getNextUserList();
-		String nextActId = dto.getTaskCurrentActId();
+//		//抄送选择的用户
+//		String nextUsersId = dto.getNextUserList();
+//		String nextActId = dto.getTaskCurrentActId();
+//		//获取上一步活动单元信息
+//		FlowActivity probo = DaoUtil.get(FlowActivity.class, dto.getTaskPreActId());
+//		//获取当前（下一步审批）活动单元信息
+//		FlowActivity currentbo = DaoUtil.get(FlowActivity.class, nextActId);
+//		
+//		
+//		//1.保存文档信息 YHFile(文件基础表状态1-审批中)
+////		String fileId = saveFileInfo(dto);
+//		
+//		//2.保存任务表信息 YHTask
+//		saveTaskInfo(dto, probo, currentbo, dto.getFileId());
+//		
+//		//3.保存任务进程表信息 YHTaskProcess
+//		
+//		//4.保存抄送办理人信息
+//		SelUser su = new SelUser();
+//		su.setSelUserId(UuidUtils.getUUID36());
+//		su.setFileId(dto.getFileId());
+//		su.setActId(nextActId);
+//		su.setUserId(nextUsersId);
+//		su.setSelType("2");//抄送所选择的用户
+//		su.save();
+//		//5.保存其他业务信息
+	}
+	
+	/**
+	 * 退回（退回到经办人（发起人））
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public void recheckBack(YhFlowComponentDTO dto) throws ServiceException{
+		//获取文档信息
+		File file = DaoUtil.get(File.class, dto.getFileId());
+		//获取经办人（文档创建人）
+		String createUserID = file.getCreateUserID();
 		//获取上一步活动单元信息
 		FlowActivity probo = DaoUtil.get(FlowActivity.class, dto.getTaskPreActId());
-		//获取当前（下一步审批）活动单元信息
-		FlowActivity currentbo = DaoUtil.get(FlowActivity.class, nextActId);
+		//获取当前（下一步审批：经办人）活动单元信息
+		List<WorkflowActivityDTO> allActivityDTOList = YhFlowComponentQueryHelper.getFlowActivityByFlowId(dto.getFlowId());
+		WorkflowActivityDTO wdto = allActivityDTOList.get(0);
+		FlowActivity currentbo = new FlowActivity();
+		BeanHelper.copyProperties(wdto, currentbo);
 		
-		
-		//1.保存文档信息 YHFile(文件基础表状态1-审批中)
-//		String fileId = saveFileInfo(dto);
+		//1.更新文档信息 YHFile(文件基础表状态7-已退回)
+		updateFileInfo(dto);
 		
 		//2.保存任务表信息 YHTask
 		saveTaskInfo(dto, probo, currentbo, dto.getFileId());
 		
-		//3.保存任务进程表信息 YHTaskProcess(发起不保存)
+		//3.保存任务进程表信息 YHTaskProcess
+		saveTaskProcessInfo(dto, probo);
 		
-		//4.保存抄送办理人信息
+		//4.保存经办人信息
 		SelUser su = new SelUser();
 		su.setSelUserId(UuidUtils.getUUID36());
 		su.setFileId(dto.getFileId());
-		su.setActId(nextActId);
-		su.setUserId(nextUsersId);
-		su.setSelType("2");//抄送所选择的用户
+		su.setActId(wdto.getActId());
+		su.setUserId(createUserID);
+		su.setSelType("3");//退回所选择的用户
 		su.save();
 		//5.保存其他业务信息
 	}
@@ -334,7 +344,32 @@ public class YhFlowProcedureComponentServiceImpl implements  YhFlowProcedureComp
 	 * @throws ServiceException
 	 */
 	public void submitCoordinationUsers(YhFlowComponentDTO dto) throws ServiceException{
+		//协同选择的用户
+		String nextUsersId = dto.getNextUserList();
+		String nextActId = dto.getTaskCurrentActId();
+		//获取当前（下一步审批）活动单元信息
+		FlowActivity currentbo = DaoUtil.get(FlowActivity.class, nextActId);
 		
+		//1.更新文档信息 YHFile(文件基础表状态4-协同中)
+		updateFileInfo(dto);
+		
+		//2.保存协同任务信息
+		String[] nextUsersIds = nextUsersId.split(",");
+		for(String userId : nextUsersIds){
+			CoordinationTask ct = new CoordinationTask();
+			ct.setCtId(UuidUtils.getUUID36());
+			ct.setCtName(dto.getTaskName());
+			ct.setCtTaskId(dto.getTaskId());
+			ct.setCtDoUser(userId);
+			ct.setCtSendUser(UserContext.getLoginUserID());
+			ct.setCtSendTime(DateUtil.now());
+			ct.setCtFlowId(dto.getFlowId());
+			ct.setCtActId(nextActId);
+			ct.setCtEntityId(dto.getFileId());
+			ct.setCtActName(currentbo.getActName());
+			ct.save();
+		}
+		//3.保存其他业务信息
 	}
 
 }

@@ -28,6 +28,7 @@ import com.yh.hr.component.flow.facade.YhFlowComponentFacade;
 import com.yh.platform.core.exception.ServiceException;
 import com.yh.platform.core.util.JSONHelper;
 import com.yh.platform.core.util.SpringBeanUtil;
+import com.yh.platform.core.web.UserContext;
 import com.yh.platform.core.web.action.BaseAction;
 
 /**
@@ -318,8 +319,9 @@ public class YhFlowComponentAction extends BaseAction {
 		request.setAttribute("acceptFileTypes", acceptFileTypes);
 		//获取附件列表
 		String fileId = request.getParameter("fileId");
-		String faUserName = request.getParameter("faUserName");
 		String templateId = request.getParameter("templateId");
+		String faUserName = UserContext.getLoginUserID();
+		//String taskId = request.getParameter("taskId");
 		request.setAttribute("fileId", fileId);
 		request.setAttribute("faUserName", faUserName);
 		request.setAttribute("templateId", templateId);
@@ -328,7 +330,7 @@ public class YhFlowComponentAction extends BaseAction {
 		request.setAttribute("viewPage", workflowConfigurationDto.getTemplateInfoPage());
 		TableTagBean ttb = new TableTagBean();
 		ttb.getCondition().put("fileId", fileId);
-		ttb.getCondition().put("faUserName", faUserName);
+		ttb.getCondition().put("faUserName",faUserName );
 		List<FileAnnexDTO> annexFileList = uploadAnnexComponentFacade.listAnnexFile(ttb);
 		request.setAttribute("annexFileList", annexFileList);
 		//获取抄送信息

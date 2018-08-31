@@ -14,12 +14,17 @@
 <script src="js/jquery.form.min.js"></script>
 
 <script type="text/javascript">
+var submitUrl = '${submitUrl}';
 $(document).ready(function() {
 	$('#confirm').click(function() {
 		MessageBox.yes('提示','确认要提交流程吗?', function(){
 			var nextUserList = new Array();
 			var otherUserList = new Array();
 			var isSendList = new Array();
+			var postData = localStorage.getItem('postData');//业务表单数据
+			if(null != postData){
+				localStorage.removeItem('postData');
+			}
 			$('.nextRadio:checked').each(function(index, element) {
 				nextUserList.push($(this).val());
 			});
@@ -36,14 +41,16 @@ $(document).ready(function() {
 			//var url = $('#flowComponentForm').attr("action");
 			//var data = $('#flowComponentForm').serializeArray();   
 			$.ajax({ 
-				  url: $('#flowComponentForm').attr("action"), 
-				  data: $('#flowComponentForm').serializeArray(),  
+				  url: submitUrl+'&postData='+postData,
+				  data: $('#flowComponentForm').serializeArray(), 
 				  dataType:'json', 
 				  async : false,
+				  type : 'post',
 				  success:function(data){      
 					  if (data.success) {
 			              MessageBox.alert('消息',data.message,function(){
-			            	  $('#cancel').trigger("click");
+			            	  Dialog.close();
+			            	  //$('#cancel').trigger("click");
 			              });
 			          }
 			          else
@@ -54,6 +61,10 @@ $(document).ready(function() {
 			  })
 	
 		});
+	});
+	/*取消 */
+	$('#cancel').click(function() {
+		Dialog.close();
 	});
 	/*重置 */
 	$('#reset').click(function() {
@@ -148,5 +159,10 @@ $(document).ready(function() {
 		</table>
 	</div>
 	</html:form>
+	<div class="mho_modal_footer">
+		<button id="confirm" class="mho_btn mho_btn_empty mho_btn_circle">确认</button>
+		<button id="cancel" class="mho_btn mho_btn_empty mho_btn_circle">取消</button>
+		<button id="reset" class="mho_btn mho_btn_empty mho_btn_circle">重置</button>
+	</div>
 </body>
 </html>

@@ -29,6 +29,7 @@ public class YhFlowComponentForm extends ValidatorForm{
 	private java.lang.Long		deptId;	//所属部门ID
 	private java.lang.String	taskCurrentActId;	//当前活动单元ID
 	private java.lang.String	taskPreActId;	//上一步活动单元
+	private java.lang.String  	taskId;//任务ID
 	private java.lang.String	taskName;	//任务名称
 	private java.lang.String	taskCoordination;	//协同状态
 	private java.lang.String	taskSign;	//加签（标识任务是否属于加签，若是加签则不可以协同）
@@ -147,6 +148,12 @@ public class YhFlowComponentForm extends ValidatorForm{
 	}
 	public void setTaskPreActId(java.lang.String taskPreActId) {
 		this.taskPreActId = taskPreActId;
+	}
+	public java.lang.String getTaskId() {
+		return taskId;
+	}
+	public void setTaskId(java.lang.String taskId) {
+		this.taskId = taskId;
 	}
 	public java.lang.String getTaskName() {
 		return taskName;

@@ -21,11 +21,43 @@
 	<script type="text/javascript" src="component/workflow/configuration/drawing/myflow.jpdl4.js"></script>
 	<script type="text/javascript" src="component/workflow/configuration/drawing/myflow.editors.js"></script>
 	<script type="text/javascript" src="component/workflow/configuration/drawing/index.js"></script>
-	
+	<script type="text/javascript" src="component/workflow/configuration/js/selectOrgForCreateFlow.js"></script>
 	<link rel="stylesheet" type="text/css" href="component/workflow/configuration/drawing/ruleFlowProps.css">
+	<link rel="stylesheet" href="component/front_transform/font-awesome-4.7.0/css/font-awesome.css">
 		<link rel="stylesheet" href="component/front_transform/mho.css">
+		<script type="text/javascript">
+	var templateId = '${templetId}';
+	var flowdata='${workflowConfigurationDto.flowData}';
+	 $.asset["ruleParams"]={}; // 节点属性参数
+	 $.asset["ruleParamsPath"]={}; // 连线属性
+	
+	</script>
 </head>
 <body>
+		<div style="overflow-x:hidden;padding-bottom: 20px;">
+		<input type="hidden" id="templetId" name="templetId" value='${templetId}' /> 
+		<input type="hidden" id="flowId" name="flowId" value='${workflowConfigurationDto.flowId}' /> 
+				<dl class="data-unit-dl">
+					<dt>流程名称：</dt>
+					<dd>
+						<label><input type="text" name="flowName" class="modal_iput" id="flowName" value='${workflowConfigurationDto.flowName}' maxlength="100"/></label>
+					</dd>
+				</dl>
+				<dl class="data-unit-dl">
+					<dt>流程类别：</dt>
+					<dd>
+					<label><dictionary:dicItemSelect id="flowType" name="flowType" styleClass="modal_select" emptyText="<%=WorkFlowConfigurationUtil.EMPTY_SELECT %>"  dicTypeCode="<%=WorkFlowConfigurationUtil.YHRS4004%>"  selected='${workflowConfigurationDto.flowType}'/> </label>
+					</dd>
+				</dl>
+				<dl class='data-unit-dl'>
+							<dt class="search-unit-dt">所属科室：</dt>
+							<dd class="search-unit-dd">
+									<input type="text" class="modal_iput" name="hireDeptName" id="hireDeptName" readonly="readonly" onclick="selectOrg()" value='${workflowConfigurationDto.flowOrgName}' /> 
+									<input type="hidden" id="hireDeptOid" name="hireDeptOid" value='${workflowConfigurationDto.flowOrgOid}' /> 
+									<!-- <a class="md-unit-clear" onclick="$(this).siblings('input').val('')"></a> -->
+							</dd>
+						</dl>
+		</div>
 <div class="substance"  id="tabs-1">
 	<div id="myflow_tools" class="ui-widget-content">
 		<div id="myflow_tools_handle" style="text-align: center;"
@@ -89,65 +121,89 @@
        		 <div class ="addRuleGroup">
                 <section class="mho_accordion ruleStrategy">
 					<dl class="mho_accordion_item">
-					<dt class="mho_accordion_title mho_dep_yellow">基本属性</dt>
+					<dt class="mho_accordion_title mho_dep_yellow">基本属性<i class="fa fa-caret-down"></i></dt>
 					<dd class="mho_accordion_body">
-						<div class="mho_form_group">
-							<label>活动名称</label>
-							<input type="text" class="mho_form_field" name="activityName">
+						<div class="mho_row mho_row_no_margin">
+							<div class="mho_col mho_col_5">
+								<div class="mho_form_group">
+									<label>活动名称</label>
+									<input type="text" style="width:150px;" class="mho_form_field" name="activityName">
+								</div>
+							</div>
+							<div class="mho_col mho_col_5">
+								<div class="mho_form_group">
+									<label>活动序号</label>
+									<input type="text" style="width:150px;" class="mho_form_field" name="activityNo">
+								</div>
+							</div>
 						</div>
-						<div class="mho_form_group">
-							<label>活动序号</label>
-							<input type="text" class="mho_form_field" name="activityNo">
-						</div>
-						<div class="mho_form_group">
-							<label>活动类型</label>
-							<dictionary:dicItemSelect id="activityType" name="activityType"  emptyText="<%=WorkFlowConfigurationUtil.EMPTY_SELECT %>"  dicTypeCode="<%=WorkFlowConfigurationUtil.YHRS4005%>" />
-						</div>
-						<div class="mho_form_group">
-							<label>退回方式</label>
-							<dictionary:dicItemSelect id="backWay" name="backWay" emptyText="<%=WorkFlowConfigurationUtil.EMPTY_SELECT %>"  dicTypeCode="<%=WorkFlowConfigurationUtil.YHRS4006%>" />
-						</div>
-						<div class="mho_form_group">
-							<label>默认审核内容</label>
-							<textarea name="content" rows=2></textarea>
+						<div class="mho_row mho_row_no_margin">
+							<div class="mho_col mho_col_5">
+								<div class="mho_form_group">
+									<label>活动类型</label>
+									<dictionary:dicItemSelect style="width:150px;" styleClass="mho_form_field" id="activityType" name="activityType"  emptyText="<%=WorkFlowConfigurationUtil.EMPTY_SELECT %>"  dicTypeCode="<%=WorkFlowConfigurationUtil.YHRS4005%>" />
+								</div>
+							</div>
+							<div class="mho_col mho_col_5">
+								<div class="mho_form_group">
+									<label>退回方式</label>
+									<dictionary:dicItemSelect style="width:150px;" styleClass="mho_form_field" id="backWay" name="backWay" emptyText="<%=WorkFlowConfigurationUtil.EMPTY_SELECT %>"  dicTypeCode="<%=WorkFlowConfigurationUtil.YHRS4006%>" />
+								</div>
+							</div>
 						</div>
 					</dd>
 				</dl>
 				<dl class="mho_accordion_item qxControl">
-					<dt class="mho_accordion_title mho_dep_yellow">权限控制</dt>
+					<dt class="mho_accordion_title mho_dep_yellow">权限控制<i class="fa fa-caret-down"></i></dt>
 					<dd class="mho_accordion_body">
-						<div class="mho_form_group">
-							<label>允许协同</label>
-							<dictionary:dicItemSelect id="allowSynergy" name="allowSynergy" 
-															dicTypeCode="<%=DicConstants.YHRS0003%>" emptyText="--请选择--" />
+						<div class="mho_row mho_row_no_margin">
+							<div class="mho_col mho_col_3">
+								<div class="mho_form_group">
+									<label>允许协同</label>
+									<dictionary:dicItemSelect styleClass="mho_form_field" id="allowSynergy" name="allowSynergy" 
+										dicTypeCode="<%=DicConstants.YHRS0003%>" emptyText="--请选择--" />
+								</div>
+							</div>
+							<div class="mho_col mho_col_3">
+								<div class="mho_form_group">
+									<label>允许结束</label>
+									<dictionary:dicItemSelect styleClass="mho_form_field" id="allowSynergy" name="allowSynergy" 
+										dicTypeCode="<%=DicConstants.YHRS0003%>" emptyText="--请选择--" />
+								</div>
+							</div>
+							<div class="mho_col mho_col_3">
+								<div class="mho_form_group">
+									<label>允许加签</label>
+									<dictionary:dicItemSelect styleClass="mho_form_field" id="allowCountersign" name="allowCountersign" 
+										dicTypeCode="<%=DicConstants.YHRS0003%>" emptyText="--请选择--" />
+								</div>
+							</div>
+							<div class="mho_col mho_col_3">
+								<div class="mho_form_group">
+									<label>允许抄送</label>
+									<dictionary:dicItemSelect styleClass="mho_form_field" id="allowCopy" name="allowCopy" 
+										dicTypeCode="<%=DicConstants.YHRS0003%>" emptyText="--请选择--" />
+								</div>
+							</div>
 						</div>
-						<div class="mho_form_group">
-							<label>允许结束</label>
-							<dictionary:dicItemSelect id="allowEnd" name="allowEnd" 
-															dicTypeCode="<%=DicConstants.YHRS0003%>" emptyText="--请选择--" />
-						</div>
-						<div class="mho_form_group">
-							<label>允许加签</label>
-							<dictionary:dicItemSelect id="allowCountersign" name="allowCountersign" 
-															dicTypeCode="<%=DicConstants.YHRS0003%>" emptyText="--请选择--" />
-						</div>
-						<div class="mho_form_group">
-							<label>允许抄送</label>
-							<dictionary:dicItemSelect id="allowCopy" name="allowCopy" 
-															dicTypeCode="<%=DicConstants.YHRS0003%>" emptyText="--请选择--" />
-						</div>
-						<div class="mho_form_group">
-							<label>允许补签</label>
-							<dictionary:dicItemSelect id="allowRetroactive" name="allowRetroactive" 
-															dicTypeCode="<%=DicConstants.YHRS0003%>" emptyText="--请选择--" />
-						</div>
-						<div class="mho_form_group">
-							<label>操作者集合</label>
-							<select id="handlers" name="handlers">
-							<option value>--请选择--</option>
-							<option value="&amp;&amp;">与</option>
-							<option value="||">或</option>
-							</select>
+						<div class="mho_row mho_row_no_margin">
+							<div class="mho_col mho_col_3">
+								<div class="mho_form_group">
+									<label>允许补签</label>
+									<dictionary:dicItemSelect styleClass="mho_form_field" id="allowRetroactive" name="allowRetroactive" 
+										dicTypeCode="<%=DicConstants.YHRS0003%>" emptyText="--请选择--" />
+								</div>
+							</div>
+							<div class="mho_col mho_col_4">
+								<div class="mho_form_group">
+									<label>操作者集合</label>
+									<select id="handlers" class="mho_form_field" name="handlers">
+										<option value>--请选择--</option>
+										<option value="&amp;&amp;">与</option>
+										<option value="||">或</option>
+									</select>
+								</div>
+							</div>
 						</div>
 						<div class="mho_tabs">
 							<ul class="mho_tabs_nav">
@@ -170,45 +226,47 @@
 					</dd>
 				</dl>
 				<dl class="mho_accordion_item">
-					<dt class="mho_accordion_title mho_dep_yellow">任务通知</dt>
-					<dt class="mho_accordion_title">任务创建人通知设置</dt>
-					<dd class="mho_accordion_body">
-						<div class="mho_form_group">
-							<label>启用通知<input type="checkbox" id="isMessageNext" name="isMessage" ></label>
-						</div>
-						<div class="mho_form_group">
-							<label>消息模板</label>
-							<textarea rows=2 id="isMessageTemp" name="isMessageTemp"></textarea>
-						</div>
-						
-					</dd>
-					<dt class="mho_accordion_title">下一处理人通知设置</dt>
-					<dd class="mho_accordion_body">
-					<div class="mho_form_group">
-							<label>启用通知<input type="checkbox" id="isMessageNext" name="isMessageNext" ></label>
-						</div>
-						<div class="mho_form_group">
-							<label>消息模板</label>
-							<textarea rows=2 id="isMessageTempNext" name="isMessageTempNext"></textarea>
-						</div>
-					</dd>
-					<dt class="mho_accordion_title">历史处理人通知设置</dt>
-					<dd class="mho_accordion_body">
-						<div class="mho_form_group">
-							<label>启用通知<input type="checkbox" id="isMessageHistory" name="isMessageHistory" ></label>
-						</div>
-						<div class="mho_form_group">
-							<label>消息模板</label>
-							<textarea rows=2 id="isMessageTempHistory" name="isMessageTempHistory"> </textarea>
-						</div>
-						
-					</dd>
-					<dt class="mho_accordion_title">通知方式</dt>
-					<dd class="mho_accordion_body">
-					<div class="mho_form_group">
-					<label>手机短信<input type="checkbox" id="notification" name="notification" ></label>
+					<dt class="mho_accordion_title mho_dep_yellow">任务通知<i class="fa fa-caret-down"></i></dt>
+					<div class="mho_accordion_body">
+						<dt class="mho_accordion_title">任务创建人通知设置<i class="fa fa-caret-down"></i></dt>
+						<dd class="mho_accordion_body">
+							<div class="mho_form_group">
+								<label>启用通知<input type="checkbox" id="isMessageNext" name="isMessage" ></label>
+							</div>
+							<div class="mho_form_group">
+								<label>消息模板</label>
+								<textarea rows=2 id="isMessageTemp" name="isMessageTemp"></textarea>
+							</div>
+							
+						</dd>
+						<dt class="mho_accordion_title">下一处理人通知设置<i class="fa fa-caret-down"></i></dt>
+						<dd class="mho_accordion_body">
+							<div class="mho_form_group">
+								<label>启用通知<input type="checkbox" id="isMessageNext" name="isMessageNext" ></label>
+							</div>
+							<div class="mho_form_group">
+								<label>消息模板</label>
+								<textarea rows=2 id="isMessageTempNext" name="isMessageTempNext"></textarea>
+							</div>
+						</dd>
+						<dt class="mho_accordion_title">历史处理人通知设置<i class="fa fa-caret-down"></i></dt>
+						<dd class="mho_accordion_body">
+							<div class="mho_form_group">
+								<label>启用通知<input type="checkbox" id="isMessageHistory" name="isMessageHistory" ></label>
+							</div>
+							<div class="mho_form_group">
+								<label>消息模板</label>
+								<textarea rows=2 id="isMessageTempHistory" name="isMessageTempHistory"> </textarea>
+							</div>
+							
+						</dd>
+						<dt class="mho_accordion_title">通知方式<i class="fa fa-caret-down"></i></dt>
+						<dd class="mho_accordion_body">
+							<div class="mho_form_group">
+							<label>手机短信<input type="checkbox" id="notification" name="notification" ></label>
+							</div>
+						</dd>
 					</div>
-					</dd>
 				</dl>
 		</section>  
             </div>

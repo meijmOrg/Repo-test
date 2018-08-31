@@ -11,4 +11,5 @@
 		</property>
 	</bean>
    <bean id="yhFlowComponentService" class="com.yh.hr.component.flow.service.impl.YhFlowComponentServiceImpl"/>
+   <bean id="yhFlowComponentAbstractService" class="com.yh.hr.component.flow.service.impl.YhFlowComponentAbstractServiceImpl" abstract="true"/>
 </beans>

@@ -23,6 +23,7 @@ public class YhFlowComponentDTO{
 	private java.lang.Long		deptId;	//所属部门ID
 	private java.lang.String	taskCurrentActId;	//当前活动单元ID
 	private java.lang.String	taskPreActId;	//上一步活动单元
+	private java.lang.String  	taskId;//任务ID
 	private java.lang.String	taskName;	//任务名称
 	private java.lang.String	taskCoordination;	//协同状态
 	private java.lang.String	taskSign;	//加签（标识任务是否属于加签，若是加签则不可以协同）
@@ -32,6 +33,7 @@ public class YhFlowComponentDTO{
 	private java.lang.String	taskSendNextUser;	//任务下一步用户
 	private java.lang.String	taskProcessResult;	//处理结果
 	private java.lang.String	taskProcessExplain;	//处理意见
+	private java.lang.String	taskFlag;	//业务标识
 	
 	
 	public java.lang.String getIsSendList() {
@@ -148,6 +150,12 @@ public class YhFlowComponentDTO{
 	public void setTaskPreActId(java.lang.String taskPreActId) {
 		this.taskPreActId = taskPreActId;
 	}
+	public java.lang.String getTaskId() {
+		return taskId;
+	}
+	public void setTaskId(java.lang.String taskId) {
+		this.taskId = taskId;
+	}
 	public java.lang.String getTaskName() {
 		return taskName;
 	}
@@ -195,6 +203,12 @@ public class YhFlowComponentDTO{
 	}
 	public void setTaskProcessExplain(java.lang.String taskProcessExplain) {
 		this.taskProcessExplain = taskProcessExplain;
+	}
+	public java.lang.String getTaskFlag() {
+		return taskFlag;
+	}
+	public void setTaskFlag(java.lang.String taskFlag) {
+		this.taskFlag = taskFlag;
 	}
 	
 }

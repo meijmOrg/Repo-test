@@ -68,4 +68,14 @@ public class YhFlowProcedureComponentFacade {
 		yhFlowProcedureComponentService.submitCsUsers(dto);
 	}
 	
+	/**
+	 * 协同(确定)
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public void submitCoordinationUsers(YhFlowComponentDTO dto) throws ServiceException{
+		yhFlowProcedureComponentService.submitCoordinationUsers(dto);
+	}
+	
 }

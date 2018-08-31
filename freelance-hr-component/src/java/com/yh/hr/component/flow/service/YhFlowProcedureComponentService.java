@@ -49,4 +49,12 @@ public interface YhFlowProcedureComponentService {
 	 */
 	public void submitCsUsers(YhFlowComponentDTO dto) throws ServiceException;
 	
+	/**
+	 * 协同(确定)
+	 * @param 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public void submitCoordinationUsers(YhFlowComponentDTO dto) throws ServiceException;
+	
 }

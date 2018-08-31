@@ -18,10 +18,10 @@
 var serverUrl = '${pageContext.request.contextPath}';
 var maxFileSize = parseInt('${maxFileSize}')*1024*1024;
 var acceptFileTypes = '${acceptFileTypes}'.toLowerCase();
-var fileId = '343sdfdf';
-var faUserName = '自定义的';
 //acceptFileTypes = acceptFileTypes ? acceptFileTypes.split(',') : [];
 //var maxFileCounts = parseInt('${maxFileCounts}');
+var fileId = '${fileId}';
+var faUserName = '${faUserName}';
 </script>
 </head>
 <body>

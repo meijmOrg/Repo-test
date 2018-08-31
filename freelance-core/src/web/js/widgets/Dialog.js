@@ -25,7 +25,7 @@
 		});
 	});
  */
-var Dialog = (function($, window, document){
+var Dialog2 = (function($, window, document){
 	var html = [
 		'<div class="modal-dialog">',
 			'<div class="modal-mask"></div>',

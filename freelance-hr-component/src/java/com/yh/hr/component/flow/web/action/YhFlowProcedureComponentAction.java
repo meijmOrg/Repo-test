@@ -107,6 +107,7 @@ public class YhFlowProcedureComponentAction extends BaseAction {
 			HttpServletResponse response) throws Exception{
 		try {
 			YhFlowComponentDTO dto = new YhFlowComponentDTO();
+			dto.setFileFlowStatus(DicConstants.YHRS4008_7);//已退回
 			yhFlowProcedureComponentFacade.recheckBack(dto);
 			response.getWriter().print(JSONHelper.fromObject(true, "退回成功！"));
 		} catch (Exception e) {
@@ -184,7 +185,7 @@ public class YhFlowProcedureComponentAction extends BaseAction {
 			BeanHelper.copyProperties(yhFlowComponentForm, dto);
 			dto.setFileFlowStatus(DicConstants.YHRS4008_4);//协同中
 			dto.setTaskCoordination("Y");//协同标识
-			yhFlowProcedureComponentFacade.submitSighUsers(dto);
+			yhFlowProcedureComponentFacade.submitCoordinationUsers(dto);
 			response.getWriter().print(JSONHelper.fromObject(true, "提交成功！"));
 		} catch (Exception e) {
 			this.handleException(request, e, null);

@@ -3,7 +3,7 @@ var MessageBox = (function($,window){
 	var dialog = null;
 	
 	function getDialog() {
-		return dialog ? dialog : (dialog = new Dialog());
+		return dialog ? dialog : (dialog = new Dialog2());
 	}
 	
 	return {

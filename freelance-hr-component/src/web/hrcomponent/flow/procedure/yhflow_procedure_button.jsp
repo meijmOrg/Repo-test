@@ -23,10 +23,14 @@ $(document).ready(function() {
 	params.coordination=false;
 	buttonControl(params);
 	$('#submitFlow').click(function() {
+		var csUserListStr = '';
 		var csUserList = JSON.parse(localStorage.getItem('nextUserList'));
-		localStorage.removeItem('nextUserList');
+		if(null != csUserList){
+			csUserListStr = csUserList.join(',');
+			localStorage.removeItem('nextUserList');
+		}
 	    var dialog = new Dialog({
-	        url: 'goProUserListPartial.do?method=goProUserListPartial&csUserList='+csUserList.join(','),
+	        url: 'goProUserListPartial.do?method=goProUserListPartial&csUserList='+csUserListStr,
 	        width: '80%',
 	        title: '流程下一步'
 	    });

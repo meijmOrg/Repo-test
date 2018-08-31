@@ -60,6 +60,11 @@
             <column name="flow_org_name">
                 <comment>所属部门名称</comment>
             </column>
-        </property>  
+        </property> 
+         <property name="flowData" type="java.lang.String">
+            <column name="FlowData">
+                <comment>流程数据</comment>
+            </column>
+        </property>   
     </class>
 </hibernate-mapping>

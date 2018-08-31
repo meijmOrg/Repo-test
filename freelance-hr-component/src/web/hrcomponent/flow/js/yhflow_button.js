@@ -15,4 +15,13 @@ function buttonControl(params){
 	if(params.duplicate){//抄送用户
 		$('#duplicate').hide();
 	}
+	if(params.duplicate){//同意
+		$('#agree').hide();
+	}
+	if(params.duplicate){//退回
+		$('#back').hide();
+	}
+	if(params.duplicate){//请求协同
+		$('#coordination').hide();
+	}
 }

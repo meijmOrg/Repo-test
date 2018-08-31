@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="yhfVacationForm" type="com.yh.hr.biz.vacation.web.form.YhfVacationForm" />
+		<form-bean name="yhFlowComponentForm" type="com.yh.hr.component.flow.web.form.YhFlowComponentForm" />
+    </form-beans>
+	<action-mappings>
+		<action path="/goBizVacationWorkTop"
+	            scope="request"
+	            type="com.yh.hr.biz.vacation.web.action.BizVacationAction"
+	            parameter="method">
+	    	<description>请休假业务发起工作台</description>
+	      <forward name="success" path="/hrbiz/vacation/yhflow_vacation_worktop.jsp"/>
+	    </action>
+	    <action path="/listVacationInfo"
+	            scope="request"
+	            type="com.yh.hr.biz.vacation.web.action.BizVacationAction"
+	            parameter="method">
+	    	<description>请休假业务列表</description>
+	    </action>
+	    <action path="/goVacationFlowStartPage"
+	            scope="request"
+	            type="com.yh.hr.biz.vacation.web.action.BizVacationAction"
+	            parameter="method">
+	    	<description>跳转到请休假业务发起主页面</description>
+	      <forward name="success" path="/hrbiz/vacation/yhflow_vacation_flowstart.jsp"/>
+	    </action>
+	    <action path="/createVacationInfo"
+	    		name="yhFlowComponentForm"
+	    		scope="request"
+	            type="com.yh.hr.biz.vacation.web.action.BizVacationAction"
+	            parameter="method">
+	    	<description>创建请休假业务事项</description>
+	    </action>
+	    <action path="/createVacationInfoSigh"
+	    		name="yhFlowComponentForm"
+	    		scope="request"
+	            type="com.yh.hr.biz.vacation.web.action.BizVacationAction"
+	            parameter="method">
+	    	<description>请休假业务加签</description>
+	    </action>
+	    <action path="/saveVacationInfo"
+	    		name="yhfVacationForm"
+	    		scope="request"
+	            type="com.yh.hr.biz.vacation.web.action.BizVacationAction"
+	            parameter="method">
+	    	<description>表单暂存、保存历史数据</description>
+	    </action>
+	    <action path="/getVacationInfo"
+	    		scope="request"
+	            type="com.yh.hr.biz.vacation.web.action.BizVacationAction"
+	            parameter="method">
+	    	<description>获取请休假表单数据</description>
+	    </action>
+	</action-mappings>
+</struts-config>

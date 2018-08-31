@@ -739,30 +739,56 @@
         // 函数----------------
         // 转化json字串
         this.toJson = function () {
-            var data = "{type:'" + _o.type + "',id:'" + (!_o.id ? "" : _o.id) + "',text:{text:'"
+        	var jsonData={};
+        	jsonData.type=_o.type;
+        	jsonData.id=(!_o.id ? "" : _o.id);
+        	var textData={};
+        	textData.text=(!_text.node.textContent ? "" : _text.node.textContent);
+        	jsonData.text=textData;
+        	var attrData={};
+        	attrData.x=Math.round(_rect.attr('x'));
+        	attrData.y=Math.round(_rect.attr('y'));
+        	attrData.width=Math.round(_rect.attr('width'));
+        	attrData.height=Math.round(_rect.attr('height'));
+        	jsonData.attr=attrData;
+        	if($.asset["ruleParams"][_o.id])
+        		{
+        		jsonData.ruleProps=$.asset["ruleParams"][_o.id];
+        		}
+        	 console.log(jsonData);
+             return jsonData;
+           /* var data = "{type:'" + _o.type + "',id:'" + (!_o.id ? "" : _o.id) + "',text:{text:'"
                 + (!_text.node.textContent ? "" : _text.node.textContent) + "'}, attr:{ x:"
                 + Math.round(_rect.attr('x')) + ", y:"
                 + Math.round(_rect.attr('y')) + ", width:"
                 + Math.round(_rect.attr('width')) + ", height:"
                 + Math.round(_rect.attr('height')) + "},"
                 + (!$.asset["ruleParams"][_o.id] ? "" : 'ruleProps:'+JSON.stringify($.asset["ruleParams"][_o.id])+",")
-               /* + " props:{";
+                + " props:{";
             for (var o in _o.props) {
                 data += o + ":{value:'" + _o.props[o].value + "'},"
-            }*/
+            }
             if (data.substring(data.length - 1, data.length) == ',')
                 data = data.substring(0, data.length - 1);
             data += "}";
             console.log(data);
-            return data;
+            return data;*/
         };
         // 从数据中恢复图
         this.restore = function (data) {
             var obj = data;
            
-            if("task"==data.type||"start"==data.type||"end"==data.type)
+            if("state"==data.type||"start"==data.type||"end"==data.type)
             {
                 $.asset["ruleParams"][data.id]=data.ruleProps;
+                if("start"==data.type)
+                	{
+                	  $(_r).data('haveStart',true);
+                	}
+                else if("end"==data.type)
+            	{
+                	 $(_r).data('haveEnd',true);	
+            	}
             }
 
             // if (typeof data === 'string')
@@ -1048,7 +1074,19 @@
                 return [p, arr];
             };
             this.toJson = function () {
-                var data = "[", d = _fromDot;
+            	var dataJson=[],d = _fromDot;
+            	 while (d) {
+                     if (d.type() == 'big')
+                    	 {
+                    	 var data={};
+                    	 data.x=Math.round(d.pos().x);
+                    	 data.y=Math.round(d.pos().y);
+                    	 dataJson.push(data);
+                    	 }
+                     d = d.right();
+                 }
+                 return dataJson;
+                /*var data = "[", d = _fromDot;
 
                 while (d) {
                     if (d.type() == 'big')
@@ -1059,7 +1097,7 @@
                 if (data.substring(data.length - 1, data.length) == ',')
                     data = data.substring(0, data.length - 1);
                 data += "]";
-                return data;
+                return data;*/
             };
             this.restore = function (data) {
                 var obj = data, d = _fromDot.right();
@@ -1283,7 +1321,25 @@
         };
         // 转化json数据
         this.toJson = function () {
-            var data = "{id:'" + (!_o.id ? "" : _o.id) + "',from:'" + _from.getId() + "',to:'" + _to.getId()
+        	var dataJson={};
+        	dataJson.id=(!_o.id ? "" : _o.id);
+        	dataJson.from= _from.getId();
+        	dataJson.to=_to.getId();
+        	dataJson.dots=_dotList.toJson();
+        	var textData={};
+        	textData.text=_text.attr('text');
+        	var textPosData={};
+        	textPosData.x=Math.round(_textPos.x);
+        	textPosData.y=Math.round(_textPos.y);
+        	textData.textPos=textPosData;
+        	dataJson.text=textData;
+        	if($.asset["ruleParamsPath"][_o.id])
+    		{
+        		dataJson.ruleProps=$.asset["ruleParamsPath"][_o.id];
+    		}
+        		console.log(dataJson);
+        	 return dataJson;
+           /* var data = "{id:'" + (!_ofrom.id ? "" : _o.id) + "',:'" + _from.getId() + "',to:'" + _to.getId()
                 + "', dots:" + _dotList.toJson() + ",text:{text:'"
                 + _text.attr('text') + "',textPos:{x:"
                 + Math.round(_textPos.x) + ",y:" + Math.round(_textPos.y)
@@ -1293,7 +1349,7 @@
             if (data.substring(data.length - 1, data.length) == ',')
                 data = data.substring(0, data.length - 1);
             data += '}';
-            return data;
+            return data;*/
         };
         // 恢复
         this.restore = function (data) {
@@ -1699,8 +1755,27 @@
 
                 }
             });
-
             function getJson() {
+            	var dataJson={};
+            	var statesData={};
+            	var pathsData={};
+            	 for (var k in _states) {
+                     if (_states[k]) {
+                    	 var id=_states[k].getId();
+                    	 statesData[id]=_states[k].toJson()
+                     }
+                 }
+            	 dataJson.states=statesData;
+            	 for (var k in _paths) {
+                     if (_paths[k]) {
+                    	 var id=_paths[k].getId();
+                    	 pathsData[id] = _paths[k].toJson();
+                     }
+                 }
+            	 dataJson.paths=pathsData;
+                 return dataJson;
+            };
+            /*function getJson() {
                 var data = '{states:{';
                 for (var k in _states) {
                     if (_states[k]) {
@@ -1722,7 +1797,7 @@
                 //data += '},props:{props:{';
                 data += '}}';
                 return data;
-            }
+            }*/
 
             $('#myflow_save').click(function () {// 保存
                 if(!($(_r).data('haveStart'))){

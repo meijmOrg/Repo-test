@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/include/jsp_headers.jsp"%>
+<%@ page import="com.yh.component.workflow.utils.WorkFlowConfigurationUtil"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -331,15 +332,15 @@ function deleteFlow(baseInfoId){
 			<th><div align="center">流程名称</div></th>
 			<th><div align="center">所属部门</div></th>
 			<th><div align="center">流程类型</div></th>
-			<th colspan="2"><div align="center"><a href="#" onclick="selectOrgForCreateFlow(this,'Y','${workflowConfigurationForm.templateId}')" style="color:green">新建流程</a></div></th>
+			<th colspan="2"><div align="center"><a href="#" onclick="createFlowOrUpdate(this,'Y','${workflowConfigurationForm.templateId}',null,null)" style="color:green">新建流程</a></div></th>
 		</tr>
 		<c:forEach items="${workflowConfigurationForm.baseInfoList}" var="dto" varStatus="status">
 		    <tr style="heigth:10px">
 		     	<td align="center">${status.index+1 }</td>
 		        <td align="center">${dto[0].flowName }</td>
 		        <td align="center">${dto[0].flowOrgName }</td>
-		        <td align="center">${dto[0].flowType }</td>
-		        <td align="center"><a href="#" onclick="updateFlow('${dto[0].flowId}')" style="color:green">修改</a></td>
+		        <td align="center"><dictionary:viewDicItemName dicTypeCode="<%=WorkFlowConfigurationUtil.YHRS4004%>" dicItemCode="${dto[0].flowType}" /></td>
+		        <td align="center"><a href="#" onclick="createFlowOrUpdate(this,'Y','${workflowConfigurationForm.templateId}','${dto[0].flowId}','update')" style="color:green">修改</a></td>
 		        <td align="center"><a href="#" onclick="deleteFlow('${dto[0].flowId}')" style="color:green">删除</a></td>
 		    </tr>
 		</c:forEach>

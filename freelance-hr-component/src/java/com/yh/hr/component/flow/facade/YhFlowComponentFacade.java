@@ -10,7 +10,6 @@ import com.yh.component.workflow.dto.CarbonCopyDTO;
 import com.yh.component.workflow.dto.PermissionUsersDTO;
 import com.yh.component.workflow.dto.TaskProcessDTO;
 import com.yh.component.workflow.dto.WorkflowActivityDTO;
-import com.yh.hr.component.flow.dto.YhFlowComponentDTO;
 import com.yh.hr.component.flow.service.YhFlowComponentService;
 import com.yh.platform.core.exception.ServiceException;
 
@@ -40,9 +39,9 @@ public class YhFlowComponentFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void submitFlowStart(YhFlowComponentDTO dto) throws ServiceException{
-		yhFlowComponentService.submitFlowStart(dto);
-	}
+//	public void submitFlowStart(YhFlowComponentDTO dto) throws ServiceException{
+//		YhfTaskManageServiceImpl.createBizVacationInfo(dto);;
+//	}
 	
 	/**
 	 * 表单数据暂存
@@ -50,9 +49,9 @@ public class YhFlowComponentFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void saveTemporaryStorage(YhFlowComponentDTO dto) throws ServiceException{
-		yhFlowComponentService.saveTemporaryStorage(dto);
-	}
+//	public void saveTemporaryStorage(YhFlowComponentDTO dto) throws ServiceException{
+//		YhfTaskManageServiceImpl.saveTemporaryStorage(dto);
+//	}
 	
 	/**
 	 * 历史数据
@@ -60,9 +59,9 @@ public class YhFlowComponentFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void saveHistoryData(YhFlowComponentDTO dto) throws ServiceException{
-		yhFlowComponentService.saveHistoryData(dto);
-	}
+//	public void saveHistoryData(YhFlowComponentDTO dto) throws ServiceException{
+//		yhFlowComponentService.saveHistoryData(dto);
+//	}
 	
 	/**
 	 * 列出人员信息
@@ -80,9 +79,9 @@ public class YhFlowComponentFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void submitSighUsers(YhFlowComponentDTO dto) throws ServiceException{
-		yhFlowComponentService.submitSighUsers(dto);
-	}
+//	public void submitSighUsers(YhFlowComponentDTO dto) throws ServiceException{
+//		yhFlowComponentService.submitSighUsers(dto);
+//	}
 	
 	/**
 	 * 抄送用户(确定)
@@ -90,9 +89,9 @@ public class YhFlowComponentFacade {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public void submitCsUsers(YhFlowComponentDTO dto) throws ServiceException{
-		yhFlowComponentService.submitCsUsers(dto);
-	}
+//	public void submitCsUsers(YhFlowComponentDTO dto) throws ServiceException{
+//		yhFlowComponentService.submitCsUsers(dto);
+//	}
 	
 	/**
 	 * 查询部门、小组、角色

@@ -265,7 +265,7 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 				DrawingFlowRuleText dfrt = dfr.getText();
 				//规则主信息
 				FlowRule ruleBo = new FlowRule();
-				ruleBo.setFlowId(df.getFlowId());
+				ruleBo.setFlowId(flowBo.getFlowId());
 				ruleBo.setRuleBeginActId(dfr.getFrom());
 				//ruleBo.setRuleCondition(); // 规则构造流转条件
 				ruleBo.setRuleEndActId(dfr.getTo());
@@ -336,6 +336,9 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 		sb.append("delete from yhf_flow_activity_permission where act_id in (select fa.act_id from yhf_flow_activity fa where fa.flow_id = '"+flowId+"');");
 		//活动信息-任务通知信息表
 		sb.append("delete from yhf_flow_activity_notice where act_id in (select fa.act_id from yhf_flow_activity fa where fa.flow_id = '"+flowId+"');");
+		
+		//规则信息表
+		sb.append("delete from yhf_flow_activity where flow_id = '"+flowId+"';");
 		//规则信息表
 		sb.append("delete from yhf_flow_rule where flow_id = '"+flowId+"';");
 		//模板-流程关联信息表
@@ -352,18 +355,16 @@ public class WorkflowConfigurationServiceImpl implements WorkflowConfigurationSe
 	 * @see com.yh.component.workflow.service.WorkflowConfigurationService#saveRuleFlow(com.yh.component.workflow.vo.DrawingFlow)
 	 */
 	public void saveRuleFlow(DrawingFlow df) throws ServiceException {
-		String flag = "insert"; //update
 		if(df != null){
-			if(StringUtils.isNotEmpty(flag)&&flag.equals("update")&&StringUtils.isEmpty(df.getFlowId())){
-					throw new ServiceException(null,"flowId is null");
-			}else if(StringUtils.isNotEmpty(flag)&&flag.equals("update")&&StringUtils.isNotEmpty(df.getFlowId())){//修改
+			if(StringUtils.isEmpty(df.getFlowId())){
+				this.insertFlow(df,null);
+			}else{//修改
 				//获取创建人信息
 				Flow originalFlow = DaoUtil.get(Flow.class, df.getFlowId());
 				this.deleteFlow(df.getFlowId());
 				this.insertFlow(df,originalFlow);
-			}else{//新增
-				this.insertFlow(df,null);
 			}
+			
 		}
 	}
 	/*
