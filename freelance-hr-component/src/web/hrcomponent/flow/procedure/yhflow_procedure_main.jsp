@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/include/jsp_headers.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +26,7 @@ var faUserName = '自定义的';
 </head>
 <body>
 	<div style="background:#fff;padding:20px 60px 20px 0;">
+		<jsp:include page="${viewPage}"></jsp:include>
 		<jsp:include page="../yhflow_attachment_view.jsp">
 			<jsp:param value="mho_col_10" name="widthFlag"/>
 		</jsp:include>
@@ -36,7 +38,7 @@ var faUserName = '自定义的';
 		<jsp:include page="../yhflow_attachment.jsp">
 			<jsp:param value="mho_col_10" name="widthFlag"/>
 		</jsp:include>
-		<jsp:include page="../yhflow_button.jsp"></jsp:include>
+		<jsp:include page="/hrcomponent/flow/procedure/yhflow_procedure_button.jsp"></jsp:include>
 	</div>
 	<script src="hrcomponent/flow/js/YhflowAttachment.js"></script>
 </body>

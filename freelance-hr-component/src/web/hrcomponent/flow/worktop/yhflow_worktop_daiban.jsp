@@ -46,12 +46,19 @@ $(document).ready(function(){
 			tbar: '#fr_tbar',
 			fbar: '#fr_fbar',
 			buttons: {
-				/* 'add': function(){
-					 Widget.openContent("",function(){
-						 worktop.form.goQuery();
-					 });
+				 'goFlowProcedure': function(){
+					 var rows = worktop.grid.selectModel.getSelectRows();
+					 if (rows.length != 1) {
+							MessageBox.alert('提示', "请选择一条记录再操作");
+					 }else{
+						 var fileId = rows[0].data.file_ID;
+						 var templateId = rows[0].data.template_Id;
+						 Widget.openContent("goFlowProcedureMainPage.do?method=goFlowProcedureMainPage&fileId="+fileId+"&templateId="+templateId,function(){
+							 worktop.form.goQuery();
+						 });
+					 }
 				},
-				'update': function(grid,record,worktop){
+				/*'update': function(grid,record,worktop){
 					Widget.openContent(,function(){
 						worktop.form.goQuery();
 				    });
@@ -110,9 +117,9 @@ $(document).ready(function(){
 function goback(){
 	HistoryRegister.go("goHomepage");
 }
-function goFlowProcedure(){
+/* function goFlowProcedure(){
 	Widget.openContent("goFlowProcedureMainPage.do?method=goFlowProcedureMainPage");
-}
+} */
 </script>
 </head>
 <body  style="overflow-x: hidden;">
@@ -128,7 +135,7 @@ function goFlowProcedure(){
 		<div class="handle-btn clearfix" id="fr_tbar">
 			<button class="btn-add btn-left-icon btn-default check_transaction_popdown" button-click="add">新增</button>
 			<button class="btn-delete btn-left-icon btn-default" button-click="delete">删除</button>
-		<button class="btn_add" onclick="goFlowProcedure()">流程过程</button>
+			<button class="btn_add" button-click="goFlowProcedure">流程过程</button>
 	    </div>
 		<!-- 列表内容展示-->
 		<table class="x-table sortable ellipsis striped hover"></table>
